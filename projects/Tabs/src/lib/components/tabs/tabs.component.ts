@@ -310,7 +310,7 @@ export class TabsComponent implements OnInit {
       }
     }
 
-    this.route.queryParams.subscribe((params: any)=> {
+    this.route.queryParams.subscribe(params => {
       console.log(params);
       if (Object.keys(params).length == 0) {
         setTimeout(() => {
@@ -377,7 +377,7 @@ export class TabsComponent implements OnInit {
       }
 
       if (params.tab) {
-        this.data[params.tab]['active'] = true;
+        this.data[params.tab]['active'].set(true);
       }
       if (params.sub) {
         this.data[params.tab].sub[params.sub]['active'] = true;
