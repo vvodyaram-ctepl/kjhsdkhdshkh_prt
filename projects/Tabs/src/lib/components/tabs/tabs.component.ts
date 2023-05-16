@@ -310,7 +310,7 @@ export class TabsComponent implements OnInit {
       }
     }
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params: any)=> {
       console.log(params);
       if (Object.keys(params).length == 0) {
         setTimeout(() => {
