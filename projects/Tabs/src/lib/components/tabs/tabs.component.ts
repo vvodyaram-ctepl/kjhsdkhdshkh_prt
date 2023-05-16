@@ -376,20 +376,22 @@ export class TabsComponent implements OnInit {
         })
       }
 
+      const tab = this.data[params.tab];
+
       if (params.tab) {
-        this.data[params.tab]['active'].set(true);
+        tab['active'].set(true);
       }
       if (params.sub) {
-        this.data[params.tab].sub[params.sub]['active'] = true;
+        tab.sub[params.sub]['active'].set(true);
       }
       setTimeout(() => {
         if (params.tab) {
-          this.data[params.tab]['active'] = true;
+          tab['active'].set(true);
           let tabElement = <any>this.t;
           tabElement.select('t-' + params.tab);
         }
         if (params.sub) {
-          this.data[params.tab].sub[params.sub]['active'] = true;
+          tab.sub[params.sub]['active'].set(true);
           let tabEle = <any>this.t1;
           console.log(tabEle);
           tabEle.select('t1-' + params.tab + '-' + params.sub);

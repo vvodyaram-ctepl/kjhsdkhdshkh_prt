@@ -1,3 +1,5 @@
+declare var require: any
+
 import {
   Component,
   OnInit,
@@ -21,8 +23,8 @@ import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 // tslint:disable-next-line: nx-enforce-module-boundaries
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
 import * as moment from 'moment';
 
 import * as FileSaver from 'file-saver';
