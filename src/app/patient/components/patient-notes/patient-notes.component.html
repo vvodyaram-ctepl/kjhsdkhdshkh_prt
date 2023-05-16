@@ -1,0 +1,33 @@
+
+        <div class="mt-2 boxItem">
+            <div class="device-title text-right mb-2">
+                <button class="btn btn-primary" (click)="addNotesPage()" *ngIf="RWFlag">New</button>
+            </div>
+            <!-- <hr class="line mb-2" /> -->
+            <!-- <div class="scrollbar scrollbar-near-moon thin">
+                <div class="notes-blk" *ngFor="let note of petNotes; let i=index">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <div>
+                        <div class="note-title">{{note.noteType}}</div>
+                        <div class="note-date">{{note.modifiedDate | customDateFormat }}</div>
+                        <div class="note-dis">
+                            {{note.content}}
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="petNotes.length == 0">
+                    <div>No Notes Found</div>
+                </div>
+            </div> -->
+
+            <datatable [headers]="headers"
+                [hideExport]="true" 
+                dir="DESC"
+                searchFilter="false"
+                defaultColumn=""
+                url="/api/pets/{{petId}}/getPetNotes?petId={{petId}}"
+                (formatter)="formatter($event)"
+                >
+        </datatable>
+        </div>
+  

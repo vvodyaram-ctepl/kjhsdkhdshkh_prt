@@ -1,0 +1,22 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span *ngIf="addFlag">Add New Pet Parent</span>
+                <span *ngIf="editFlag">Edit Pet Parent</span>
+                <span *ngIf="viewFlag">View Pet Parent</span>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="navtabsBackground">
+            <ul ngbNav class="row nav-tabs tabsDesign" (navChange)="navChange($event)">
+                <li class="col" [ngbNavItem]="flatTab.name" *ngFor="let flatTab of flatTabs">
+                    <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                        (click)="activateTab(flatTab)"><span>{{ flatTab.label }}</span></a>
+                </li>
+            </ul>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

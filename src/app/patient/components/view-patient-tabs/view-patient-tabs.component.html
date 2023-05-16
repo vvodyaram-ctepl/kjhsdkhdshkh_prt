@@ -1,0 +1,45 @@
+<div class="content-box">
+    <div class="content-blk">
+<ngb-carousel #carousel [showNavigationIndicators]="false"
+[showNavigationArrows]="true" [interval]="false" (slide)="onSlide($event, carousel)">
+<ng-template ngbSlide *ngFor="let item of data;let i = index" id="{{i}}">
+  <!-- <div class="study-cnt px-0 archived" *ngFor="let listItem of item">
+    {{listItem.name}}
+  </div> -->
+  <!-- {{item | json}} -->
+  <!-- <div *ngFor="let flatTab of item;let i=index" class="box-wrap-sensor"
+    [class.active]="(flatTab.deviceType == selectedRecord)"
+    (click)="assetClick(flatTab.deviceType)" style="float:left">
+    <div class="font-weight-bold f22">{{flatTab.deviceCount}}</div>
+    <div class="f15">{{flatTab.deviceType}}</div>
+  </div> -->
+ 
+        <div class="navtabsBackground">
+            <ul ngbNav class="row nav-tabs tabsDesign">
+  <li class="col" [ngbNavItem]="flatTab.name" *ngFor="let flatTab of item">
+    <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+        (click)="activateTab(flatTab)"><span>{{ flatTab.name }}</span></a>
+</li>
+</ul>
+</div>
+
+
+
+</ng-template>
+</ngb-carousel>
+<router-outlet></router-outlet>
+</div>
+</div>
+<!-- <div class="content-box">
+    <div class="content-blk">
+        <div class="navtabsBackground">
+            <ul ngbNav class="row nav-tabs tabsDesign">
+                <li class="col" [ngbNavItem]="flatTab.name" *ngFor="let flatTab of flatTabs">
+                    <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                        (click)="activateTab(flatTab)"><span>{{ flatTab.name }}</span></a>
+                </li>
+            </ul>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div> -->

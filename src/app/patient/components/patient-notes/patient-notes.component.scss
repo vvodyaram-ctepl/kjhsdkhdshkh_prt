@@ -1,0 +1,43 @@
+app-patient-notes {
+.notes-blk{
+    font-size: 13px;
+    .fa-check{
+        border: 1px solid #1EC8E5;
+        padding: 5px;
+        margin-top: 4px;
+        border-radius: 3px;
+        position: absolute;
+      }   
+      > div{
+        position: relative;
+        padding-left:30px;
+        margin-top: 15px;
+        .note-title{        
+            font-weight:600;
+            color:#212F3A;
+            padding-right:68px;
+            text-overflow: ellipsis;
+            overflow: hidden; 
+            white-space: nowrap;
+        }
+        .note-date{
+            color:#828699;
+            position: absolute;
+            right:0;
+            top:0;
+            font-size: 12px;
+        }
+        .note-dis{
+            color:#828699;
+            text-overflow: ellipsis;
+            overflow: hidden;  
+            white-space: nowrap;
+        }
+
+    }
+
+}
+datatable .table-responsive.outer-table-padding {
+    padding: 0px;
+}
+}

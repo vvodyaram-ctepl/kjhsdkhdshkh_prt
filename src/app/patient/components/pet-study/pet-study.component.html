@@ -1,0 +1,83 @@
+<form [formGroup]="addStudyForm" (submit)='onSubmit(addStudyForm.value)'>
+    <div class="content-box">
+        <!-- <div class="content-hdr">
+            </div> -->
+        <div class="content-block">
+            <!-- {{addStudyForm.value | json}} -->
+            <div formArrayName="arr"
+                *ngFor="let a of addStudyForm.get('arr')['controls']; let i = index;let last =last">
+                <div class="row mb-3" [formGroupName]="i">
+                    <div class="col-5">
+                        <fieldset class="w-fieldset" [disabled]="!addFilterFlag || (!addStudyForm.value.arr[i].disabled && !addStudyForm.value.arr[i].isVirtual)">
+                            <legend><label class="label">Study</label></legend>
+                            <lib-typeahead [data]="studyArr" matcher="studyName" formControlName="studyName"
+                                class="w-100 mb-0" placeholder="" class="w-100" (onClear)='clearStudy(i)'
+                                (selectedItem)='studySelected($event.studyId,i,$event)'>
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-3">
+                        <fieldset class="w-fieldset"
+                            [disabled]="!addFilterFlag || (!addStudyForm.value.arr[i].disabled && !addStudyForm.value.arr[i].isVirtual)">
+                            <legend> <label class="label">Study Association Date </label>
+                            </legend>
+                            <!-- <input formControlName="studyDesc" type="text" class="form-control textbox w-100" maxlength="" /> -->
+                            <datepicker class="w-100" formControlName="studyassDate" format="MM-DD-YYYY"
+                                [minDate]="addStudyForm.value.arr[i].startDate"
+                                [maxDate]="addStudyForm.value.arr[i].endDate"></datepicker>
+                        </fieldset>
+                        <!-- <validation-message [control]="addStudyForm.get('arr').controls[i].controls.studyassDate">
+                        </validation-message> -->
+                    </div>
+                    <!-- {{addStudyForm.value.arr[i].isExternal | json}} -->
+                    <!-- [disabled]="!addStudyForm.value.arr[i].isExternal" -->
+                    <!-- {{addStudyForm.value.arr[i].isExternalArr | json}} -->
+                    
+                    <!--Below code commetned for JIRA : #WPP2-630-->
+                    <!-- <div class="col-3"
+                        *ngIf="(addStudyForm.value.arr[i].isExternalArr.length > 0) && addStudyForm.value.arr[i].studyName">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">External Pet <span class="asterisk">*</span></label></legend>
+                            <lib-typeahead [data]="addStudyForm.value.arr[i].isExternalArr" matcher="externalPetValue"
+                                formControlName="externalPet" class="w-100 mb-0" placeholder="" class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                        <validation-message [control]="addStudyForm.get('arr').controls[i].controls.externalPet">
+                        </validation-message>
+                    </div> -->
+                    <div class="col-1 center-align" *ngIf="addFilterFlag">
+                        <!-- <button type="button" >Delete</button> -->
+                        <!-- <span class="fa fa-trash-alt pointer-cursor black size-17 mr-3" (click)="removeItem(i)"
+                                *ngIf="addStudyForm.value.arr.length > 1"></span>
+                                <span class="fa fa-plus pointer-cursor size-17" style="color:black;" *ngIf="last"
+                                (click)="addItem()"></span> -->
+
+                        <!-- addStudyForm.value.arr.length > 1 -->
+                        <div class="card icon-card-list red-bg mr-2" title="Remove"
+                            *ngIf=" addStudyForm.value.arr.length > 1 && addStudyForm.value.arr[i].disabled">
+                            <span class="pointer-cursor size-17" title="Remove" (click)="removeItem(i)">-</span>
+                        </div>
+
+                        <div class="card icon-card-list blue-bg" title="Add" *ngIf="last && !addStudyForm.value.arr[i].isVirtual">
+                            <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                                (click)="addItem()"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <!-- <button class="btn btn-primary" type="button" *ngIf="addStudyForm.value.arr == ''" (click)="addItem()" style="margin-right: 5px;">Add Plan</button> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

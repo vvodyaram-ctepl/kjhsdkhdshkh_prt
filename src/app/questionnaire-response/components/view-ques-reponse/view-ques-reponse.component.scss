@@ -1,0 +1,36 @@
+.que-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #37b57c;
+    // margin-bottom: 15px;
+    .q-hdr-name {
+        font: normal normal 600 13px/15px Titillium Web;
+        letter-spacing: -0.4px;
+        color: #212f3a;
+    }
+    .q-name {
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: -0.6px;
+        color: #212f3a;
+    }
+}
+.custom-table table td {
+    border-top: 0;
+    border-bottom: 1px solid #dee2e6;
+    line-height: 3;
+    font-weight: 600;
+
+    &.question {
+        width: 57%;
+        padding-right: 3% !important;
+    }
+
+    .question-number {
+        font-weight: bolder;
+    }
+
+    &.answer {
+        font-weight: 500;
+        width: 40%;
+    }
+}

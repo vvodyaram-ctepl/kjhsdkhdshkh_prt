@@ -1,0 +1,165 @@
+<div class="content-box">
+  <div class="content-block">
+    <reports-datatable *ngIf="showDataTable" [headers]="headers" [filterTypeArr]="filterTypeArr" [hideExport]="true"
+      (nodeAction)="getNode($event)" defaultColumn="name" (formatter)="formatter($event)" placeholder="Search"
+      dir="DESC" url="/api/pointTrackers/getPointTrackingActivities/{{this.trackId}}" pageName='campaignActivities'>
+    </reports-datatable>
+    <div class="row no-gutter mt-3">
+      <div class="col-12">
+        <div class="float-right">
+          <button class="btn btn-primary" type="button" routerLink="/user/point-tracking/view/{{
+        trackId
+      }}/campaign-details">
+            Back
+          </button>&nbsp;&nbsp;
+          <!-- <button class="btn btn-primary" type="button" routerLink="/user/point-tracking/view/{{
+        trackId
+      }}/campaign-activities">
+        Next
+      </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Reject Activity
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span class="icon-close" aria-hidden="true"></span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row mb-4">
+      <div class="col-12 mb-3">
+        Are you sure you want to reject activity for <span class="bold-text" style="color:red">{{this.petName}}</span> ?
+      </div>
+      <div class="col-12 mb-2">
+        Reason for rejection
+      </div>
+      <div class="col-12">
+        <!-- <textarea class="form-control" name="search" autocomplete="off"
+            [(ngModel)]="rejectReason"></textarea> -->
+        <div class="w-fieldset">
+          <select class="form-control" [(ngModel)]="reasonRejected">
+            <option value="">Select</option>
+            <option *ngFor='let list of trackerRejectReasons' [title]="list.reason"
+              [value]="list.trackerRejectReasonId">{{list.reason.length > 60 ? ((list.
+              reason | slice:0:60) + '..') : list.reason}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          No
+        </button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+          (click)="rejectActivity();d('Cross click')">
+          Yes
+        </button>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #customOptions let-oRecord="rowData">
+  <form>
+    <div class="row" *ngIf="(oRecord.activity == 'Images' || oRecord.activity == 'Videos'); else questionnaire">
+      <ng-container *ngIf="!oRecord.isEdited">
+        <div class="col-9 text-ellipsis">
+          <span title={{oRecord.behavior}}>{{oRecord.behavior}}</span>
+        </div>
+        <div class="col-3">
+          <span (click)="oRecord.isEdited = true;changeBehav(oRecord.speciesId)"
+            *ngIf="oRecord.status != 'Approved' && RWFlag">
+            <div class="card icon-card-list green-bg mb-2 mr-2 float-right cursor-pointer" title="Edit">
+              <span class="icon-tag size-20" title="Edit"></span>
+            </div>
+          </span>
+        </div>
+      </ng-container>
+      <div class="col-12" *ngIf="oRecord.isEdited">
+        <select class="editSelect" [(ngModel)]="oRecord.behavior" [ngModelOptions]="{standalone: true}"
+          (change)="oRecord.isEdited = false">
+          <option *ngFor="let item of behaviorArr" [value]="item.metricName">{{item.metricName}}</option>
+        </select>
+      </div>
+    </div>
+    <ng-template #questionnaire>
+      <span *ngIf="oRecord.activity == 'Questionnaire'">
+        <a target="_blank" routerLink="/user/responses/view/{{oRecord.questionnaireRespId}}/{{oRecord.studyId}}">Click
+          to access</a>
+      </span>
+    </ng-template>
+  </form>
+</ng-template>
+
+<ng-template #videoPopup let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Video
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span aria-hidden="true">&#10006;</span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-4">
+      <div class="col-12 video-wrapper">
+        <video controls class="p-video videopath" controls autoplay width="100%" style="margin:0 auto;">
+          <source src="{{playVideoUrl}}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          Cancel
+        </button>&nbsp;&nbsp;
+        <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="downloadvideo();">
+                  Download
+              </button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #archiveContent4 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      View Image
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span aria-hidden="true">&#10006;</span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-4 vertical-scroll">
+      <div class="col-12">
+        <img src="{{playImgUrl}}" alt="pet" class="img-fluid" />
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          Close
+        </button>&nbsp;&nbsp;
+        <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3"  (click)="downloadImage();">
+                  Download
+              </button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>

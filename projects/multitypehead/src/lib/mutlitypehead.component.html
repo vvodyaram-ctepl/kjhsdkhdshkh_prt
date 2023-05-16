@@ -1,0 +1,33 @@
+<ng-select class="custom" id="myInput" *ngIf="url" (paste)="myFunction($event)" [disabled]="disabled" [items]="items" [multiple]="true" [bindLabel]="matcher" [placeholder]="placeholder ? placeholder : ''"
+    [typeahead]="typeahead" [(ngModel)]="ngModel" multiple="true" (change)="onAdded($event)" (clear)="onItemClear($event)" (blur)="onBlur()">
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of (items ? items.slice(0,showMaxBadgesMin || showMaxBadges): [])">
+            <span class="ng-value-label" [ngStyle]="item.style" [title]="item[display ? display : matcher]">{{item[display ? display : matcher]}}</span>
+            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+        </div>
+        <div class="ng-value cursor" *ngIf="items.length > showMaxBadges" (click)="openRemains(items);$event.stopPropagation()">
+            <span class="ng-value-label">{{showBadge ? '-' : '+'}}{{items.length - showMaxBadges}}</span>
+        </div>
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item">
+        <span [ngStyle]="item.style">{{item[matcher]}}</span>
+    </ng-template>
+    
+</ng-select>
+<ng-select class="custom" *ngIf="data" (paste)="myFunction($event)" [disabled]="disabled" [items]="data" [multiple]="true" [bindLabel]="matcher" [placeholder]="placeholder ? placeholder : ''"
+    [(ngModel)]="ngModel" multiple="true" (change)="onAdded($event)" (clear)="onItemClear($event)" (blur)="onBlur()">
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of (items ? items.slice(0,showMaxBadgesMin || showMaxBadges): [])">
+            <span class="ng-value-label" [ngStyle]="item.style" [title]="item[display ? display : matcher]">{{item[display ? display : matcher]}}</span>
+            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+           
+        </div>
+        <div class="ng-value cursor" *ngIf="items.length > showMaxBadges" (click)="openRemains(items);$event.stopPropagation()">
+            <span class="ng-value-label">{{showBadge ? '-' : '+'}}{{items.length - showMaxBadges}}</span>
+        </div>
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item">
+        <span [ngStyle]="item.style">{{item[matcher]}}</span>
+    </ng-template>
+</ng-select>
+<i *ngIf="showCopyIcon" title="copy" style="font-size:24px;position:absolute;right:63px;top:20px;cursor: pointer;" class="icon ion-ios-copy-outline text-right" (click)="copyValues($event)"></i>

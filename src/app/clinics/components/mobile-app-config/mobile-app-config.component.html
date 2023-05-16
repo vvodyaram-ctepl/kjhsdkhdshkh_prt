@@ -1,0 +1,138 @@
+<form [formGroup]="mobileAppForm">
+    <div class="content-box">
+        <div class="content-block">
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="label-hdr">
+                        App Config Menu
+                    </div>
+                </div>
+                <!-- <div class="col-6">
+                    <div class="label-hdr">
+                        Permissions
+                    </div>
+                </div> -->
+            </div>
+
+            <div formArrayName="permissionMap"
+                *ngFor="let role of mobileAppForm.get('permissionMap')['controls']; let i = index">
+                <div class="row mb-3" [formGroupName]="i">
+                    <!-- {{this.mobileAppForm.value | json}} -->
+                    <div class="col-6">
+                        <div class="checkbox-wrapper">
+                            <span class="check mr-2">
+                                <!-- [value]="menu.menuId" -->
+                                <!-- viewFlag -->
+                                <input type="checkbox" *ngIf="viewFlag" disabled=viewFlag  class="checkbox-width-20" (change)="onCheckboxChange($event,i)"
+                                    [value]="role.value.menuCheck" formControlName="menuCheck" />
+
+                                    <input type="checkbox" *ngIf="!viewFlag"  class="checkbox-width-20" (change)="onCheckboxChange($event,i)"
+                                    [value]="role.value.menuCheck" formControlName="menuCheck" />
+                            </span>
+                            <span class="p-absolute" [ngClass]="(role.value.menuName.mobileAppConfigId == 7 || role.value.menuName.mobileAppConfigId == 8) && role.value.menuCheck == true ? 'addStyle' : ''">{{role.value.menuName.mobileAppConfigName}}</span>
+                            <span *ngIf="role.value.menuName.mobileAppConfigId == 7 && role.value.menuCheck == true">
+                                <!-- {{role.value.weightUnit | json}} -->
+                            <fieldset style="width: 36%;" class="w-fieldset">
+                                <legend> <label class="label">Weight</label></legend>
+                                <!-- <input style="width:76%;float:left;" type="text" formControlName="weight"
+                                    class="form-control textbox" maxlength="" /> -->
+                                    <!-- {{role.value.weightUnit | json}} -->
+                                <select class="select-cstom-control form-control"  *ngIf="viewFlag" disabled=viewFlag 
+                                    formControlName="weightUnit">
+                                    <option value="lbs">LBS</option>
+                                    <option value="kgs">KGS</option>
+                                </select>
+
+                                <select class="select-cstom-control form-control"  *ngIf="!viewFlag" 
+                                    formControlName="weightUnit">
+                                    <option value="lbs">LBS</option>
+                                    <option value="kgs">KGS</option>
+                                </select>
+                            </fieldset>
+                            </span>
+
+                            <!-- eating -->
+                            <span *ngIf="role.value.menuName.mobileAppConfigId == 8 && role.value.menuCheck == true">
+                                <!-- {{role.value.weightUnit | json}} -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <!-- {{studyStartDate | json}} -->
+                            <fieldset class="w-fieldset" [disabled]="viewFlag" >
+                                <legend> <label class="label">Start Date <span *ngIf="role.value.menuName.mobileAppConfigId == 8 && role.value.menuCheck == true"
+                                    class="asterisk">*</span></label></legend>
+
+                                <datepicker class="w-100" formControlName="eatingStartDate" (select)="startdateSelect()"  [minDate]="studyStartDate" [maxDate]="studyEndDate"
+                                format="MM-DD-YYYY"></datepicker>
+                            </fieldset>
+                            <validation-message [control]="mobileAppForm.get('permissionMap').controls[i].controls.eatingStartDate"></validation-message>
+                        </div>
+                        <div class="col-6">
+                            <fieldset class="w-fieldset" [disabled]="viewFlag" >
+                                <legend> <label class="label">End Date <span *ngIf="role.value.menuName.mobileAppConfigId == 8 && role.value.menuCheck == true"
+                                    class="asterisk">*</span></label></legend>
+
+                                <datepicker class="w-100" formControlName="eatingEndDate" [minDate]="role.value.eatingStartDate" [maxDate]="studyEndDate"
+                                format="MM-DD-YYYY"></datepicker>
+                            </fieldset>
+                            <validation-message [control]="mobileAppForm.get('permissionMap').controls[i].controls.eatingEndDate"></validation-message>
+                            </div>
+                        </div>
+                            </span>
+                            <!-- eatig ends -->
+                        </div>
+                    </div>
+                    <!-- <div class="col-6">
+                            <select class="form-control w-100" formControlName="menuActionName" disabled="true">
+                                <option value="">Set Permissions</option>
+                                <option *ngFor="let list of data.menuActions" [value]="list.menuActionId">
+                                    {{list.menuActionName}}</option>
+                            </select>
+                        </div> -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                        <!-- <button *ngIf="!viewFlag" class="btn btn-primary" type="button" (click)="submit()">
+                            <span>submit</span>
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Change Permissions ?
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click');enableSelection()">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mb-4">
+            <div class="col-12">
+                Do you want to change the permissions? Pet parent may lose access to some functionalities.
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-primary btn-custom mr-3" (click)="d('Cross click')">
+                    Yes
+                </button>
+                <button type="button" class="btn btn-secondary btn-custom" (click)="d('Cross click');enableSelection()">
+                    No
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

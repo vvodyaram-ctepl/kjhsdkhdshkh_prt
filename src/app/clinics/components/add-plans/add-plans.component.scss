@@ -1,0 +1,19 @@
+.label {
+    font: normal normal normal 14px/15px Titillium Web;
+    letter-spacing: -0.3px;
+    color: #4B4B5A;
+}
+.center-align {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+}
+.mtop-15 {
+    margin-top: 10px;
+}
+.icon-card-list {
+    bottom:0px;
+    box-shadow: none;
+    width: 30px;
+    height: 30px;
+}

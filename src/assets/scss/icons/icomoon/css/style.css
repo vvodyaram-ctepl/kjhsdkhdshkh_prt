@@ -1,0 +1,561 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?wripw7');
+  src:  url('fonts/icomoon.eot?wripw7#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?wripw7') format('truetype'),
+    url('fonts/icomoon.woff?wripw7') format('woff'),
+    url('fonts/icomoon.svg?wripw7#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-activity-factor-repo:before {
+  content: "\e905";
+}
+.icon-trackShip:before {
+  content: "\e99d";
+}
+.icon-trackShipThick:before {
+  content: "\e99e";
+}
+.icon-greenShipThick:before {
+  content: "\e99f";
+  color: #0aa884;
+}
+.icon-greenShip:before {
+  content: "\e9a0";
+  color: #0aa884;
+}
+.icon-trackShipment:before {
+  content: "\e98a";
+}
+.icon-trackShipMap:before {
+  content: "\e997";
+}
+.icon-assetShipment:before {
+  content: "\e998";
+}
+.icon-feedingFrequency:before {
+  content: "\e990";
+}
+.icon-roleMenu:before {
+  content: "\e991";
+}
+.icon-preludeRepo:before {
+  content: "\e992";
+}
+.icon-operationalRepo:before {
+  content: "\e993";
+}
+.icon-activeRepo:before {
+  content: "\e995";
+}
+.icon-imageScoring:before {
+  content: "\e996";
+}
+.icon-timerNew:before {
+  content: "\e98c";
+}
+.icon-speciesNew:before {
+  content: "\e999";
+}
+.icon-prelude:before {
+  content: "\e98d";
+}
+.icon-operational:before {
+  content: "\e98e";
+}
+.icon-img-scoring:before {
+  content: "\e98f";
+}
+.icon-preludeReport:before {
+  content: "\e988";
+}
+.icon-feedingNew:before {
+  content: "\e989";
+}
+.icon-petManagement:before {
+  content: "\e902";
+}
+.icon-studyManagement1:before {
+  content: "\e903";
+}
+.icon-studyManagement:before {
+  content: "\e909";
+}
+.icon-species:before {
+  content: "\e90a";
+}
+.icon-manage-report:before {
+  content: "\e96b";
+}
+.icon-prelude-report .path1:before {
+  content: "\e96c";
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path2:before {
+  content: "\e96d";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-prelude-report .path3:before {
+  content: "\e96e";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path4:before {
+  content: "\e96f";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path5:before {
+  content: "\e970";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path6:before {
+  content: "\e971";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path7:before {
+  content: "\e972";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path8:before {
+  content: "\e973";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path9:before {
+  content: "\e974";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path10:before {
+  content: "\e975";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path11:before {
+  content: "\e976";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path12:before {
+  content: "\e977";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path13:before {
+  content: "\e978";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path14:before {
+  content: "\e979";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path15:before {
+  content: "\e97a";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-prelude-report .path16:before {
+  content: "\e97b";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-operational-report:before {
+  content: "\e97c";
+}
+.icon-feeding .path1:before {
+  content: "\e97d";
+  color: rgb(26, 24, 24);
+}
+.icon-feeding .path2:before {
+  content: "\e97e";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-feeding .path3:before {
+  content: "\e97f";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-feeding .path4:before {
+  content: "\e980";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-feeding .path5:before {
+  content: "\e981";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-feeding .path6:before {
+  content: "\e982";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-feeding .path7:before {
+  content: "\e983";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-feeding .path8:before {
+  content: "\e984";
+  margin-left: -1em;
+  color: rgb(26, 24, 24);
+}
+.icon-image-scoring:before {
+  content: "\e985";
+}
+.icon-activity-report:before {
+  content: "\e986";
+}
+.icon-analytical-report:before {
+  content: "\e987";
+}
+.icon-pushNotifcation:before {
+  content: "\e901";
+}
+.icon-userManagemnt:before {
+  content: "\e900";
+}
+.icon-supportMaterial:before {
+  content: "\e906";
+}
+.icon-support:before {
+  content: "\e907";
+}
+.icon-assets:before {
+  content: "\e90b";
+}
+.icon-clinical-users:before {
+  content: "\e90c";
+}
+.icon-assetDeviceInfo2:before {
+  content: "\e915";
+}
+.icon-assetManageFw:before {
+  content: "\e916";
+}
+.icon-uniE90C:before {
+  content: "\e917";
+}
+.icon-uniE90D:before {
+  content: "\e90d";
+}
+.icon-Icon-open-dashboard:before {
+  content: "\e90e";
+}
+.icon-mobile-app:before {
+  content: "\e90f";
+}
+.icon-patients:before {
+  content: "\e910";
+}
+.icon-pet-parent:before {
+  content: "\e911";
+}
+.icon-plans:before {
+  content: "\e912";
+}
+.icon-roles:before {
+  content: "\e913";
+}
+.icon-search:before {
+  content: "\e914";
+}
+.icon-star:before {
+  content: "\e918";
+}
+.icon-star-filled:before {
+  content: "\e919";
+}
+.icon-tick:before {
+  content: "\e922";
+}
+.icon-uniE918:before {
+  content: "\e923";
+}
+.icon-uniE919:before {
+  content: "\e924";
+}
+.icon-uniE91A:before {
+  content: "\e91a";
+}
+.icon-uniE91B:before {
+  content: "\e91b";
+}
+.icon-uniE91C:before {
+  content: "\e91c";
+}
+.icon-uniE91D:before {
+  content: "\e91d";
+}
+.icon-uniE91E:before {
+  content: "\e91e";
+}
+.icon-uniE91F:before {
+  content: "\e91f";
+}
+.icon-right-arrow:before {
+  content: "\e920";
+}
+.icon-reportsnew:before {
+  content: "\e921";
+}
+.icon-device:before {
+  content: "\e925";
+}
+.icon-firmware:before {
+  content: "\e926";
+}
+.icon-uniE924:before {
+  content: "\e92f";
+}
+.icon-uniE925:before {
+  content: "\e930";
+}
+.icon-uniE926:before {
+  content: "\e931";
+}
+.icon-uniE927:before {
+  content: "\e927";
+}
+.icon-XMLID_2112:before {
+  content: "\e928";
+}
+.icon-dog-blue:before {
+  content: "\e929";
+}
+.icon-tag:before {
+  content: "\e92a";
+}
+.icon-Headphones:before {
+  content: "\e92b";
+}
+.icon-clinics-tab:before {
+  content: "\e92c";
+}
+.icon-femenine:before {
+  content: "\e92d";
+}
+.icon-rings:before {
+  content: "\e92e";
+}
+.icon-filter:before {
+  content: "\e932";
+}
+.icon-card:before {
+  content: "\e933";
+}
+.icon-report-chat:before {
+  content: "\e93c";
+}
+.icon-Group-2972:before {
+  content: "\e93d";
+}
+.icon-assetDeviceInfo:before {
+  content: "\e93e";
+}
+.icon-assetReports:before {
+  content: "\e934";
+}
+.icon-assetManagement:before {
+  content: "\e935";
+}
+.icon-assetDashboard:before {
+  content: "\e936";
+}
+.icon-studyNotification:before {
+  content: "\e937";
+}
+.icon-pointTracker:before {
+  content: "\e938";
+}
+.icon-audit:before {
+  content: "\e939";
+}
+.icon-roles1:before {
+  content: "\e93a";
+}
+.icon-mobileApp:before {
+  content: "\e93b";
+}
+.icon-assets1:before {
+  content: "\e93f";
+}
+.icon-petParents:before {
+  content: "\e940";
+}
+.icon-pets:before {
+  content: "\e949";
+}
+.icon-plans1:before {
+  content: "\e94a";
+}
+.icon-users:before {
+  content: "\e94b";
+}
+.icon-study:before {
+  content: "\e941";
+}
+.icon-favourites:before {
+  content: "\e942";
+}
+.icon-edit1:before {
+  content: "\e943";
+}
+.icon-device1:before {
+  content: "\e944";
+}
+.icon-Responses:before {
+  content: "\e945";
+}
+.icon-selfOnBoarding:before {
+  content: "\e946";
+}
+.icon-feedback:before {
+  content: "\e947";
+}
+.icon-settings:before {
+  content: "\e948";
+}
+.icon-ellipsis:before {
+  content: "\e94c";
+}
+.icon-grip-vertical:before {
+  content: "\e94d";
+}
+.icon-xlsx:before {
+  content: "\e956";
+}
+.icon-upload:before {
+  content: "\e957";
+}
+.icon-close:before {
+  content: "\e958";
+}
+.icon-minus:before {
+  content: "\e94e";
+}
+.icon-external-link:before {
+  content: "\e94f";
+}
+.icon-uniE950:before {
+  content: "\e950";
+}
+.icon-uniE951:before {
+  content: "\e951";
+}
+.icon-uniE952:before {
+  content: "\e952";
+}
+.icon-uniE953:before {
+  content: "\e953";
+}
+.icon-uniE954:before {
+  content: "\e954";
+}
+.icon-redeempoints:before {
+  content: "\e955";
+}
+.icon-pointsearned:before {
+  content: "\e959";
+}
+.icon-pointsutilized:before {
+  content: "\e95a";
+}
+.icon-line-chart:before {
+  content: "\e963";
+}
+.icon-badge:before {
+  content: "\e964";
+}
+.icon-pdf-file:before {
+  content: "\e965";
+}
+.icon-excel:before {
+  content: "\e95b";
+}
+.icon-mars:before {
+  content: "\e95c";
+}
+.icon-canine:before {
+  content: "\e95d";
+}
+.icon-feline:before {
+  content: "\e95e";
+}
+.icon-pet-house:before {
+  content: "\e95f";
+}
+.icon-mail:before {
+  content: "\e960";
+}
+.icon-calendar:before {
+  content: "\e961";
+}
+.icon-database:before {
+  content: "\e962";
+}
+.icon-notification:before {
+  content: "\e966";
+}
+.icon-genderless:before {
+  content: "\e967";
+}
+.icon-media-player:before {
+  content: "\e99a";
+}
+.icon-stopwatch:before {
+  content: "\e99b";
+}
+.icon-clock:before {
+  content: "\e99c";
+}
+.icon-qResponse:before {
+  content: "\e968";
+}
+.icon-questionnaire:before {
+  content: "\e969";
+}
+.icon-dropdownArrow:before {
+  content: "\e96a";
+}
+.icon-cog:before {
+  content: "\e994";
+}
+.icon-roleNew:before {
+  content: "\e98b";
+}
+.icon-pushNotifications .path1:before {
+  content: "\e904";
+  color: rgb(15, 14, 14);
+}
+.icon-pushNotifications .path2:before {
+  content: "\e9a1";
+  margin-left: -0.900390625em;
+  color: rgb(0, 0, 0);
+}

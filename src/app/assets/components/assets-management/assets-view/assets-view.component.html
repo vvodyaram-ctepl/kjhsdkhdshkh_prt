@@ -1,0 +1,208 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">View Asset Details </div>
+            <div class="col-6 text-right">
+                <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="editDeviceDetails()">Edit Asset
+                    Details</button>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-banner mb-3">
+            <div class="row  border-1">
+                <div class="col-6 block-left-center mb-2 pl-0">
+                    <span class="banner-heading-text  mr-0">{{assetsData.deviceNumber}}</span>
+                    <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                    <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right mb-2">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row  mt-3 pb-4 mb-3 border-1">
+                <div class="col mb-2">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Asset Type</div>
+                                <div class="green-small-text">{{assetsData.deviceType ? assetsData.deviceType : '-'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col  mb-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Asset Model</div>
+                                <div class="green-small-text">{{assetsData.deviceModel ? assetsData.deviceModel : '-'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col mb-2">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Asset Location</div>
+                                <div class="green-small-text">{{assetsData.location ? assetsData.location : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col mb-2" *ngIf="showOtherLocation">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Other Location</div>
+                                <div class="green-small-text">{{assetsData.deviceLocationOthers ?
+                                    assetsData.deviceLocationOthers : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col mb-2">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Asset Number</div>
+                                <div class="green-small-text">
+                                    {{assetsData.deviceNumber ? assetsData.deviceNumber : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Manufacturer Serial Number</div>
+                                <div class="green-small-text">
+                                    {{assetsData.mfgSerialNumber ? assetsData.mfgSerialNumber : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row ">
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Manufacturer Firmware</div>
+                                <div class="green-small-text">{{assetsData.mfgFirmware ? assetsData.mfgFirmware : '-'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Bluetooth MAC Address</div>
+                                <div class="green-small-text">{{assetsData.mfgMacAddr ? assetsData.mfgMacAddr : '-'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Wifi MAC Address</div>
+                                <div class="green-small-text">
+                                    {{assetsData.wifiMacAddr ? assetsData.wifiMacAddr : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+               
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Tracking Number</div>
+                                <div class="green-small-text">
+                                    {{assetsData.trackingNumber ? assetsData.trackingNumber : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="box-wrap ">
+                                <div class="small-text">Asset Status</div>
+                                <div class="green-small-text">
+                                    {{assetsData.status ? assetsData.status : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="float-right mt-4">
+                        <button class="btn btn-secondary" type="button" (click)="backToList()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  <div class="content-banner">
+             <div class="firmware-title border-1">Firmware History</div>
+            <div class="row">
+                <div class="col custom-table">
+                    <table>
+                        <thead class="table-hdr">
+                            <tr>
+                                <th *ngFor="let list of headers; let i = index">
+                                    {{ list.label }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body" *ngIf="firmwareHistory?.length > 0">
+                            <tr *ngFor="let list of firmwareHistory; let i = index">
+                                 <td>
+                                    {{ list.notificationDate | date: 'dd-MM-yyyy'}}
+                                </td>
+                                <td>
+                                    {{ list.updatedDate | date: 'dd-MM-yyyy'}}
+                                </td>
+                                <td>
+                                    {{ list.version }}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="table-body" *ngIf="firmwareHistory?.length == 0">
+                            <tr>
+                                <td>No Records Found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>  -->
+        <!-- <div class="content-banner">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="backToList()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+    </div>
+</div>

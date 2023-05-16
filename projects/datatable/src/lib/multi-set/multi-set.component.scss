@@ -1,0 +1,22 @@
+multi-set{
+    .scroll{
+        margin-left:0px !important;
+        margin-right:0px !important;
+        width: 75%;
+        max-height:100px;
+        padding-top: 5px;
+        overflow-y:scroll;
+        min-height:100px;
+        border:1px solid #e2e2e2;
+        .col-12{
+            padding:0px 5px !important;
+            .form-group{
+                margin-bottom: 0 !important;
+                label{
+                    margin-bottom: 0 !important;
+                }
+
+            }
+        }
+    }
+}

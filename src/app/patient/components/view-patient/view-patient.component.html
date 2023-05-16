@@ -1,0 +1,472 @@
+<div class="patients-view">
+    <div class="content-box">
+        <div class="content-hdr">
+            <div class="row">
+                <div class="col">View Pet
+                </div>
+                <div class="col text-right addbtn">
+                    <div class="switch-btns mr-4" style="display: inline-block;">
+                        <button class="btn btn-primary" [class.active]="showTabsPage == false" (click)="cardView()">
+                            card
+                        </button>
+                        <button class="btn btn-secondary" [class.active]="showTabsPage == true" (click)="tabView()">
+                            tab
+                        </button>
+                    </div>
+                    <button *ngIf="RWFlag" class="btn btn-primary btn-purple" (click)="addPet()">Associate New
+                        Study</button>
+                </div>
+            </div>
+        </div>
+        <div class="text-center searchblock" (click)="showSelectPatient();">
+            <i class="fa fa-bars"></i>&nbsp;Select Pet
+        </div>
+        <div id="content" class="search-content scrollbar scrollbar-near-moon thin"
+            [ngClass]="selectInfo ? 'showSinfo' : 'hideSinfo'" (scroll)="myFunction()">
+            <!-- <div class="search-input">
+                <i class="icon-search"  (click)="searchTextFn(query)"></i>
+                <input type="text" placeholder="Pet Name" class="form-control" name="search" autocomplete="off"
+                    [(ngModel)]="searchText"/>
+
+            </div> -->
+
+            <div class="search-wrapper" style="position: relative;">
+                <!-- autocomplete="off" -->
+                <div class="position-fixed" style="z-index: 9;">
+                    <input type="text" placeholder="Pet Name" class="form-control pet-input" name="search"
+                        autocomplete="off" [(ngModel)]="searchText" (keydown.enter)="searchTextFn(searchText)" />
+                    <!-- <input type="text" [placeholder]="placeholder ? placeholder : ''" [(ngModel)]="query" id="listSearch"
+                    class="search-box" (keydown.enter)="changedInput($event)"> -->
+                    <div class="icon-circle search-icon-ds" (click)="searchTextFn(searchText)" style="cursor:pointer;">
+                        <i class="icon-search"></i>
+
+                    </div>
+                    <div *ngIf="searchText" class="icon-circle close-icon-ds" (click)="clearSearch()">
+                        <i class="icon ion-ios-close-outline size-18 close-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <ul *ngIf="pets" (scrolledIndexChange)="currentIndex($event)">
+                <!-- <virtual-scroller #scroll [items]="pets"> -->
+                <!-- <li *ngFor="let item of scroll.viewPortItems">{{item?.petName}}</li>
+                </virtual-scroller> -->
+                <!-- <li class="pet-list-item" *ngFor="let pet of pets | filter:searchText;let k = index"
+                    [class.active]="(pet.petId == selectedRecordPet)"
+                    (click)="petSelected(pet.petId,pet.selectStudyId)">
+                    <div><img class="p-img" [src]='pet.petPhotoUrl ? pet.petPhotoUrl : "assets/images/no-dogs.svg"' />
+                    </div>
+                    <div class="p-info">
+                        <div class="p-name">{{pet.petName}}&nbsp;</div>
+                        <div class="p-type">{{pet.breedName}}&nbsp;</div>
+                    </div>
+                </li> -->
+
+                <li class="pet-list-item" *ngFor="let pet of pets" [class.active]="(pet.petId == selectedRecordPet)"
+                    (click)="petSelected(pet.petId,pet.selectStudyId);tabSelection()">
+                    <div><img class="p-img" [src]='pet.petPhotoUrl ? pet.petPhotoUrl : "assets/images/no-dogs.svg"' />
+                    </div>
+                    <div class="p-info">
+                        <div class="p-name">{{pet.petName}}&nbsp;</div>
+                        <div class="p-type">{{pet.breedName}}&nbsp;</div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="patient-details" *ngIf="petDetails">
+            <div class="content-blk patientblk">
+                <div class="row">
+                    <div class="col patientCol pt-2 pb-2 position-relative">
+                        <i class="icon-right-arrow" (click)="showPatientInfo();"></i>
+                        <div class="position">
+                            <div class="patientimg float-left">
+                                <div class="patientimg-status">
+                                    <div class="p-img">
+                                        <!-- <img
+                                        [src]='petDetails.petPhotoUrl ? petDetails.petPhotoUrl : "assets/images/no-dogs.svg"' /> -->
+                                        <span class="petImag" *ngIf="petDetails.petPhotoUrl">
+                                            <div style="background-image: url({{petDetails.petPhotoUrl}});"></div>
+                                        </span>
+                                        <span class="petImag" *ngIf="!petDetails.petPhotoUrl">
+                                            <div style="background-image: url(assets/images/no-dogs.svg);"></div>
+                                        </span>
+                                    </div>
+                                    <div class="pet-status" *ngIf="petDetails.petStatus">
+                                        <!-- {{petDetails.petStatus ? petDetails.petStatus : 'Unassigned'}} -->
+                                        <span class="offStudy-status"
+                                            *ngIf="petDetails.petStatusId == '1'">{{petDetails.petStatus}}</span>
+                                        <span class="onStudy-status"
+                                            *ngIf="petDetails.petStatusId == '2'">{{petDetails.petStatus}}</span>
+                                        <span class="deceased-status"
+                                            *ngIf="petDetails.petStatusId == '3'">{{petDetails.petStatus}}</span>
+                                        <span class="offStudy-status"
+                                            *ngIf="petDetails.petStatusId == '' || petDetails.petStatusId == 'undefined'">Unassigned</span>
+                                    </div>
+                                </div>
+                                <div class="patientname">
+                                    <div class="nameofpatient">
+                                        <span class="petname-info" title="{{petDetails.petName}}">{{petDetails.petName ?
+                                            petDetails.petName : ''}}<span class="icon-star fav-icon" *ngIf="!isFav"
+                                                (click)="makeFav()"></span>
+                                            <span class="icon-star-filled fav-icon" *ngIf="isFav"
+                                                (click)="removeFav()"></span></span>
+
+
+                                    </div>
+                                    <div class="typeofpatient" title="{{petDetails.breedName}}">{{petDetails.breedName ?
+                                        petDetails.breedName : '-'}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="patientInfoBlock float-left d-inline-flex"
+                            [ngClass]="patientInfo ? 'showPinfo' : 'hidePinfo'">
+                            <!-- <div class=" p-info">
+                                <div class="p-icon">
+                                    <i class="icon-XMLID_2112"></i>
+                                </div>
+                                <div class="p-icon-info">
+                                    <div class="">Species</div>
+                                    <div class="">{{petDetails.speciesName ? petDetails.speciesName:
+                                        '-'}}</div>
+                                </div>
+                            </div> -->
+                            <div class=" p-info">
+                                <div class="p-icon"><i class="icon-speciesNew"></i></div>
+                                <div class="p-icon-info">
+                                    <div class="">Species</div>
+                                    <div class="">{{petDetails.speciesName ? petDetails.speciesName :
+                                        '-'}}</div>
+                                </div>
+                            </div>
+                            <div class=" p-info">
+                                <div class="p-icon">
+                                    <i *ngIf="petDetails.gender === 'Female'" class="icon-femenine"></i>
+                                    <i *ngIf="petDetails.gender === 'Male'" class="icon-mars"></i>
+                                    <i *ngIf="petDetails.gender !== 'Male' && petDetails.gender !== 'Female'"
+                                        class="icon-genderless"></i>
+                                </div>
+                                <div class="p-icon-info">
+                                    <div class="">Gender</div>
+                                    <div class="">{{petDetails.gender ? petDetails.gender : '-'}}</div>
+                                </div>
+                            </div>
+                            <div class=" p-info">
+                                <div class="p-icon"><i class="icon-XMLID_2112"></i></div>
+                                <div class="p-icon-info">
+                                    <div class="">Weight</div>
+                                    <div class="">{{petDetails.weight ? petDetails.weight + ' ' +petDetails.weightUnit:
+                                        '-'}}</div>
+                                </div>
+                            </div>
+                            <div class="p-info">
+                                <div class="p-icon"><i class="icon icon-calendar"></i></div>
+                                <div class="p-icon-info">
+                                    <div class="">Date of Birth</div>
+                                    <div class="">{{petDetails.dateOfBirth ? (petDetails.dateOfBirth | customDateFormat)
+                                        :'-'}}
+                                        <p class="mb-0 text-center" *ngIf="petDetails.dateOfBirth && petDetails.isDobUnknown">
+                                            (Approximate)
+                                        </p>
+                                    </div>
+                                    <!-- <div class="" *ngIf="petDetails.dateOfBirth && petDetails.isDobUnknown"> (approx.)
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="p-info">
+                                <div class="p-icon"><i class="icon-rings"></i></div>
+                                <div class="p-icon-info">
+                                    <div class="">Spayed/Neutered?</div>
+                                    <div class="">{{petDetails.isNeutered == true ? 'Yes':'No'}}</div>
+                                </div>
+                            </div>
+                            <!-- <div class="p-info">
+                                    <div class="p-icon"><i class="icon-Group-2972"></i></div>
+                                    <div class="p-icon-info">
+                                        <div class="">Deceased</div>
+                                        <div class="">No</div>
+                                    </div>
+                                </div> -->
+                        </div>
+                        <!-- feeding freq -->
+                        <div class="patientInfoBlock float-left mb-2 d-inline-flex"
+                            [ngClass]="patientInfo ? 'showPinfo' : 'hidePinfo'">
+
+                            <div class="p-info">
+                                <div class="p-icon"><i class="icon-feedingFrequency"></i></div>
+                                <div class="p-icon-info">
+                                    <div class="">Feeding Frequency</div>
+                                    <div class="">{{petDetails.feedingPreferences ?
+                                        petDetails.feedingPreferences : '-'}}</div>
+                                </div>
+                            </div>
+                            <div class="p-info" style="visibility: hidden;">
+                                <div class="p-icon"><i class="icon-feedingFrequency"></i></div>
+                                <div class="p-icon-info">
+                                    <div class="">Feeding Frequency</div>
+                                    <div class="">{{petDetails.feedingPreferences ?
+                                        petDetails.feedingPreferences : '-'}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- freq ends -->
+                        <div class="p-infobtn">
+                            <button *ngIf="RWFlag" class="btn btn-primary" (click)="editPetPage()">Edit Pet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="bg-color-grey  pb-2">
+                        <div class="row ml-2 mr-2 p-10">
+                            <div class="col-md-4 changeStudy">
+                                <div class="f-12 plancolor">Study Name</div>
+                                <div class="f-16 white">{{petDetails.studyName ? petDetails.studyName : ''}}</div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="p-info">
+                                    <div class="p-icon"><i class="fa fa-calendar"></i></div>
+                                    <div class="p-icon-info">
+                                        <div class="">Start Date</div>
+                                        <div class="">{{petDetails.startDate ? petDetails.startDate : '--'}}</div>
+                                    </div>
+                                </div>
+                                <div class="p-info">
+                                    <div class="p-icon"><i class="fa fa-calendar"></i></div>
+                                    <div class="p-icon-info">
+                                        <div class="">End Date</div>
+                                        <div class="">{{petDetails.endDate ? petDetails.endDate : '--'}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5 col-md-4 text-right">
+                                <button *ngIf="RWFlag" class="btn btn-primary btn-pink" (click)="removeStudy()">Remove
+                                    Study</button>
+                            </div>
+                        </div>
+                    </div> -->
+            <div class="pet-carousel">
+                <!-- {{tabset.activeId}} -->
+                <ngb-tabset type="pills" #tabset="ngbTabset" (tabChange)="fetchNews($event)">
+                    <ngb-tab title="Current Studies" id="ngb-tab-0">
+                        <ng-template ngbTabContent *ngIf="data.length > 0">
+                            <ngb-carousel #carouselMain [showNavigationIndicators]="false">
+                                <ng-template ngbSlide *ngFor="let item of data;let i = index" id="{{i}}">
+                                    <div class="study-cnt px-0" *ngFor="let listItem of item;let j = index"
+                                        [class.current-study]="listItem.petStudyId == selectedRow1">
+                                        <!-- {{listItem | json}} -->
+
+                                        <!-- <div [class.current-study]="listItem.studyId == selectedRow1" class="study-cnt-blk" (click)="selectedStudy(listItem.studyId)" *ngIf="(j == 0)">
+                                                <div class="study-name-cnt">Study Name</div>
+                                                <div class="study-name-info">{{listItem.studyName}}</div>
+                                                <div class="study-date-info">
+                                                    <span>Start Date</span>{{listItem.startDate}}
+                                                </div>
+                                                <div class="study-date-info">
+                                                    <span>End Date</span>{{listItem.endDate}}
+                                                </div>
+                                                <button *ngIf="listItem.studyId == selectedRow1" class="btn btn-primary btn-pink disassociate" (click)="disassociate(listItem.studyId,listItem.studyName)">Disassociate
+                                                    Study</button>
+                                            </div> -->
+                                        <div class="study-cnt-blk"
+                                            (click)="selectedStudy(listItem.petStudyId);activeStudy(listItem.petStudyId);">
+                                            <div class="study-name-cnt">Study Name</div>
+                                            <div class="study-name-info">{{listItem.studyName}}</div>
+                                            <div class="study-date-info">
+                                                <span>Start Date</span>{{listItem.startDate != '' ?
+                                                listItem.startDate : '-'}}
+                                            </div>
+                                            <div class="study-date-info mb-1">
+                                                <!-- <span>End Date</span>{{listItem.endDate != '' ?
+                                                listItem.endDate : '-'}} -->
+                                            </div>
+                                            <button
+                                                *ngIf="listItem.petStudyId == selectedRow1 && RWFlag && listItem.studyId != 2901"
+                                                class="btn btn-primary btn-pink disassociate"
+                                                (click)="disassociate(listItem.petStudyId,listItem.studyName)">Disassociate
+                                                Study</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
+                        </ng-template>
+                        <ng-template ngbTabContent *ngIf="data.length == 0">
+                            <div style="text-align: center;color:red;line-height:2;"> No Current Studies Found</div>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="Archived Studies" id="ngb-tab-1">
+                        <ng-template ngbTabContent *ngIf="dataArchive.length > 0">
+                            <ngb-carousel #carousel1 [showNavigationIndicators]="false">
+                                <ng-template ngbSlide *ngFor="let item of dataArchive;let i = index" id="{{i}}">
+                                    <div class="study-cnt px-0 archived" *ngFor="let listItem of item"
+                                        [class.current-study]="listItem.petStudyId == selectedRow1">
+                                        <!-- {{listItem | json}} -->
+                                        <div class="study-cnt-blk"
+                                            [class.current-study]="listItem.petStudyId == selectedRow1"
+                                            (click)="selectedStudy(listItem.petStudyId);activeStudy(listItem.petStudyId);">
+                                            <div class="study-name-cnt">Study Name</div>
+                                            <div class="study-name-info">{{listItem.studyName}}</div>
+                                            <div class="study-date-info">
+                                                <span>Start Date</span>{{listItem.startDate != '' ?
+                                                listItem.startDate : 'NA'}}
+                                            </div>
+                                            <div class="study-date-info">
+                                                <span>End Date</span>{{listItem.endDate != '' ?
+                                                listItem.endDate:
+                                                'NA'}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
+                        </ng-template>
+                        <ng-template ngbTabContent class="panel-no-data" *ngIf="dataArchive.length == 0">
+                            <div style="text-align: center;color:red;"> No Archive Studies Found</div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+            <app-view-patient-cards *ngIf="!showTabsPage && showPanelist" (showSlider)="showSlider($event)"
+                (showTabs)="showTabs($event)" [petId]="petId" [studyId]="studyId">
+            </app-view-patient-cards>
+
+
+
+            <app-view-patient-tabs *ngIf="showTabsPage && showPanelist" [showNextSlide]="showNextSlide" [petId]="petId"
+                [studyId]="studyId">
+            </app-view-patient-tabs>
+        </div>
+    </div>
+
+
+</div>
+<ng-template #archiveContent2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Associate New Study
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addStudyForm">
+            <div class="row mb-4">
+                <div class="col-4">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Study <span class="asterisk">*</span></label></legend>
+                        <lib-typeahead [data]="studyArr" matcher="studyName" formControlName="studyName"
+                            class="w-100 mb-0" placeholder="" class="w-100" (onClear)='clearStudy()'
+                            (selectedItem)='studySelected($event)'>
+                        </lib-typeahead>
+                    </fieldset>
+                    <validation-message [control]="addStudyForm.controls.studyName">
+                    </validation-message>
+                </div>
+                <div class="col-4">
+                    <!-- {{addStudyForm.value | json}} -->
+                    <fieldset class="w-fieldset">
+                        <legend> <label class="label">Study Association Date</label>
+                        </legend>
+                        <datepicker class="w-100" formControlName="studyassDate" format="MM-DD-YYYY"
+                            [minDate]="addStudyForm.value.startDate" [maxDate]="addStudyForm.value.endDate">
+                        </datepicker>
+                    </fieldset>
+                </div>
+                <!-- {{addStudyForm.value.arr[i].isExternal | json}} -->
+                <!--Below code commetned for JIRA : #WPP2-630-->
+                <!-- <div class="col-4" 
+                *ngIf="(addStudyForm.value.isExternalArr.length > 0) && addStudyForm.value.studyName"
+                >
+                    <fieldset class="w-fieldset" [disabled]="!addStudyForm.value.isExternal">
+                        <legend> <label class="label">External Pet </label></legend>
+                        <lib-typeahead [data]="addStudyForm.value.isExternalArr" matcher="externalPetValue"
+                            formControlName="externalPet" class="w-100 mb-0" placeholder="" class="w-100">
+                        </lib-typeahead>
+                    </fieldset> -->
+                <!-- <validation-message
+                [control]="addStudyForm.controls.externalPet"
+              >
+              </validation-message> -->
+                <!-- </div> -->
+            </div>
+            <div class="row text-right">
+                <div class="col-12 mb-4">
+                    <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                        No
+                    </button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="associatStudy()">
+                        Yes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Disassociate Study
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mb-4">
+            <div class="col-12">
+                Do you want to disassociate <span class="bold-text" style="color:red">{{this.studyDeName}}</span> ?
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    No
+                </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="deleteStudy();d('Cross click')">
+                    Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #archiveContent3 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Observation Video
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-4">
+            <div class="col-12 video-wrapper">
+                <video controls class="p-video videopath" controls autoplay>
+                    <source src="{{videoPath}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    Cancel
+                </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="downloadvideo();">
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>

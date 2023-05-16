@@ -1,0 +1,79 @@
+<!-- <div white class="bg-white p-3">
+    <div class="row boxItem mt-0">
+        <div class="col col-md-6">
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Pet Parent Name
+                </div>
+                <div class="col-6 ">
+                    John
+                </div>
+            </div>
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Pet Parent Email
+                </div>
+                <div class="col-6 ">
+                    xyz@gmail.com
+                </div>
+            </div>
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Mobile #
+                </div>
+                <div class="col-6 ">
+                    3565734245
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="mt-4 boxItem">
+    <div class="scrollbar scrollbar-near-moon thin">
+        <!-- <ngb-accordion #acc="ngbAccordion" [animation]="true" [closeOthers]="true" activeIds="parent-0"
+            *ngIf="petParents">
+            <ngb-panel *ngFor="let parent of petParents; let i=index" id="parent-{{i}}">
+                <ng-template ngbPanelTitle>
+                    <div>{{parent.petParentName}} <i class="icon-right-arrow"></i></div>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Email
+                        </div>
+                        <div class="col-7">
+                            {{parent.email ? parent.email: '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Mobile
+                        </div>
+                        <div class="col-7">
+                            {{parent.phoneNumber ? parent.phoneNumber: '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Shipping Address
+                        </div>
+                        <div class="col-7">
+                            {{parent.shippingAddress ? parent.shippingAddress: '-'}}
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion> -->
+        <datatable [headers]="headers"
+                [hideExport]="true" 
+                dir="DESC"
+                searchFilter="false"
+                defaultColumn="name"
+                url="/api/pets/{{petId}}/getPetParents?petId={{petId}}">
+        </datatable>
+        <!-- <div *ngIf="petParents.length == 0">
+            <div>No Parent Found</div>
+        </div> -->
+    </div>
+</div>

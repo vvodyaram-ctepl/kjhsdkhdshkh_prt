@@ -1,0 +1,47 @@
+app-view-patient-tabs {
+    .content-blk {
+    //     width: 840px;
+    // margin: 0 auto;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    background: #fff !important;
+    }
+    .carousel-control-prev {
+        // left: 0;
+        // width: 42px !important;
+        // left: -56px;
+        width: 22px !important;
+        height:49px;
+        left: 0px;
+        position: absolute;
+        opacity: 1 !important;
+        background: #23cacc;
+    }
+    .carousel-control-prev-icon {
+        width: 16px !important;
+    }
+    .carousel-control-next {
+        // left: 0;
+        // width: 42px !important;
+        // right: -43px;
+        width: 16px !important;
+        height:49px;
+        right: 0px;
+        position: absolute;
+        opacity: 1 !important;
+        background: #23cacc;
+    }
+    // .carousel-control-next {
+    //     background: #23cacc;
+    // }
+
+    .content-blk .navtabsBackground .tabsDesign .nav-item {
+        max-width: 277px !important;
+    }
+    .content-blk .navtabsBackground .tabsDesign .nav-item .nav-link span {
+        padding-left: 5px !important;
+    }
+    .content-blk .navtabsBackground .tabsDesign .nav-item .nav-link {
+        font-size: 12px;
+    }
+    }

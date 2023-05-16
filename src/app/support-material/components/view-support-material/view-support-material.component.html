@@ -1,0 +1,316 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">View Support Material : {{materialType}}</div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="row">
+            <div class="col-2 mb-2">
+                <select class="filter-select" [(ngModel)]="categoryFilter" (change)="onCategoryFilter()"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="0" disabled="true">Category</option>
+                    <option *ngFor='let list of materialCategoryList' [value]="list.categoryId">{{list.categoryName}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-2 mb-2" *ngIf="categoryFilter == 1">
+                <select class="filter-select" [(ngModel)]="subCategoryFilter" (change)="onSubCategoryFilter()"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="0" disabled="true">Sub Category</option>
+                    <option *ngFor='let list of materialSubCategoryList' [value]="list.categoryId">{{list.categoryName}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-2 mb-2" *ngIf="categoryFilter == 2">
+                <select class="filter-select" [(ngModel)]="assetFilter" [ngModelOptions]="{standalone: true}"
+                    (change)="changeDeviceType()">
+                    <option value="" disabled="true">Asset Type</option>
+                    <option *ngFor='let list of assetTypes' [value]="list">{{list}}</option>
+                </select>
+            </div>
+
+            <div class="col-2 mb-2" *ngIf="categoryFilter == 2">
+                <select class="filter-select" [(ngModel)]="assetModelFilter" [ngModelOptions]="{standalone: true}">
+                    <option value="" disabled="true">Asset Model</option>
+                    <option *ngFor='let list of deviceModelList' [value]="list">{{list}}</option>
+                </select>
+            </div>
+            <!-- filter value -->
+            <div class="col-2">
+                <div class="button-wrapper">
+                    <button class="btn btn-primary mr-2" type="button" (click)="searchText(query)">
+                        search
+                    </button>
+                    <button class="btn btn-primary btn-pink" type="button" (click)="reset()">
+                        reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="content-block pl-3 pr-3">
+            <!-- {{this.rolesForm.value | json}} -->
+            <form [formGroup]="viewForm" novalidate>
+                <div class="dataBox">
+                    <div class="table">
+                        <div class="row thead" *ngIf="materialType == 'Videos'">
+                            <div class="col">VIDEO</div>
+                            <div class="col">TITLE</div>
+                            <div class="col">CATEGORY</div>
+                            <div class="col">SUB CATEGORY</div>
+                            <div class="col">ASSET TYPE</div>
+                            <div class="col">ASSET MODEL</div>
+                            <div class="col">SIZE</div>
+                            <div class="col">DURATION</div>
+                            <div class="col">UPLOADED DATE</div>
+                            <div class="col-2">&nbsp;</div>
+                        </div>
+                        <div class="row thead" *ngIf="materialType == 'User Guides'">
+                            <div class="col">FILE</div>
+                            <div class="col">TITLE</div>
+                            <div class="col">CATEGORY</div>
+                            <div class="col">SUB CATEGORY</div>
+                            <div class="col">ASSET TYPE</div>
+                            <div class="col">ASSET MODEL</div>
+                            <div class="col">SIZE</div>
+                            <div class="col">UPLOADED DATE</div>
+                            <div class="col-2">&nbsp;</div>
+                        </div>
+
+                        <div class="row thead" *ngIf="materialType == 'FAQs'">
+                            <div class="col-4">QUESTION</div>
+                            <div class="col-3">ANSWER</div>
+                            <div class="col">CATEGORY</div>
+                            <div class="col">SUB CATEGORY</div>
+                            <div class="col">ASSET TYPE</div>
+                            <div class="col">ASSET MODEL</div>
+                            <!-- <div class="col">UPLOAD DATE</div> -->
+                            <div class="col-1">&nbsp;</div>
+                        </div>
+                        <!-- </table>
+                    <table> -->
+                        <!-- <table class="table" *ngIf="supportMaterialDetails"> -->
+                        <div>
+                            <div class="mb-3" formArrayName="viewData"
+                                *ngFor="let role of viewForm.get('viewData')['controls']; let i = index">
+                                <div [formGroupName]="i">
+
+                                    <!-- <ng-container *ngFor="let list of supportMaterialDetails;let i = index "> -->
+                                    <div class="row">
+
+                                        <div class="col" *ngIf="materialType == 'Videos'">
+                                            <div class="patient-name">
+                                                <img [src]='role.value.thumbnail ? role.value.thumbnail : "assets/images/no-video.png"'
+                                                    (error)="img.src = 'assets/images/no-video.png'" alt="Video"
+                                                    width="150" (click)="playVideo(role.value)" />
+
+                                                <video #video style="display: none;" *ngIf="role.value.urlOrAnswer"
+                                                    width="320" height="240" controls
+                                                    [attr.src]="role.value.urlOrAnswer"
+                                                    (loadedmetadata)="getDuration($event, role)">
+                                                </video>
+
+                                                <!-- <div>{{role.value.thumbnailUrl}}</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col fileName text-cstm" *ngIf="materialType == 'User Guides'">
+                                            {{role.value.fileName}}
+                                        </div>
+
+                                        <div class="text-cstm" style="word-break: break-all;"
+                                            [ngClass]="(materialType == 'FAQs') ? 'col-4' : 'col'">
+                                            {{role.value.title}}</div>
+                                        <div class="col-3 text-cstm" *ngIf="materialType == 'FAQs'">
+                                            {{role.value.urlOrAnswer}}</div>
+                                        <div class="{{ materialType == 'FAQs' ? 'col text-cstm' : 'col text-cstm'}}">
+                                            {{role.value.category}}</div>
+                                        <div class="col text-cstm">{{ role.value.subcategory || '-' }}</div>
+                                        <div class="col text-cstm">{{role.value.assetType || '-'}}</div>
+                                        <div class="col text-cstm">{{role.value.assetModel || '-'}}</div>
+                                        <div class="col text-cstm" *ngIf="materialType == 'Videos'">
+                                            {{role.value.fileSize}}</div>
+                                        <div class="col text-cstm" *ngIf="materialType == 'User Guides'">
+                                            {{role.value.fileSize}}</div>
+                                        <div class="col text-cstm" *ngIf="materialType == 'Videos'">
+                                            {{role.value.videoDuration}}</div>
+                                        <div class="col text-cstm" *ngIf="materialType != 'FAQs'">
+                                            {{role.value.modifiedDate}}</div>
+
+
+                                        <div class="v-center"
+                                            [ngClass]="(materialType == 'Videos' || materialType == 'User Guides') ? 'col-2' : 'col-1'">
+                                            <div *ngIf="RWFlag" class="card icon-card-list red-bg mb-2 cursor-pointer"
+                                                title="Delete">
+                                                <span class="fa fa-trash-alt size-14" title="Delete"
+                                                    (click)="delete(role.value)"></span>
+                                            </div>
+                                            <div *ngIf="RWFlag" class="card icon-card-list green-bg mr-2" title="Edit">
+                                                <span class="icon-tag size-20" title="Edit"
+                                                    (click)="edit(role.value)"></span>
+                                            </div>
+                                            <button *ngIf="materialType != 'FAQs'"
+                                                class="btn btn-primary cstm-btn float-right mr-3"
+                                                (click)="downloadPop(role.value)">Download</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- pagination -->
+            <div class="row" *ngIf="supportMaterialDetails && supportMaterialDetails.length > 0 && paginationFlag">
+                <div class="col-6 float-left">
+                    <span class="line-height-30 size-14" *ngIf="filterFlag">{{title ? title : pagination.searchElments +
+                        " Record(s) found out of " + pagination.totalElements}}</span>
+
+                    <span class="line-height-30 size-14" *ngIf="!filterFlag">{{title ? title : pagination.totalElements
+                        + " Record(s) found" }}</span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right" style="text-align: left">
+                        <ngb-pagination class="pagination" size="sm" [collectionSize]="pagination.searchElments"
+                            [(page)]="pagination.page" [maxSize]="pagination.noOfElements" [rotate]="true"
+                            [pageSize]="pagination.noOfElements" [boundaryLinks]="true" (pageChange)="pageChanged()">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="supportMaterialDetails.length == 0">
+                <div class="blue-hdr commentHistory">
+                    <div class="col text-center">
+                        <span class="line-height-30">No records found</span>
+                    </div>
+                </div>
+            </div>
+            <!-- pagination -->
+            <!-- {{supportMaterialDetails | json}} -->
+            <span *ngIf="supportMaterialDetails.length == 0 && !spinnerFlag">
+                <div class="blue-hdr commentHistory">
+                    <div class="row">
+                        <div class="col text-center">
+                            <span class="line-height-30">No records found</span>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="clearfix"></div>
+            </span>
+            <!-- <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" (click)="backToList()"
+                            type="button">Close</button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+    <!-- <div class="content-blk">
+        <datatable [headers]="headers"
+        [hideExport]="true"
+        [hideBottomPagination]="true"
+        defaultColumn="titleOrQuestion" dir="DESC"
+        url="/api/support/getMaterialDetailsListById/{{supportMaterialId}}" pageName="supportMaterials">
+        </datatable>
+        </div> -->
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Download Media
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mb-4">
+            <div class="col-12">
+                Are you sure you want to download media for <span class="bold-text"
+                    style="color:red">{{selectedContent.title}}</span> ?
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    No
+                </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="downloadFile();d('Cross click')">
+                    Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #archiveContent3 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title" style="line-height: 1.4 !important">
+            {{selectedContent.title}} Video
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-4">
+            <div class="col-12 video-wrapper">
+                <video controls class="p-video videopath" controls autoplay width="100%" style="margin:0 auto;">
+                    <source src="{{selectedContent.urlOrAnswer}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    Cancel
+                </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="downloadFile();">
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #deleteSupportMaterial let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Delete</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true" class="icon-close"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Do you want to delete <span class="bold-text" style="color:red">{{supportDetailsItem.title}} </span> ?
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="deleteSupportDetailsRec()">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

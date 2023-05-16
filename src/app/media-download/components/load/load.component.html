@@ -1,0 +1,9 @@
+<div class="text-center mt-4">
+    <img *ngIf="imgUrl" src="{{imgUrl}}" class="cal-image" style="width:35%;" />
+
+    <video *ngIf="VideoUrl" controls class="p-video videopath" controls autoplay style="margin:0 auto">
+    <source src="{{VideoUrl}}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+</div>

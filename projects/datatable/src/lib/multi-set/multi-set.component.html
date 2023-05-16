@@ -1,0 +1,17 @@
+<!-- [ngClass]="alignment == 'vertical' ? 'scroll' : ''" -->
+<div class="container">
+  <div class="row">
+    <label class='col-12 mb-0'*ngIf="type === 'checkbox' && showSelectAllCheckBox && data && data.length > 0">
+          <input  type="checkbox" class="relative top-2" #ckSelectAllEle
+          (change)="onCheckedAll($event)" /> Select All
+    </label>
+    <!-- [ngClass]="alignment == 'vertical' ? 'col-12' : 'col-3'" -->
+    <div class='col-12' *ngFor="let item of data;let i = index">
+      <div class="form-group">
+        <label [ngClass]="{'disable-all':item.disabled}">
+          <input #ck [type]="type" class="relative top-2" name="multiset" [checked]="item.checked"
+            (change)="item.checked = ck.checked;onChecked(i)" /> {{item[matcher]}}</label>
+      </div>
+    </div>
+  </div>
+</div>

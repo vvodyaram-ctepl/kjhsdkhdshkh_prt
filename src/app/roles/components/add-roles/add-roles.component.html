@@ -1,0 +1,135 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span *ngIf="addFlag">Add New Role</span>
+                <span *ngIf="editFlag">Edit Role</span>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <!-- {{this.rolesForm.value | json}} -->
+        <div class="content-block">
+            <form [formGroup]="rolesForm" novalidate>
+                <div class="row mb-3">
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Role Name <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="roleName">
+                        </fieldset>
+                        <validation-message [control]="rolesForm.controls.roleName"></validation-message>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Role Type <span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control w-100" formControlName="roleType">
+                                <option value="">Role Type</option>
+                                <option *ngFor="let type of data.roletypes" [value]="type.roleTypeId">
+                                    {{type.roleType}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [control]="rolesForm.controls.roleType"></validation-message>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+                            <select class="form-control w-100" formControlName="isActive">
+                                <option value="">Select</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [control]="rolesForm.controls.isActive"></validation-message>
+                    </div>
+                </div>
+
+                <div class="row mb-4 permission-header">
+                    <div class="col-5">
+                        <div class="label-hdr">
+                            Module
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="label-hdr">
+                            Permission
+                        </div>
+                    </div>
+                </div>
+                <div formArrayName="permissionMap"
+                    *ngFor="let role of rolesForm.get('permissionMap')['controls']; let i = index">
+                    <div class="row mb-3" [formGroupName]="i">
+                        <!-- {{this.rolesForm.value | json}} -->
+                        <div class="col-12">
+                            <div class="role-heading">
+                                <input type="checkbox" formControlName="parentMenuCheck"
+                                    (change)="onCheckboxAllChange($event,i)" id="check{{i}}" class="checkbox-width-20">
+                                <label for="check{{i}}">{{role.value.parentMenuName}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div formArrayName="subMenu"
+                                *ngFor="let submenu of rolesForm.get('permissionMap')['controls'][i].get('subMenu')['controls']; let j = index">
+                                <div class="row mb-2" [formGroupName]="j">
+                                    <div class="col-5">
+                                        <div class="checkbox-wrapper mt-2 ml-3">
+                                            <fieldset [disabled]="submenu.value.disabled">
+                                                <span class="check mr-2">
+                                                    <input type="checkbox" class="checkbox-width-20"
+                                                        (change)="onCheckboxChange($event)"
+                                                        [value]="submenu.value.menuCheck" formControlName="menuCheck" />
+                                                </span>
+                                                <span class="p-absolute">{{submenu.value.menuName}}</span>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <fieldset class="w-fieldset">
+                                            <select class="form-control w-100" formControlName="menuActionName"
+                                                disabled="true">
+                                                <ng-container
+                                                    *ngIf="(submenu.value.menuId != 37 && submenu.value.menuId != 9 && submenu.value.menuId != 22 && submenu.value.menuId != 25 && submenu.value.menuId != 16 && submenu.value.menuId != 18 && submenu.value.menuId !== 33 && submenu.value.menuId !== 27 && submenu.value.menuId !== 12 && submenu.value.menuId !== 13)">
+                                                        <option *ngFor="let list of data.menuActions" [value]="list.menuActionId">
+                                                            {{list.menuActionName}}</option>]
+                                                </ng-container>
+
+                                                <ng-container *ngIf="(submenu.value.menuId == 37)">
+                                                    <option *ngFor="let list of customMenuActions"
+                                                        [value]="list.menuActionId">
+                                                        {{list.menuActionName}}</option>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    *ngIf="(submenu.value.menuId == 9 || submenu.value.menuId == 22 || submenu.value.menuId == 25 || submenu.value.menuId == 16 || submenu.value.menuId == 18 || submenu.value.menuId == 33 || submenu.value.menuId == 27 || submenu.value.menuId == 12 || submenu.value.menuId == 13)">
+                                                    <option *ngFor="let list of menuActionViewOption"
+                                                        [value]="list.menuActionId">
+                                                        {{list.menuActionName}}</option>
+                                                </ng-container>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!viewFlag">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <!-- <button class="btn btn-primary" type="button" 
+                                (click)="addItem()" style="margin-right: 5px;">Add Plan</button> -->
+                            <button class="btn btn-secondary" type="button"
+                                (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="updateRole()">
+                                <span *ngIf="addFlag">Submit</span>
+                                <span *ngIf="editFlag">Submit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

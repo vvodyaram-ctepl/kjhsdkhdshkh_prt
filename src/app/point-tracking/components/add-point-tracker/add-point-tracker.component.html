@@ -1,0 +1,268 @@
+<form [formGroup]="pointForm">
+    <div class="content-box">
+        <div class="content-hdr">
+            <div class="row">
+                <div class="col-6 block-left-center">
+                    <span *ngIf="!editFlag">Add New
+                        Campaign</span>
+                    <span *ngIf="editFlag">Edit Campaign</span>
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+        </div>
+        <div class="content-blk">
+            <div class="content-block">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label">Campaign Name <span class="asterisk">*</span></label></legend>
+                            <input type="text" formControlName="tracker" class="form-control textbox" maxLength="100" />
+                        </fieldset>
+                        <validation-message [control]="pointForm.controls.tracker"></validation-message>
+                    </div>
+                    <div class="col-6">
+                        <fieldset class="w-fieldset" [disabled]="pointForm.value.disabled">
+                            <legend><label class="label">Study <span class="asterisk">*</span></label></legend>
+                            <lib-typeahead [data]="studyArr" matcher="studyName" formControlName="study"
+                                (selectedItem)="selectedStudy($event)" class="w-100 mb-0" placeholder="" class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+
+
+                        <validation-message [control]="pointForm.controls.study"></validation-message>
+                    </div>
+
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <fieldset class="w-fieldset" [disabled]="pointForm.value.disabled">
+                            <legend><label class="label">Start Date <span class="asterisk">*</span></label></legend>
+                            <datepicker class="w-100" formControlName="start_date" (select)="startdateSelect()"
+                                [minDate]="studyStartDate" [maxDate]="studyEndDate" format="MM-DD-YYYY"></datepicker>
+                        </fieldset>
+                        <validation-message [control]="pointForm.controls.start_date"></validation-message>
+                    </div>
+                    <div class="col-6">
+                        <fieldset class="w-fieldset" [disabled]="pointForm.value.disabled">
+                            <legend>
+                                <label class="label">End Date <span class="asterisk">*</span></label>
+                            </legend>
+                            <datepicker class="w-100" formControlName="end_date" [minDate]="pointForm.value.start_date"
+                                [minDate]="studyStartDate" [maxDate]="studyEndDate" format="MM-DD-YYYY"></datepicker>
+                        </fieldset>
+                        <validation-message [control]="pointForm.controls.end_date"></validation-message>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-6">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+                            <select class="form-control w-100" formControlName="status">
+                                <option value="">Select</option>
+                                <option value=2 *ngIf="!isPublished">Draft</option>
+                                <option value=1>Published</option>
+                                <option value=0 *ngIf="editFlag">Inactive</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [control]="pointForm.controls.status"></validation-message>
+                    </div>
+                </div>
+
+                <!-- {{this.pointForm.value | json}} -->
+                <div class="row no-gutter mb-4 pb-2 b-1-green">
+                    <div class="col-3">
+                        <div class="heading-text">
+                            Activities
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="heading-text">
+                            points
+                        </div>
+                    </div>
+                    <!-- <div class="col-2 pl-3">
+                        <div class="heading-text">
+                            Start Date
+                        </div>
+                    </div>
+                    <div class="col-2 pl-3">
+                        <div class="heading-text">
+                            End Date
+                        </div>
+                    </div> -->
+                </div>
+                <div class="PTeditfields" formArrayName="pointTrackerSubscribed"
+                    *ngFor="let role of pointForm.get('pointTrackerSubscribed')['controls']; let i = index">
+                    <div [formGroupName]="i">
+                        <div class="row mb-3 d-flex no-gutter">
+                            <!-- {{role.value | json}} -->
+
+                            <div class="col-3">
+                                <div class="checkbox-wrapper">
+                                    <!-- <span class="check mr-2"> -->
+                                    <!-- [value]="menu.menuId" -->
+                                    <!-- <input type="checkbox" class="checkbox-width-20" 
+                                            (change)="onCheckboxChange($event)" [value]="role.value.activitiesId.activityId" formControlName="activitiesId"/> -->
+                                    <!-- </span> -->
+                                    <span>{{role.value.activitiesId.activityName}}</span>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" formControlName="points" class="form-control textbox"
+                                    maxLength="100" [readonly]="pointForm.value.disabled && role.value.points != '' && !role.value.isNew"/>
+                                <validation-message
+                                    [control]="pointForm.get('pointTrackerSubscribed').controls[i].controls.points">
+                                </validation-message>
+                            </div>
+                            <!-- <div class="col-2 pl-3">
+                                <fieldset class="w-fieldset" [disabled]="pointForm.value.disabled && role.value.points != ''">
+                                    <datepicker class="w-100" formControlName="startDate"
+                                        (select)="activitiesStartdateSelect(role)"
+                                        [minDate]="pointForm.value.start_date" [maxDate]="pointForm.value.end_date"
+                                        format="MM-DD-YYYY">
+                                    </datepicker>
+                                </fieldset>
+                                <validation-message [control]="pointForm.get('pointTrackerSubscribed').controls[i].controls.startDate"></validation-message>
+                            </div>
+                            <div class="col-2 pl-3">
+                                <fieldset class="w-fieldset" [disabled]="pointForm.value.disabled && role.value.points != ''">
+                                    <datepicker class="w-100" formControlName="endDate" [minDate]="role.value.startDate ? role.value.startDate : pointForm.value.start_date" [maxDate]="pointForm.value.end_date"
+                                        format="MM-DD-YYYY">
+                                    </datepicker>
+                                </fieldset>
+                                <validation-message [control]="pointForm.get('pointTrackerSubscribed').controls[i].controls.endDate"></validation-message>
+                            </div> -->
+                            <div class="col-1 pl-3">
+                                <!---->
+                                <div class="card icon-card-list blue-bg" title="Add"
+                                    *ngIf="role.value.activitiesId.activityId == 4  && role.value.arr.length == 0 ">
+                                    <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                                        (click)="addSub(i)"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bg-green">
+                            <div class="col-12">
+                                <div formArrayName="arr"
+                                    *ngFor="let submenu of pointForm.get('pointTrackerSubscribed')['controls'][i].get('arr')['controls']; let j = index;let last = last;">
+                                    <!-- *ngFor="let record of list.imageList" -->
+                                    <div [formGroupName]="j">
+                                        <div class="row mb-3 no-gutter">
+
+                                            <div class="col-3 pr-3">
+                                                <fieldset class="w-fieldset selectsubActivity" [disabled]="pointForm.value.disabled && submenu.value.actPoints != '' && !submenu.value.isNew">
+                                                <!-- <legend><label class="label w-100">Species</label></legend> -->
+                                                <select class="select-custom form-control w-100"
+                                                    formControlName="species" (change) = "changeSpecies($event,i,j)" >
+                                                    <option value="">Select</option>
+                                                    <!-- <option value="1">Canine</option>
+                                                    <option value="2">Feline</option> -->
+                                                   
+                                                    <option *ngFor='let list of speciesArr' [value]="list.speciesId">{{list.speciesName}}
+
+                                                </select>
+                                                </fieldset>
+                                                <validation-message
+                                                [control]="pointForm.get('pointTrackerSubscribed').controls[i].get('arr').controls[j].controls.species">
+                                            </validation-message>
+                                            </div>
+
+                                            <div class="col-3 pr-3">
+                                                <fieldset class="w-fieldset selectsubActivity" [disabled]="pointForm.value.disabled && submenu.value.actPoints != '' && !submenu.value.isNew || submenu.value.species == ''">
+                                                <!-- <legend><label class="label w-100">Activity</label></legend> -->
+                                                <!-- {{submenu.value.actvtyName | json }} -->
+                                                <!-- {{submenu.value.species == '1' | json}} -->
+                                                <!-- {{canineBehvrArr | json}}
+                                                {{felineBehvArr | json}} -->
+                                                <!-- {{submenu.value.species == '2' | json}} -->
+                                                <select class="select-custom form-control w-100"
+                                                    formControlName="actvtyName" (change) = "checkDuplicateBehavior(i, j)" >
+                                                    <option value="">Select</option>
+
+                                                    <ng-container *ngIf="submenu.value.species == ''">
+                                                    <!-- <option *ngFor='let list of behaviorArr' [value]="list.metricId">
+                                                        {{list.metricName}}</option> -->
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="submenu.value.species == '1'">
+                                                        <option *ngFor='let list of canineBehvrArr' [value]="list.metricId">
+                                                            {{list.metricName}}</option>
+                                                        </ng-container>
+                                                       
+                                                        <ng-container *ngIf="submenu.value.species == '2'">
+                                                            <option *ngFor='let list of felineBehvArr' [value]="list.metricId">
+                                                                {{list.metricName}}</option>
+                                                            </ng-container>
+
+                                                </select>
+                                                </fieldset>
+                                                <validation-message
+                                                [control]="pointForm.get('pointTrackerSubscribed').controls[i].get('arr').controls[j].controls.actvtyName">
+                                            </validation-message>
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="text" formControlName="actPoints"
+                                                    class="form-control textbox" maxLength="100" [readonly]="pointForm.value.disabled && submenu.value.actPoints != '' && !submenu.value.isNew" />
+                                                <validation-message
+                                                    [control]="pointForm.get('pointTrackerSubscribed').controls[i].get('arr').controls[j].controls.actPoints">
+                                                </validation-message>
+                                            </div>
+                                            <!-- <div class="col-2 pl-3">
+                                                <fieldset class="w-fieldset" [disabled]="pointForm.value.disabled && submenu.value.actPoints != ''">
+                                                    <datepicker class="w-100" formControlName="startDate"
+                                                        (select)="activitiesStartdateSelect(submenu)"
+                                                        [minDate]="pointForm.value.start_date" [maxDate]="pointForm.value.end_date"
+                                                        format="MM-DD-YYYY">
+                                                    </datepicker>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-2 pl-3">
+                                                <fieldset class="w-fieldset" [disabled]="pointForm.value.disabled && submenu.value.actPoints != ''">
+                                                    <datepicker class="w-100" formControlName="endDate"
+                                                    [minDate]="submenu.value.startDate ? submenu.value.startDate : pointForm.value.start_date" [maxDate]="pointForm.value.end_date"
+                                                        format="MM-DD-YYYY">
+                                                    </datepicker>
+                                                </fieldset>
+                                            </div> -->
+                                            <div class="col-2 pl-3 my-auto">
+                                                <div class="card icon-card-list red-bg mr-2" title="Remove" *ngIf="!(pointForm.value.disabled && submenu.value.actPoints != '' && !submenu.value.isNew)">
+                                                    <!--   *ngIf=" addStudyForm.value.arr.length > 1 && addStudyForm.value.arr[i].disabled" -->
+                                                    <span class="pointer-cursor size-17" title="Remove"
+                                                        (click)="removeItem(i,j)">-</span>
+                                                </div>
+                                                <!-- -->
+                                                <div class="card icon-card-list blue-bg" title="Add"
+                                                    *ngIf="role.value.activitiesId.activityId == 4 && last  && role.value.arr.length != 0">
+                                                    <span class="fa fa-plus pointer-cursor size-15" style="color:white;"
+                                                        title="Add" (click)="addSub(i)"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" (click)="backToList()"
+                                type="button">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="submit()">
+                                <span *ngIf="!editFlag">Submit</span>
+                                <span *ngIf="editFlag">Submit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

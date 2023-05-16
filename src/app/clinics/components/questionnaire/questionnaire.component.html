@@ -1,0 +1,176 @@
+<form [formGroup]="addQuestionnaireForm">
+    <div class="content-box">
+        <!-- <div class="content-hdr">
+
+        </div> -->
+        <div class="content-block">
+            <!-- {{addQuestionnaireForm.value | json}} -->
+            <div formArrayName="arr" *ngFor="
+                let a of addQuestionnaireForm.get('arr')['controls'];
+                let i = index;
+                let last = last
+              ">
+                <div class="row mb-3" [formGroupName]="i">
+                    <div class="col-3">
+                        <!-- {{addQuestionnaireForm.value.arr[i].disabled | json}} -->
+                        <!-- [disabled]="addQuestionnaireForm.value.arr[i].disabled" -->
+                        <fieldset class="w-fieldset">
+                            <legend>
+                                <label class="label">Questionnaire Name </label>
+                            </legend>
+
+                            <!--  [data]="qList" -->
+                            <lib-typeahead [data]="addQuestionnaireForm.value.arr[i].qList" matcher="questionnaireName"
+                                formControlName="questionnaireName" (selectedItem)='populate($event,i)'
+                                (click)="getUniqQuesList(i)" (onClear)="getUniqQuesList(i);onClear(i)"
+                                class="w-100 mb-0" placeholder="" class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                        <validation-message
+                            [control]="addQuestionnaireForm.get('arr').controls[i].controls.questionnaireName">
+                        </validation-message>
+                    </div>
+                    <div class="col-2">
+                        <fieldset class="w-fieldset">
+                            <legend>
+                                <label class="label">Occurrence <span
+                                        *ngIf="addQuestionnaireForm.value.arr[i].questionnaireName"
+                                        class="asterisk">*</span></label>
+                            </legend>
+
+                            <select class="select-cstom-control form-control" formControlName="occuranceId"
+                                (change)="fSelected(i)">
+                                <option value="">Select</option>
+                                <option *ngFor='let list of occuranceList' [value]="list.occuranceId">
+                                    {{list.occuranceName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message
+                            [control]="addQuestionnaireForm.get('arr').controls[i].controls.occuranceId">
+                        </validation-message>
+                    </div>
+
+                    <!-- {{addQuestionnaireForm.value.arr[i].occuranceId | json}} -->
+                    <!-- [disabled]="addQuestionnaireForm.value.arr[i].occuranceId != 2 || addQuestionnaireForm.value.arr[i].disabled" -->
+                    <div class="col-2">
+                        <fieldset class="w-fieldset" [disabled]="addQuestionnaireForm.value.arr[i].occuranceId != 2">
+                            <legend>
+                                <label class="label">Frequency <span
+                                        *ngIf="addQuestionnaireForm.value.arr[i].occuranceId == 2"
+                                        class="asterisk">*</span></label>
+                            </legend>
+
+                            <select class="select-cstom-control form-control" formControlName="frequencyId">
+                                <option value="">Select</option>
+                                <option *ngFor='let list of freqList' [value]="list.frequencyId">{{list.frequencyName}}
+                                </option>
+                            </select>
+                        </fieldset>
+                        <validation-message
+                            [control]="addQuestionnaireForm.get('arr').controls[i].controls.frequencyId">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-2">
+                        <fieldset class="w-fieldset">
+                            <legend>
+                                <label class="label">Start Date <span
+                                        *ngIf="addQuestionnaireForm.value.arr[i].questionnaireName"
+                                        class="asterisk">*</span></label>
+                            </legend>
+                            <datepicker class="w-100" formControlName="startDate" format="MM-DD-YYYY"
+                                [minDate]="studyStartDate" [maxDate]="studyEndDate" (select)="startdateSelect()">
+                            </datepicker>
+                        </fieldset>
+                        <validation-message [control]="
+                        addQuestionnaireForm.get('arr').controls[i].controls.startDate
+                    ">
+                        </validation-message>
+                    </div>
+                    <div class="col-2">
+                        <fieldset class="w-fieldset">
+                            <legend>
+                                <label class="label">End Date <span
+                                        *ngIf="addQuestionnaireForm.value.arr[i].questionnaireName"
+                                        class="asterisk">*</span></label>
+                            </legend>
+                            <datepicker class="w-100" formControlName="endDate"
+                                [minDate]="addQuestionnaireForm.value.arr[i].startDate" format="MM-DD-YYYY"
+                                [maxDate]="studyEndDate">
+                            </datepicker>
+                        </fieldset>
+                        <validation-message [control]="
+                            addQuestionnaireForm.get('arr').controls[i].controls.endDate
+                          ">
+                        </validation-message>
+                    </div>
+                    <div class="col-1 center-align">
+                        <div class="card icon-card-list red-bg mr-2 mt-3 pointer-cursor" title="Remove"
+                            *ngIf="addQuestionnaireForm.value.arr.length > 1" (click)="removeItem(i)">
+                            <span class=" pointer-cursor size-17" title="Remove">-</span>
+                        </div>
+
+                        <div class="card icon-card-list blue-bg mt-3" title="Add" *ngIf="last">
+                            <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                                (click)="addItem()"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <!-- <button class="btn btn-primary" type="button" *ngIf="addPlanForm.value.arr == ''" (click)="addItem()" style="margin-right: 5px;">Add Plan</button> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="back()">
+                            Back</button>&nbsp;&nbsp;
+
+                        <button *ngIf="!editFlag" class="btn btn-primary" type="button" (click)="submit()">
+                            <span>submit</span> <!-- || (editFlag && !isExternalData) -->
+                        </button>
+                        <button *ngIf="editFlag" class="btn btn-primary" type="button" (click)="next()">
+                            <span>Next</span> <!-- && isExternalData -->
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<ng-template #confrimationPopup let-c="close" let-d="dismiss">
+    <!-- 
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-basic-title">
+                    The {{studyName}} study is created successfully.
+                </h5>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <div class="close-wrapper">
+                        <span class="icon-close" aria-hidden="true"></span>
+                    </div>
+                </button>
+            </div> -->
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                <p>
+                    The <b>{{studyName}}</b> study is added successfully.
+                </p>
+                <p>
+                    To automatically create all pet and pet parents associated with this study (in Prelude) on the
+                    portal, please follow the below steps:
+                </p>
+                <ul class="ulList">
+                    <li>Visit the “Edit Study page” for this study after 15 minutes</li>
+                    <li>Navigate to the “Prelude Configuration” tab</li>
+                    <li>Define the Prelude fields that need to be configured for this study</li>
+                    <li>Submit the details</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</ng-template>

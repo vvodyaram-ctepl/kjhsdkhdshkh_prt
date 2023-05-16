@@ -1,0 +1,50 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Favorite
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <!-- <button class="btn btn-primary" type="button" >Add New Study</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <datatable *ngIf="showDataTable" [headers]="headers" [filterTypeArr]="filterTypeArr" [hideExport]="true"
+            (nodeAction)="getNode($event)" defaultColumn="name" (formatter)="formatter($event)" placeholder="Search"
+            dir="DESC" url="/api/favourites"  pageName="Favorite">
+        </datatable>
+    </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Remove</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+                <!--&#10006;-->
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Do you want to remove <span class="bold-text" style="color:red">{{recordName}}</span> from your
+                favorites?</div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="deleteRecord(selectedItem);">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

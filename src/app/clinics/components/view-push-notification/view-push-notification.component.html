@@ -1,0 +1,103 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">View Push Notification</div>
+            <div class="col-6 text-right">
+                <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="editPush(id)">Edit
+                    Push Notification</button>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+
+        <div class="content-banner mb-3">
+
+            <div class="row no-gutter border-1">
+                <div class="col-6 block-left-center mb-2">
+                    <span class="banner-heading-text">{{planDetails.notificationName}}</span>
+                    <span class="status-button" *ngIf="planDetails.status != undefined"
+                        [ngClass]="planDetails.status == '1' ? 'active-bg' : 'inactive-bg'">{{planDetails.status =='1'
+                        ? 'Active':'Inactive'}}</span>
+                    <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                    <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right mb-2">
+                        <!-- <span class="pi_text mr-2">Principal Investigator</span> -->
+                        <!-- <span class="phone_number_text mr-4">{{clinicForm.value.pinv}}</span> -->
+
+                        <!-- <button class="btn btn-primary" routerLink="/user/clinics/edit-clinic/{{id}}">Edit
+                            Study</button> -->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutter mt-3">
+                <!-- <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap ml-3">
+                                <div class="small-text">Plan Name</div>
+                                <div class="green-small-text">{{planDetails.planName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Description</div>
+                                <div class="green-small-text">
+                                    {{planDetails.notificationMessage ? planDetails.notificationMessage : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Start Date</div>
+                                <div class="green-small-text">{{planDetails.startDate | date: 'MM-dd-yyyy' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">End Date</div>
+                                <div class="green-small-text">{{planDetails.endDate | date: 'MM-dd-yyyy' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" routerLink="/user/push-notification">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- <div class="navtabsBackground">
+            <ul ngbNav class="row nav-tabs tabsDesign">
+                <li class="col" [ngbNavItem]="flatTab.name" *ngFor="let flatTab of flatTabs">
+                    <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                        (click)="activateTab(flatTab)"><span>{{ flatTab.name }}</span></a>
+                </li>
+            </ul>
+        </div> -->
+        <router-outlet></router-outlet>
+    </div>
+</div>

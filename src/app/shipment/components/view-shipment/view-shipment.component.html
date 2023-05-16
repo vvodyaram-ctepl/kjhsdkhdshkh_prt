@@ -1,0 +1,100 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">View Asset Shipment</div>
+            <div class="col-6 text-right">
+                <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="edit(id)">Edit Asset Shipment</button>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+
+        <div class="content-banner mb-3">
+
+            <div class="row no-gutter border-1 icon-style">
+                <div class="col-6 block-left-center mb-2">
+                    <span class="banner-heading-text">{{shipmentDetails.trackingNumber}}</span>
+                    <span class="status-button"
+                        [ngClass]="shipmentDetails.status == 'Delivered' ? 'active-bg' : 'info-bg'">{{shipmentDetails.status}}</span>
+                        <i *ngIf="shipmentDetails.status != 'Delivered'" class="icon-trackShipThick ml-2 size-26" style="cursor:pointer" (click)="trackShipment()"></i>
+                        <!-- <span class="icon-trackShipThick position-relative size-20" title="Track Shipment" (click)="trackShipment()"></span> -->
+                        <!-- <img class="ml-2" style="cursor:pointer" src="assets/images/shipment-icon.png" width="30" height="30" (click)="trackShipment()" title="Track Shipment" /> -->
+                        <!-- <span class="icon-shipment" ></span> -->
+                        
+                    <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                    <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right mb-2">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutter mt-3">
+               
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Asset Number</div>
+                                <div class="green-small-text">{{shipmentDetails.deviceNumber }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Pet Name</div>
+                                <div class="green-small-text">{{shipmentDetails.petName }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Shipment Company Name</div>
+                                <div class="green-small-text">
+                                    {{shipmentDetails.shipmentCompanyName ? shipmentDetails.shipmentCompanyName : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Shipment Date</div>
+                                <div class="green-small-text">
+                                    {{ shipmentDetails.shipmentDate ? (shipmentDetails.shipmentDate | date: 'MM-dd-yyyy') : '-' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            
+            </div>
+
+
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" routerLink="/user/shipment">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

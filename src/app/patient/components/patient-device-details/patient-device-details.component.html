@@ -1,0 +1,139 @@
+<!-- <div white class="bg-white p-3">
+    <div class="row boxItem mt-0">
+        <div class="col col-md-6">
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Device Number
+                </div>
+                <div class="col-6 ">
+                    234234
+                </div>
+            </div>
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Model
+                </div>
+                <div class="col-6 ">
+                    xyz
+                </div>
+            </div>
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Firmware version
+                </div>
+                <div class="col-6 ">
+                    3.4
+                </div>
+            </div>
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Last Sync
+                </div>
+                <div class="col-6 ">
+                    2nd Nov
+                </div>
+            </div>
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Assigned On
+                </div>
+                <div class="col-6 ">
+                    1st Nov
+                </div>
+            </div>
+            <div class="row labelItem mt-2">
+                <div class="col-6 ">
+                    Battery
+                </div>
+                <div class="col-6 ">
+                    Medium
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="mt-4 boxItem">
+    <!-- <div class="scrollbar scrollbar-near-moon thin">
+        <ngb-accordion #acc="ngbAccordion" [animation]="true" [closeOthers]="true" activeIds="device-0"
+            *ngIf="petDevices">
+            <ngb-panel *ngFor="let devices of petDevices; let i=index" id="device-{{i}}">
+                <ng-template ngbPanelTitle>
+                    <div>{{devices.deviceNumber ? devices.deviceNumber : '-'}} <i class="icon-right-arrow"></i></div>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Model
+                        </div>
+                        <div class="col-7">
+                            {{devices.deviceModel ? devices.deviceModel: '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Firmware version
+                        </div>
+                        <div class="col-7">
+                            {{devices.firmwareVersion ? devices.firmwareVersion: '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Last Sync
+                        </div>
+                        <div class="col-7">
+                            {{devices.lastSync ? devices.lastSync : '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Assigned On
+                        </div>
+                        <div class="col-7">
+                            {{devices.assignedOn ? (devices.assignedOn | customDateFormat) : '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Unassigned On
+                        </div>
+                        <div class="col-7">
+                            {{devices.unAssignedOn ? (devices.unAssignedOn | customDateFormat) : '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Unassigned Reason
+                        </div>
+                        <div class="col-7">
+                            {{devices.unassignedReason ? devices.unassignedReason : '-'}}
+                        </div>
+                    </div>
+                    <div class="row labelItem mt-1">
+                        <div class="col-5">
+                            Battery
+                        </div>
+                        <div class="col-7">
+                            {{devices.batteryPercentage ? devices.batteryPercentage : '-'}}
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <div *ngIf="petDevices.length == 0">
+            <div>No Devices Found</div>
+        </div>
+    </div> -->
+    
+    <datatable [headers]="headers"
+                [hideExport]="true" 
+                dir="DESC"
+                searchFilter="false"
+                defaultColumn=""
+                url="/api/pets/getPetDevicesByStudy/{{petId}}/{{studyId}}"
+                (formatter)="formatter($event)"
+                >
+        </datatable>
+</div>

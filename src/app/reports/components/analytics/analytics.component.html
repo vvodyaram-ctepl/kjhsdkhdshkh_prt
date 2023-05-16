@@ -1,0 +1,26 @@
+<div class="content-box" *ngIf="reports.length; else noReports">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="ml-3 current-view">Currently Viewing: </div>
+            <div class="col-4 block-left-center">
+                <select class="select-box form-control w-100" name="selectedReport" [(ngModel)]="selectedReport" (change)="onChangeReport()">
+                    <option *ngFor="let report of reports" [ngValue]=report>{{report.reportName}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <ngx-spinner bdColor="rgba(0,0,0,.6)" class="mySpinner" *ngIf="loader">
+            <img src='assets/images/loader.gif' />
+        </ngx-spinner>
+        <iframe width="100%" height="100%" *ngIf="selectedReportUrl" [src]="selectedReportUrl" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+</div>
+
+<ng-template #noReports>
+    <div class="content-box">
+        <div class="content-blk">
+            <h4 class="text-center">No Reports Found</h4>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,41 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Bulk Asset Upload
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <button class="btn btn-primary" *ngIf="RWFlag" (click)="downloadBulkUpload()">Download Bulk Upload
+                        Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="bulkUploadContent">
+            <div class="uploadBlk">
+                <!-- <input type="file" class="form-control" (change)="selectFileResult($event)">
+                <validation-message></validation-message> -->
+                <!-- {{file | json}} -->
+                <app-file-upload [(ngModel)]="file" [validTypes]="validType" [bulkuploadText]="true" [fileLength]="1" fileFormat="csv"
+                    (selectedItem)="selectFileResult($event)"></app-file-upload>
+            </div>
+            <!-- <button class="btn btn-primary float-right" (click)="uploadTemplate()">Upload Template</button> -->
+        </div>
+        <br /><br />
+        <datatable *ngIf="showDataTable" [headers]="headers" placeholder="Search Assets" [hideExport]="true"
+            defaultColumn="name" dir="DESC" [searchFilter]="true" url="/api/assets/getBulkUploadList"
+            (formatter)="formatter($event)" (nodeAction)="getNode($event)" [selectable]="selectable"
+            (selectedRecords)="selectedRecords($event)">
+        </datatable>
+        <div class="row">
+            <div class="col-12 mt-3">
+                <div class="float-right">
+                    <button class="btn btn-secondary" type="button" (click)="back()">Cancel</button>&nbsp;&nbsp;
+                    <button *ngIf="showDataTable" class="btn btn-primary" type="button" (click)="save()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

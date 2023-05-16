@@ -1,0 +1,566 @@
+app-view-patient-cards {
+    .scroll-info {
+        max-height: 216px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .scrollbar-near-moon::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-image: -webkit-gradient(linear, left bottom, left top, from(#5ee7df), to(#b490ca));
+        background-image: -webkit-linear-gradient(bottom, #5ee7df 0%, #b490ca 100%);
+        background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);
+    }
+    .scrollbar-near-moon::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #f5f5f5;
+        border-radius: 10px;
+    }
+    .scrollbar-near-moon::-webkit-scrollbar {
+        width: 12px;
+        background-color: #f5f5f5;
+    }
+    .thin::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .search-content {
+        width: 200px;
+        overflow: auto;
+        position: fixed;
+        z-index: 3;
+        top: 3.8rem;
+        bottom: 0;
+        padding: 10px;
+        box-shadow: 0px 0px 4px 2px #ddd;
+        background: #ffffff;
+        .search-input {
+            position: relative;
+            .icon-search {
+                font-size: 11px;
+                color: #37b57b;
+                padding: 5px;
+                background: #e0f6ec;
+                position: absolute;
+                right: 6px;
+                top: 9px;
+                border-radius: 50%;
+            }
+            .form-control {
+                border-radius: 5px;
+                padding-right: 30px;
+                border-width: 0px;
+                color: #646d82;
+                box-shadow: 0px 2px 13px #d1d5df80;
+            }
+        }
+        ul {
+            padding: 0px;
+            li {
+                padding: 5px 15px;
+                margin-top: 16px;
+                list-style-type: none;
+                border-radius: 5px;
+                cursor: pointer;
+                .p-img {
+                    width: 30px;
+                    border-radius: 50%;
+                    position: absolute;
+                    img {
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                }
+                .p-info {
+                    padding-left: 34px;
+                    .p-name {
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: #212f3a;
+                    }
+                    .p-type {
+                        font-size: 12px;
+                        color: #9fa3b4;
+                        line-height: 1;
+                    }
+                }
+                &:hover {
+                    background: transparent linear-gradient(180deg, #0fd6a8 0%, #2ec5e0 100%) 0% 0% no-repeat
+                        padding-box;
+                    color: #ffffff;
+                    .p-info {
+                        div {
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .patients-view {
+        background: #f3f4f7;
+        .content-box .content-hdr {
+            display: block;
+            margin-left: 200px;
+        }
+        .addbtn {
+            position: absolute;
+            right: 0;
+            margin-top: -10px;
+            .btn-primary {
+                background: transparent linear-gradient(169deg, #0fd6a8 0%, #2ec5e0 100%) 0% 0% no-repeat padding-box;
+                color: #ffffff;
+                height: inherit;
+                opacity: 1;
+                border-radius: 6px;
+                font-weight: 600;
+                margin-top: 0px;
+            }
+        }
+        .patient-details {
+            margin-left: 200px;
+            position: relative;
+        }
+        .patientblk {
+            .patientimg {
+                margin-left: 10px;
+                padding-right: 10px;
+                img {
+                    position: absolute;
+                    width: 50px;
+                    border-radius: 50%;
+                    padding: 6px;
+                    background: #fff;
+                    border: 1px solid #2ad5c5;
+                }
+                .patientname {
+                    margin-left: 60px;
+                    color: #20155a;
+                    padding-bottom: 16px;
+                    .nameofpatient {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+                    .typeofpatient {
+                        font-size: 13px;
+                        font-weight: 600;
+                    }
+                }
+            }
+            .btn-primary {
+                background: transparent linear-gradient(169deg, #0fd6a8 0%, #2ec5e0 100%) 0% 0% no-repeat padding-box;
+                color: #ffffff;
+                height: inherit;
+                opacity: 1;
+                border-radius: 6px;
+                font-weight: 600;
+                margin-top: 10px;
+            }
+        }
+
+        .p-info {
+            display: inline-block;
+            padding-right: 15px;
+            .btn-primary {
+                // position: absolute;
+                // right:0;
+                margin-top: 5px;
+                //  margin-right:5px;
+                font-size: 14px;
+            }
+            .p-icon {
+                position: absolute;
+                padding: 5px;
+                background: #fff;
+                width: 30px;
+                border-radius: 50%;
+                text-align: center;
+                color: #1cd1b8;
+            }
+            .p-icon-info {
+                padding-left: 35px;
+                div {
+                    &:first-child {
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: #1cd1b8;
+                    }
+                    &:nth-child(2) {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+
+    .bgColor {
+        background: #f3f4f7;
+    }
+
+    .changeStudy {
+        background: transparent linear-gradient(183deg, #679cf6 0%, #4072ee 100%) 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 6px #00000029;
+        color: #ffffff;
+        .f-12 {
+            font-size: 12px;
+        }
+        .f-16 {
+            font-size: 16px;
+        }
+        .plancolor {
+            color: #1cd1b8;
+        }
+        .btn-primary {
+            background: transparent linear-gradient(169deg, #0fd6a8 0%, #2ec5e0 100%) 0% 0% no-repeat padding-box;
+            color: #ffffff;
+            height: inherit;
+            opacity: 1;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+    }
+    .icon-edit1 {
+        float: left;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .boxItemparent {
+        background: #ffffff;
+        height: 278px;
+        padding-bottom: 15px;
+        position: relative;
+        box-shadow: 0px 3px 6px #00000029;
+    }
+    .boxItem {
+        margin-top: 10px;
+        cursor: pointer;
+        height: 100%;
+        .theme-grey-text {
+            font-size: 12px;
+            color: #9da1b2;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .notes-blk {
+            font-size: 13px;
+            .fa-check {
+                border: 1px solid #1ec8e5;
+                padding: 5px;
+                margin-top: 4px;
+                border-radius: 3px;
+                position: absolute;
+            }
+            > div {
+                position: relative;
+                padding-left: 30px;
+                margin-top: 15px;
+                .note-title {
+                    font-weight: 600;
+                    color: #212f3a;
+                    padding-right: 68px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+                .note-date {
+                    color: #9da1b2;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    font-size: 12px;
+                }
+                .note-dis {
+                    color: #9da1b2;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+            }
+        }
+        ul {
+            padding: 0px;
+            li {
+                list-style-type: none;
+                border-radius: 5px;
+                background-color: #dbfcf4;
+                padding: 6px 10px;
+                margin-top: 2px;
+                font-weight: 600;
+                font-size: 14px;
+                a {
+                    color: #212f3a;
+                }
+                &:hover {
+                    background: transparent linear-gradient(180deg, #0fd6a8 0%, #2ec5e0 100%) 0% 0% no-repeat
+                        padding-box;
+                    color: white;
+                    a {
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+        .obslist {
+            height: 180px;
+            overflow: auto;
+        }
+        .obs-blk {
+            font-size: 13px;
+            position: relative;
+            > span {
+                display: block;
+                float: left;
+                position: absolute;
+                z-index: 99;
+            }
+            .p-image,
+            .p-video {
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                position: absolute;
+                object-fit: contain;
+                border: 1px solid #ccc;
+            }
+            > div {
+                position: relative;
+                padding-left: 40px;
+                margin-bottom: 12px;
+                margin-top: 10px;
+                min-height: 35px;
+                .b-title {
+                    font-weight: 600;
+                    color: #212f3a;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+                .b-date {
+                    color: #9da1b2;
+                    position: absolute;
+                    right: 0;
+                    font-size: 12px;
+                    bottom: 0;
+                }
+                .b-dis {
+                    color: #9da1b2;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    padding-right: 60px;
+                }
+            }
+        }
+        .filterBox {
+            .device-title {
+                .btn {
+                    background: transparent linear-gradient(194deg, #20ddc5 0%, #1ec8e4 100%) 0% 0% no-repeat
+                        padding-box;
+                    border-radius: 4px;
+                    font-size: 13px;
+                    letter-spacing: 0px;
+                    color: #ffffff;
+                    text-shadow: 0px 3px 6px #00000029;
+                    height: 22px;
+                    border-radius: 4px;
+                    line-height: 0;
+                    font-size: 12px;
+                    min-width: 60px;
+                    right: 0;
+                    position: absolute;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .pet-list-item.active {
+        background: transparent linear-gradient(180deg, #0fd6a8 0%, #2ec5e0 100%) 0% 0% no-repeat padding-box;
+        color: #ffffff;
+    }
+    @media (max-width: 768px) {
+        .search-content {
+            position: relative;
+            top: 0;
+            width: 100%;
+        }
+        .patients-view {
+            .content-box .content-hdr {
+                display: block;
+                margin-left: 0px;
+            }
+            .patient-details {
+                margin-left: 0px;
+            }
+        }
+    }
+
+    .pagination-icon {
+        position: absolute;
+        right: 10px;
+        bottom: -4px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #4ad5d3;
+    }
+
+    .page-link {
+        padding: 2px 3px;
+        margin-left: -1px;
+        line-height: 1;
+        color: #29cbd2;
+        font-size: 12px;
+    }
+    .pagination {
+        position: absolute;
+        top: -3px;
+        right: 10px;
+    }
+    .page-item.active .page-link {
+        background-color: #d6d4de;
+        border-color: #d6d4de;
+    }
+    .page-link:focus {
+        box-shadow: 0 0 0 0 rgb(116 96 238 / 25%);
+    }
+
+    .observation-title {
+        padding: 5px 18px;
+        margin-bottom: 10px;
+        color: black;
+        .count {
+            font: normal normal bold 17px/19px Titillium Web;
+            letter-spacing: 0px;
+            opacity: 1;
+        }
+        .text {
+            font: normal normal bold 14px/20px Titillium Web;
+            letter-spacing: 0px;
+            color: #4a4a4a;
+        }
+    }
+
+    .observation-title.skyblue {
+        background: #e2f3ff 0% 0% no-repeat padding-box;
+        border: 1px solid #00c4ff;
+        border-radius: 10px;
+        opacity: 1;
+        .count {
+            color: #00c4ff;
+        }
+    }
+    .observation-title.yellow {
+        background: #fff9e8 0% 0% no-repeat padding-box;
+        border: 1px solid #ffc400;
+        border-radius: 10px;
+        opacity: 1;
+        .count {
+            color: #ffc400;
+        }
+    }
+    .observation-title.red {
+        background: #fde3e3 0% 0% no-repeat padding-box;
+        border: 1px solid #ff6969;
+        border-radius: 10px;
+        opacity: 1;
+        .count {
+            color: #ff6969;
+        }
+    }
+    .observation-title.purple {
+        background: #eadbff 0% 0% no-repeat padding-box;
+        border: 1px solid #9300ff;
+        border-radius: 10px;
+        opacity: 1;
+        .count {
+            color: #9300ff;
+        }
+    }
+    .observation-title.green {
+        background: #d0faf2 0% 0% no-repeat padding-box;
+        border: 1px solid #03daab;
+        border-radius: 10px;
+        opacity: 1;
+        .count {
+            color: #03daab;
+        }
+    }
+    .labelItem > div {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.dataBox {
+    background: #fff;
+    margin-top: 10px;
+    height: 100%;
+    padding: 0;
+    color: #1ec8e5;
+    .filterBox {
+        div {
+            // font-size:15px;
+            font: normal normal 600 15px/18px Titillium Web;
+            letter-spacing: -0.36px;
+            color: #1ec8e5;
+            opacity: 1;
+            .icon-card {
+                font-size: 20px;
+                position: absolute;
+            }
+            .device-title {
+                padding-left: 23px;
+            }
+            a {
+                color: #1ec8e5;
+            }
+        }
+    }
+    hr.line {
+        border-top: 1px solid #1ec8e5;
+        margin-top: 5px;
+        margin-bottom: 3px;
+    }
+    table {
+        margin-bottom: 0;
+        thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed; /* even columns width , fix width of table too*/
+            tr {
+                th {
+                    // border-bottom:1px solid #dee2e6;
+                    border-bottom: 1px solid #37b57c;
+                    padding: 3px;
+                    border-top: 0px;
+                    color: #00cf99;
+                    font-size: 13px;
+                }
+            }
+        }
+        tbody {
+            display: block;
+            height: 175px;
+            overflow: auto;
+
+            tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; /* even columns width , fix width of table too*/
+                border-bottom: 1px solid #eee;
+                // background: transparent linear-gradient(270deg, rgba(0, 191, 165, 1) 0%, #FFFFFF 80%) 0% 0% no-repeat padding-box;
+                td {
+                    padding: 3px;
+                    border-top: 0;
+                    font-size: 13px;
+                    line-height: 1.4;
+                    color: #000000;
+                    text-overflow: ellipsis;
+                    overflow: hidden !important;
+                }
+            }
+        }
+    }
+}

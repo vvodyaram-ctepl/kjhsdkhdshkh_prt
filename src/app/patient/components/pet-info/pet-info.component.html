@@ -1,0 +1,178 @@
+<form [formGroup]="petInfoForm" (ngSubmit)='onSubmit(petInfoForm.value)'>
+    <div class="content-box">
+        <!-- <div class="content-hdr">
+                </div> -->
+        <!-- {{petInfoForm.value | json}} -->
+        <div class="content-block">
+            <div class="row mb-3">
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Pet Image</label></legend>
+                        <input type="file" class="form-control" id="petPhoto" title="" (change)="selectFileResult($event)">
+                    </fieldset>
+                    <!-- <span>
+                        {{petInfoForm.value.petImageFileName}}
+                    </span> -->
+                    <a href="javascript:void(0)" class="filedec" title="{{petInfoForm.value.petImageFileName}}" >{{petInfoForm.value.petImageFileName}}</a>
+                    <validation-message [control]="petInfoForm.controls.petImage"></validation-message>
+                </div>
+
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Pet Name <span class="asterisk">*</span></label></legend>
+                        <input formControlName="petName" type="text" class="form-control textbox w-100" maxlength="" />
+                    </fieldset>
+                    <validation-message [control]="petInfoForm.controls.petName"></validation-message>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Species <span class="asterisk">*</span></label></legend>
+                        <!-- <lib-typeahead [data]="speciesArr" matcher="speciesName" formControlName="species" class="w-100 mb-0"
+                            placeholder="" class="w-100">
+                        </lib-typeahead> -->
+                        <select class="form-control w-100" formControlName="species" (change)="speciesSelected($event)">
+                            <option value="">Select</option>
+                            <option *ngFor='let list of speciesArr' [value]="list.speciesId">{{list.speciesName}}
+                            </option>
+                        </select>
+                    </fieldset>
+                    <validation-message [control]="petInfoForm.controls.species"></validation-message>
+                </div>
+                <div class="col">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Breed <span class="asterisk">*</span></label></legend>
+                        <lib-typeahead 
+                        [data]="petInfoForm.value.species ? newAArr : []" matcher="breedName" formControlName="breed" class="w-100 mb-0"
+                            placeholder="" class="w-100" (selectedItem)="breedSelected($event)">
+                        </lib-typeahead>
+                    </fieldset>
+                    <validation-message [control]="petInfoForm.controls.breed"></validation-message>
+                </div>
+
+                <!-- <div class="col" *ngIf="!editFlag">
+                    <fieldset class="w-fieldset">
+                        <legend> <label class="label">Weight</label></legend>
+                        <input style="width:76%;float:left;" type="text" formControlName="weight"
+                            class="form-control textbox" maxlength="" />
+                        <select style="width:24%;" class="select-cstom-control form-control"
+                            formControlName="weightUnits">
+                            <option value="LBS">LBS</option>
+                            <option value="KGS">KGS</option>
+                        </select>
+                    </fieldset>
+                    <validation-message [control]="petInfoForm.controls.weight"></validation-message>
+                </div> -->
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label w-100">Gender </label></legend>
+                        <select class="form-control w-100" formControlName="gender">
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </fieldset>
+                    <!-- <validation-message [control]="petInfoForm.controls.gender"></validation-message> -->
+                </div>
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Date of Birth </label></legend>
+                        <datepicker class="w-100" formControlName="dateofBirth" format="MM-DD-YYYY"
+                            [maxDate]="startDate"></datepicker>
+                    </fieldset>
+                    <!-- <validation-message [control]="petInfoForm.controls.dateofBirth"></validation-message> -->
+                </div>
+
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label w-100">Spayed/Neutered </label>
+                        </legend>
+                        <select class="form-control w-100" formControlName="category">
+                            <option value="">Select</option>
+                            <option value="Neutered">Yes</option>
+                            <option value="Spayed">No</option>
+                        </select>
+                    </fieldset>
+                    <!-- <validation-message [control]="petInfoForm.controls.category"></validation-message> -->
+                </div>
+                <div class="col-6">
+                    <fieldset class="w-fieldset" [disabled]="editFlag && petInfoForm.value.statusDisable">
+                        <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+                        <select class="form-control w-100" formControlName="status">
+                            <option value="1" *ngIf="!isVirtual">Off Study</option>
+                            <option value="2">On Study</option>
+                            <option value="3">Deceased</option>
+
+                        </select>
+                    </fieldset>
+                    <validation-message [control]="petInfoForm.controls.status"></validation-message>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" routerLink="/user/patients">
+                            Cancel
+                        </button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Change Pet Status ?
+        </h5>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="d('Cross click');enableSelection()">
+                <div class="close-wrapper">
+                    <span aria-hidden="true">×</span>
+                </div>
+            </button> -->
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click');cancelPetStatus()">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mb-4">
+            <div class="col-12" *ngIf="deceasedStatus">
+                Do you want to change the pet status to <span style="color:red">deceased </span> ? Pet will be
+                disassociated from associated studies.
+            </div>
+            <div class="col-12" *ngIf="offStatus">
+                Do you want to change the pet status to <span style="color:red">Off Study </span> ? Pet will be
+                disassociated from associated studies.
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-primary btn-custom mr-3" (click)="d('Cross click');changeValue()">
+                    Yes
+                </button>
+                <button type="button" class="btn btn-secondary btn-custom" (click)="d('Cross click');unChangeValue();">
+                    No
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

@@ -1,0 +1,186 @@
+<div class="content-box">
+    <div class="content-block">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="review-hdr">Basic Details</div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-3 header-text">
+                Questionnaire Name
+            </div>
+            <div class="col-3 header-text">
+                Start Date
+            </div>
+            <div class="col-3 header-text">
+                End Date
+            </div>
+            <div class="col-3 header-text">
+                Status
+            </div>
+        </div>
+
+        <div class="row mb-3" *ngIf="data != undefined && data.basicDetails">
+            <div class="col-3">
+                {{data.basicDetails.questionnaireName}}
+            </div>
+            <div class="col-3">
+                {{data.basicDetails.startDate | date: 'MM/dd/yyyy'}}
+            </div>
+            <div class="col-3">
+                {{data.basicDetails.endDate | date: 'MM/dd/yyyy'}}
+            </div>
+            <div class="col-3">
+                {{data.basicDetails.status}}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="review-hdr">Instructions</div>
+            </div>
+        </div>
+
+        <div *ngIf="data != undefined && data.instructions && data.instructions.length" style="cursor: pointer;"
+            [sortablejs]="data.instructions" [sortablejsOptions]="instructionOptions">
+            <div class="row mb-3" *ngFor="let inst of data.instructions; let i = index">
+                <div class="col-12">
+                    {{i+1}}. {{inst.instruction}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="review-hdr">Questions</div>
+            </div>
+        </div>
+        <div *ngIf="data != undefined && data.questions && data.questions.length">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <ngb-accordion [closeOthers]="true" [sortablejs]="data.questions"
+                        [sortablejsOptions]="questionOptions">
+                        <ngb-panel id="{{i}}" *ngFor="let ques of data.questions; let i = index">
+                            <ng-template ngbPanelTitle>
+                                <span class="position-absolute">
+                                    <i class="icon-grip-vertical" style="color: #babfbf;"></i>&nbsp;&nbsp;
+                                    <b>Q{{i+1}}</b>
+                                </span>
+                                <span class="question">{{ques.question}}</span>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div class="row">
+                                    <div class="dropdown col-12" *ngIf="ques.questionTypeId == 1">
+                                        <select class="form-control">
+                                            <option *ngFor="let opt of ques.questionAnswerOptions ; let i = index" [selected] = "i == 0" disabled title="{{opt.questionAnswer}}">
+                                                {{opt.questionAnswer}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div *ngIf="ques.questionTypeId == 2 || ques.questionTypeId == 3">
+                                    <div class="row" *ngFor="let opt of ques.questionAnswerOptions">
+                                        <div class="col-12">
+                                            <div class="radio-input-wrapper" *ngIf="ques.questionTypeId == 2">
+                                                <label>
+                                                    <input type="radio" class="radio" disabled />
+                                                    <span class="label">
+                                                        {{opt.questionAnswer}}
+                                                    </span>
+                                                </label>
+                                            </div>
+
+                                            <div class="checkbox-wrapper" *ngIf="ques.questionTypeId == 3">
+                                                <label>
+                                                    <input type="checkbox" class="check checkbox-width-20" disabled />
+                                                    <span class="label">
+                                                        {{opt.questionAnswer}}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text" *ngIf="ques.questionTypeId == 4">
+                                            <label>
+                                                <input type="text" class="form-control d-inline-block" readonly>
+                                            </label>
+                                        </div>
+
+                                        <div class="text" *ngIf="ques.questionTypeId == 5">
+                                            <label>
+                                                <textarea class="form-control d-inline-block" readonly></textarea>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="ques.questionTypeId == 6">
+                                    <div *ngFor="let opt of ques.questionAnswerOptions">
+                                        <div class="row">
+                                            <div class="col-3 m-auto">
+                                                {{opt.questionAnswer}}
+                                            </div>
+                                            <div class="col-9">
+                                                <div class="custom-slider">
+                                                    <ngx-slider [value]="ques.other.floor" [options]="getSliderOptions(ques.other)"></ngx-slider>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="ques.questionTypeId == 7 || ques.questionTypeId == 8">
+                                    <div class="col-12">
+                                        <div class="cloud-img ml-4"><i class="icon-upload size-40"></i></div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-2">
+
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <div class="checkbox-wrapper">
+                                                <label>
+                                                    <input type="checkbox" class="check checkbox-width-20"
+                                                        [checked]="ques.isMandatory" disabled />
+                                                    <span class="label">
+                                                        Mark this question as mandatory
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 text-right" *ngIf="!(editFlag && ques.questionId)">
+                                        <div class="mb-1">
+                                            <div class="checkbox-wrapper">
+                                                <label class="text-left">
+                                                    <input type="checkbox" class="check checkbox-width-20"
+                                                        [checked]="ques.saveForFuture" disabled />
+                                                    <span class="label">
+                                                        Save this question for future use
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 mt-3">
+                <div class="float-right">
+                    <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                    <button class="btn btn-primary" type="button" (click)="addQuestionnaire()">Save</button>&nbsp;&nbsp;
+                    <button class="btn btn-red" type="button" (click)="publish()">Publish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="content-box">
+  <div class="login-form">
+    <div class="content-hdr">
+      <div class="row">
+        <div class="col-12">Profile</div>
+      </div>
+    </div>
+    <div class="content-blk">
+      <div class="content-block pt-2">
+        <form [formGroup]="userForm">
+          <!-- <div class="row  mt-3 ">
+            <div class="col-3 ">
+              <label class="label mt-2">Username </label>
+            </div>
+            <div class="col-5 labelfield label mt-2">
+              <span>{{userForm.value.userName}}</span>
+            </div>
+          </div> -->
+
+          <div class="row  mt-3">
+            <div class="col-3 ">
+              <label class="label mt-2">Email </label>
+            </div>
+            <div class="col-5 labelfield label mt-2">
+              <span>{{userForm.value.Email}}</span>
+              <!-- <fieldset class="w-fieldset">
+                <input class="form-control" type="text" formControlName="Email" />
+              </fieldset> -->
+            </div>
+          </div>
+          <div class="row  mt-3">
+            <div class="col-3 ">
+              <label class="label mt-2">Role </label>
+            </div>
+            <div class="col-5 labelfield label mt-2">
+              <!-- {{userForm.value | json}} -->
+              <!-- <fieldset class="w-fieldset"> -->
+
+              <span *ngIf="userForm.value.Role.includes(',')"
+                [title]="userForm.value.Role">{{userForm.value.Role}}</span>
+              <span *ngIf="!userForm.value.Role.includes(',')">{{userForm.value.Role}}</span>
+
+              <!-- <input class="form-control" type="text" formControlName="Role" [title]="userForm.value.Role" /> -->
+              <!-- </fieldset> -->
+            </div>
+          </div>
+          <div class="row  mt-3">
+            <div class="col-3 ">
+              <label class="label mt-2">Full Name </label>
+            </div>
+            <div class="col-5 labelfield label mt-2">
+              <!-- <span>{{userForm.value.fullName}}</span> -->
+              <fieldset class="w-fieldset">
+                <input class="form-control" type="text" formControlName="fullName" />
+              </fieldset>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mt-3 text-right">
+              <button type="submit" (click)="updateUser()" class="btn btn-primary font-weight-bold mt-3"
+                style="font-weight:600 !important">
+                Update
+              </button>
+              &nbsp;&nbsp;
+              <button type="submit" (click)="redirectToChangePassword()"
+                class="btn btn-primary btn-pink  font-weight-bold mt-3" style="font-weight:600 !important">
+                Reset Password
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>

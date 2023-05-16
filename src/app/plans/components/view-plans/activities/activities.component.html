@@ -1,0 +1,64 @@
+<div class="content-block">
+    <div class="row">
+        <div class="col-12">
+            <!-- <datatable [headers]="headers" [hideExport]="true" defaultColumn="name" dir="DESC" [url]="url"
+                (formatter)="formatter($event)" searchFilter="false">
+            </datatable> -->
+            <div class="custom-table">
+                <table>
+                    <thead class="table-hdr">
+                        <tr>
+                            <th *ngFor="let list of headers; let i = index">
+                                {{ list.label }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body" *ngIf="dataArr?.length > 0">
+                        <ng-container *ngIf="userFlag">
+                            <tr *ngFor="let list of dataArr; let i = index">
+                                <td>
+                                    {{ list.userName }}
+                                </td>
+                                <td>
+                                    {{ list.actionName }}
+                                </td>
+                                <td>
+                                    {{ list.auditMessage }}
+                                </td>
+                                <td>
+                                    {{ list.auditTimeStamp }}
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container>
+                            <tr *ngFor="let list of dataArr; let i = index">
+                                <td>
+                                    {{ list.contactName }}
+                                </td>
+                                <td>
+                                    {{ list.activity }}
+                                </td>
+                                <td>
+                                    {{ list.description }}
+                                </td>
+                                <td>
+                                    {{ list.date }}
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    <tbody class="table-body" *ngIf="dataArr?.length == 0">
+                        <tr>
+                            <td>No Records Found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <div class="float-right">
+                <button class="btn btn-primary" type="button" (click)="back(id)">Back</button>
+            </div>
+        </div>
+    </div>
+</div>

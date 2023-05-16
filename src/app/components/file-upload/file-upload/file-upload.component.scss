@@ -1,0 +1,128 @@
+.uploadfilecontainer {
+  border: 1.5px dashed #ababad;
+  border-radius: 10px;
+  padding-top:10px;
+  background: #FFFFFF;
+  position: relative;
+  cursor: pointer;
+  .upload-title{
+    text-align: left;
+    font-size:22px;
+    letter-spacing: 0px;
+    color: #2BD7AA;
+    text-transform: capitalize;
+    font-weight: 600;
+    margin: 15px 15px 10px 15px;
+  }
+  .upload-info{
+    margin: 15px;
+    .title-info{
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0px;
+      color: #525383;
+      text-transform: capitalize;
+      
+    }
+    .description-info{
+      color: #525383;
+      font-size: 13px;
+    }
+  }
+  .uploadfilecontainerInner{
+    border: 1px solid #8687A8;
+    background: #F5F2FC;
+    padding:10px;
+    min-height: 65px;
+    max-height: 160px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 2px;
+    margin: 0px  15px 10px  15px;
+    position: relative;
+
+    .upload-wrapper {
+      background: transparent linear-gradient(164deg, #0fd6a8 0%, #2ec5e0 100%) 0%
+        0% no-repeat padding-box;
+      border-radius: 9px;
+      opacity: 0.81;
+      display: inline-block;
+      padding: 0px 20px;
+    
+      .upload-text {
+        text-align: center;
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        text-transform: capitalize;
+        line-height: 44px;
+        margin-left: 52px;
+      }
+      .cloud-img {
+        position: absolute;
+        color:#FFFFFF;
+        margin-top:5px;
+         i{
+          font-size: 32px;
+         }
+      }
+    }
+    .files-list {
+      justify-content: space-between;
+      background: #F5F2FC;
+      border-radius: 4px;
+      padding: 5px;
+      margin-right: 7px;
+      margin-bottom: 5px;
+      display: inline-block;
+      border: 1px solid #8687A8;
+      color: #1A1C5B;
+      position: relative;
+    
+      .file-ico{
+        position: absolute;
+        left:10px;
+        top:5px;
+        img{
+          width: 22px;
+          max-height: 20px;
+        }
+      }
+      .file-name {
+        font-size: 15px;
+        margin-left: 35px;
+        font-weight: 600;
+        margin-bottom: 0px;
+        margin-right: 20px;
+        padding: 4px 0px;
+      }
+      .delete-file {
+        background: transparent;
+        border: none;
+        position: absolute;
+        right:0;
+        top:8px;
+        cursor: pointer;
+      }  
+    }
+
+  }
+}
+
+.upload-wrapper.diablebtn{
+  opacity: 0.5 !important;
+    background: transparent linear-gradient(180deg
+, #d5d6d6 0%, #939393 100%) 0% 0% no-repeat padding-box !important;
+    cursor: default !important;
+}
+
+
+
+
+// .uploadfilecontainer:hover {
+//   cursor: pointer;
+//   background-color: #9ecbec !important;
+//   opacity: 0.8;
+// }
+

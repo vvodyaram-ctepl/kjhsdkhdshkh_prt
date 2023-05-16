@@ -1,0 +1,33 @@
+app-add-image-score {
+    .scoring-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon-card-list {
+        bottom: 0px;
+        box-shadow: none;
+        width: 30px;
+        height: 30px;
+    }
+    .img-icon {
+        border: 1px solid #00cf99;
+        // border-radius: 50%;
+    }
+    .filedec {
+        color: blue;
+        text-decoration: underline;
+        position: absolute;
+        background: #fff;
+        width: calc(100% - 162px);
+        margin-top: -36px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-left: 126px;
+    }
+
+    textarea.form-control {
+        height: calc(1.5em + .75rem + 2px);
+    }
+}

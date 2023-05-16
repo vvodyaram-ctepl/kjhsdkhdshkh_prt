@@ -1,0 +1,22 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Support Material
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <button *ngIf="RWFlag" class="btn btn-primary" (click)="navigateToAddSupport()"> Add New Support Material </button> 
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="content-blk">
+            <datatable [headers]="headers" [filterTypeArr]="filterTypeArr" 
+                [hideExport]="true" 
+                [hideBottomPagination]="true"
+                (nodeAction)="getNode($event)" (formatter)="formatter($event)" defaultColumn="materialType" dir="DESC"
+                url="/api/supportMaterial/getSupportMaterialTypeCount" pageName="supportMaterials">
+            </datatable>
+        </div>
+</div>

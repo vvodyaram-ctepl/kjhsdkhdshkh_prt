@@ -1,0 +1,59 @@
+.review-hdr {
+    background: #babfbf;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    text-transform: uppercase;
+}
+
+.header-text {
+  font-weight: 600;
+}
+
+:host ::ng-deep .accordion {
+    .card-header .btn-link {
+        text-decoration: none;
+        color: black;
+        padding-left: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    .card, .card:not(:first-of-type):not(:last-of-type) {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        margin-bottom: 10px;
+    }
+  }
+
+.checkbox-wrapper, .radio-input-wrapper, .text {
+    label {
+    //   width: 95%;
+      margin-bottom: 0;
+    }
+    .check, .radio {
+      position: absolute;
+    }
+  
+    .label {
+      margin-left: 25px;
+      line-height: 1.9;
+      cursor: pointer;
+    }
+  }
+  
+  .radio-input-wrapper {
+    .radio {
+      height: 30px;
+      width: 16px;
+    }
+}
+
+.text label {
+    width: 100%;
+}
+
+.fa-drag-handle {
+  content: "\f142 \f142";
+    letter-spacing: 2px;
+}

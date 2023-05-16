@@ -1,0 +1,28 @@
+app-pet-img-scoring {
+    .content-blk {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .petImage {
+        border-radius: 0%;
+        width:38px;
+        height: 38px;
+    }
+        datatable .row .search-wrapper-col {
+            display: none;
+        }
+        datatable .file-type-dl .col-12 {
+        position: absolute;
+        top: 16px;
+        left: 8px;
+        }
+        datatable .file-type-dl .col-12 .btn-primary span { 
+            display: none;
+        }
+        .boxItem.petimgpg{
+            overflow: visible;
+        }
+        .petimgpg datatable .mask-input {
+            margin-bottom: 0 !important;
+        }
+    }

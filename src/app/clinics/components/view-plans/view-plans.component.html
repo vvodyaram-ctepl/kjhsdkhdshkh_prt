@@ -1,0 +1,111 @@
+<div class="content-block">
+  <div class="btn-content">
+    <div class="row">
+      <div class="col-12">
+        <!-- <div class="float-right">
+                    <button type="button" class="btn btn-primary" (click)="addPlan()">Add New Plan</button>
+                </div>
+            </div> -->
+      </div>
+    </div>
+
+    <div class="custom-table mb-4">
+      <table>
+        <thead class="table-hdr">
+          <tr>
+            <th style="width:50%" *ngFor="let list of headers; let i = index">
+              {{ list.label }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-body" *ngIf="dataArr?.length > 0">
+          <tr *ngFor="let list of dataArr; let i = index">
+            <!-- <td>
+              {{ i + 1 }}
+            </td> -->
+            <td>
+              {{ list.planName }}
+            </td>
+            <td>
+              {{ list.subscribedDate }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody class="table-body" *ngIf="dataArr?.length == 0">
+          <tr>
+            <td>No Records Found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="float-right">
+          <button class="btn btn-secondary" type="button" routerLink="/user/clinics">
+            Close
+          </button>&nbsp;&nbsp;
+          <button class="btn btn-primary" type="button" routerLink="/user/clinics/view-clinic/{{
+              editId
+            }}/view-associated-pets">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">Add New Plan</h5>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <div class="close-wrapper">
+          <span class="icon-close" aria-hidden="true"></span>
+        </div>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="addPlanForm" (submit)="onSubmit(addPlanForm.value)">
+        <div formArrayName="arr" *ngFor="let a of addPlanForm.get('arr')['controls']; let i = index">
+          <div class="row mb-3" [formGroupName]="i">
+            <div class="col-6">
+              <fieldset class="w-fieldset">
+                <legend><label class="label">Plan Name</label></legend>
+                <lib-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" formControlName="planName"
+                  class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+              </fieldset>
+            </div>
+            <div class="col-5">
+              <fieldset class="w-fieldset">
+                <legend><label class="label">Date Subscribed</label></legend>
+                <datepicker class="w-100" formControlName="dateSubscribed" format="MM-DD-YYYY"></datepicker>
+              </fieldset>
+            </div>
+            <div class="col-1 center-align mtop-15">
+              <!-- <button type="button" >Delete</button> -->
+              <!-- <span class="icon-delete-icon black" (click)="removeItem(i)"></span> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <button class="btn btn-primary" type="button" *ngIf="addPlanForm.value.arr == ''" (click)="addItem()"
+              style="margin-right: 5px;">
+              Add New Plan
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div style="text-align:center;padding-top:20px;padding-bottom:20px;">
+      <button type="button" class="btn btn-primary btn-custom" style="margin-right:20px"
+        (click)="saveArchive(); c('Save click')">
+        Ok
+      </button>
+      <button type="button" class="btn btn-primary btn-custom" (click)="d('Cross click')">
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,71 @@
+<form [formGroup]="addPlanForm">
+  <div class="content-box">
+    <div class="content-block">
+      <div formArrayName="arr" *ngFor="
+          let a of addPlanForm.get('arr')['controls'];
+          let i = index;
+          let last = last
+        ">
+        <div class="row mb-3" [formGroupName]="i">
+          <div class="col-5">
+            <!-- {{addPlanForm.value.arr[i].planName | json}}
+            {{addPlanForm.value.arr[i].disabled | json}} -->
+            <fieldset class="w-fieldset" [disabled]="addPlanForm.value.arr[i].disabled">
+              <legend>
+                <label class="label">Plan Name <span class="asterisk">*</span></label>
+              </legend>
+              <!--[data]="planlist"  -->
+            
+              <lib-typeahead [data]="addPlanForm.value.arr[i].planlist" matcher="planName" formControlName="planName" class="w-100 mb-0"
+                placeholder="" class="w-100"  (click)="getUniqStudyList(i)" (onClear)="getUniqStudyList(i)" >
+              </lib-typeahead>
+            </fieldset>
+            <validation-message [control]="addPlanForm.get('arr').controls[i].controls.planName">
+            </validation-message>
+          </div>
+          <div class="col-5">
+            <fieldset class="w-fieldset" [disabled]="addPlanForm.value.arr[i].disabled">
+              <legend>
+                <label class="label">Date Subscribed <span class="asterisk">*</span></label>
+              </legend>
+              <datepicker class="w-100" [minDate]="startDate" formControlName="dateSubscribed" format="MM-DD-YYYY">
+              </datepicker>
+            </fieldset>
+            <validation-message [control]="
+                addPlanForm.get('arr').controls[i].controls.dateSubscribed
+              ">
+            </validation-message>
+          </div>
+          <div class="col-2 center-align">
+            <div class="card icon-card-list red-bg mr-2 pointer-cursor" title="Remove"
+              *ngIf="addPlanForm.value.arr.length > 1" (click)="removeItem(i)">
+              <span class="pointer-cursor size-17" title="Remove">-</span>
+            </div>
+
+            <div class="card icon-card-list blue-bg" title="Add" *ngIf="last">
+              <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                (click)="addItem()"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <!-- <button class="btn btn-primary" type="button" *ngIf="addPlanForm.value.arr == ''" (click)="addItem()" style="margin-right: 5px;">Add Plan</button> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="float-right">
+            <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+            <button class="btn btn-secondary" type="button" (click)="back()">
+              Back</button>&nbsp;&nbsp;
+            <button class="btn btn-primary" type="button" (click)="next()">
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

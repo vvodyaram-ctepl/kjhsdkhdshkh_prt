@@ -1,0 +1,43 @@
+.btn-content {
+    padding-right: 35px;
+    background: white;
+    padding-top: 15px;
+}
+.center-align {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.active-status {
+    font: normal normal 600 15px/16px Titillium Web;
+    letter-spacing: -0.15px;
+    color: #1CCF99;
+    padding: 0px 8px;
+    font-size: 13px;
+    text-transform: capitalize;
+    background: #E3FFF7 0% 0% no-repeat padding-box;
+border: 1px solid #1CCF99;
+border-radius: 3px;
+}
+.active-status-new {
+    font: normal normal 600 15px/16px Titillium Web;
+    letter-spacing: -0.15px;
+    padding: 0px 8px !important;
+    font-size: 13px !important;
+    text-transform: capitalize;
+    border-radius: 3px;
+    background: transparent linear-gradient(165deg, #432bff 0%, #8c05ff 100%) 0% 0% no-repeat padding-box !important;
+    border-radius: 9px !important;
+    opacity: 0.81 !important;
+}
+.inactive-status {
+    font: normal normal 600 15px/16px Titillium Web;
+    letter-spacing: -0.15px;
+    color: rgb(207, 94, 28);
+    padding: 0px 8px;
+    font-size: 13px;
+    text-transform: capitalize;
+    background: rgb(255, 233, 227) 0% 0% no-repeat padding-box;
+border: 1px solid rgb(207, 70, 28);
+border-radius: 3px;
+}

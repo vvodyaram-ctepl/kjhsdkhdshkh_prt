@@ -1,0 +1,630 @@
+.searchblock{
+    display:none;
+    color: #fff;
+    background: transparent linear-gradient(180deg, #F66793 0%, #EE4040 100%) 0% 0% no-repeat padding-box;
+    padding: 6px;
+    cursor:pointer;
+}
+.pet-input{
+    width:173px
+}
+.icon-search{
+    font-size: 11px;
+    color: #37B57B;
+    padding: 5px;
+    background: #E0F6EC;
+    position: absolute;
+    right: 6px;
+    top: -1px;
+    border-radius: 50%;
+}
+.form-control{
+    border-radius:5px;
+    padding-right: 30px;
+    border-width:0px;
+    color:#646D82;
+    box-shadow: 0px 2px 13px #D1D5DF80;
+}
+.search-icon-ds {
+position: absolute;
+top: 11px;
+right: 5px;
+}
+.close-icon-ds {
+    position: absolute;
+    top: 12px;
+    right: 38px;
+}
+.search-content{
+    width: 200px;
+    overflow: auto;
+    position: fixed;
+    z-index:3;
+    top: 3.8rem;
+    bottom: 0;
+    padding:10px;
+    box-shadow: 0px 0px 4px 2px #ddd;
+    background:#FFFFFF;
+    .search-input{
+        position: relative;
+        .icon-search{
+            font-size: 11px;
+            color: #37B57B;
+            padding: 5px;
+            background: #E0F6EC;
+            position: absolute;
+            right: 6px;
+            top: 9px;
+            border-radius: 50%;
+        }
+        .form-control{
+            border-radius:5px;
+            padding-right: 30px;
+            border-width:0px;
+            color:#646D82;
+            box-shadow: 0px 2px 13px #D1D5DF80;
+        }
+    }
+    ul{
+        padding:0px;
+        padding-top:30px;
+        li{
+            padding:5px 15px;
+            margin-top:16px;
+            list-style-type: none;
+            border-radius: 5px;
+            cursor:pointer;
+            .p-img{
+                width:30px;
+                border-radius:50%;
+                position: absolute;
+                height: 30px;
+                object-fit: cover;
+                img{
+                    width:100%;
+                }
+            }
+            .p-info{
+                padding-left: 34px;
+                max-width: 100%;
+                overflow: hidden;
+                .p-name{
+                    font-size: 16px; 
+                    font-weight: 600;
+                    color:#212F3A;
+                    width:100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .p-type{
+                    font-size: 12px; 
+                    color:#9FA3B4;
+                    line-height: 1.2; 
+                    width:100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+            &:hover,
+            &:active
+            {
+                background: transparent linear-gradient(180deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+                color:#FFFFFF;
+                .p-info{
+                    div{
+                        color:#FFFFFF;
+                    }
+                }
+            }
+        }
+        li.active{
+            
+                background: transparent linear-gradient(180deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+                color:#FFFFFF;
+                .p-info{
+                    div{
+                        color:#FFFFFF;
+                    }
+                }
+        }
+    }
+}
+.patients-view{
+    background: #F3F4F7;
+    .content-box .content-hdr{
+        display: block;
+        margin-left:200px;
+    }
+    .addbtn{
+        position: absolute;
+        right: 0;
+        .btn-primary{
+            background: transparent linear-gradient(180deg, #D5D6D6 0%, #939393 100%) 0% 0% no-repeat padding-box;
+            color: #FFFFFF;
+            height: inherit;
+            opacity: 1;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 0px;
+        }
+    }
+    .patient-details{
+        margin-left:200px;
+        position: relative;
+    }
+    .patientblk{
+        padding: 0px 10px 15px 10px;
+
+        .patientCol{
+            box-shadow: 0px 3px 6px #00000029;
+        }
+        .patientInfoBlock{
+            // margin-right:140px;
+            margin-top:10px;
+        }
+        .icon-right-arrow{
+            display:none;
+        }
+        .p-infobtn{
+            position: absolute;
+            right:0;
+            .btn{
+                margin-right:10px;
+            }
+        }
+    .patientimg{
+        position: relative;
+        margin-left: 10px;
+        padding-right: 15px;
+        min-width: 200px;
+        max-width: 300px;
+        top:25px;
+        .patientimg-status{
+            position: absolute;
+            // img{
+            //     width:52px;
+            //     height:52px;
+            //     border-radius: 50%;
+            //     padding:6px;
+            //     background:#FFF;
+            //     border:1px solid #2AD5C5;
+            // }
+            .p-img{
+                padding: 5px;
+                border: 1px solid #2AD5C5;
+                display: block;
+                position: relative;
+                width: 57px;
+                height: 57px;
+                border-radius: 50%;
+                background: #fff;
+                .petImag {
+                    width: 45px;
+                    height: 45px;
+                    display: inline-block;
+                    border-radius: 50%;
+                    text-align: center;
+                    overflow: hidden;
+                    margin-bottom: 0px;
+                    div{
+                        background-size: cover;
+                        background-position: center;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+        .patientimg-status.onStudy-status{
+            img{
+                border:1px solid #2AD5C5;
+            }
+        }
+        .patientimg-status.offStudy-status{
+            img{
+                border: 1px solid #ef3e08;
+            }
+        }
+        .patientimg-status.deceased-status{
+            img{
+                border: 1px solid #cf461c;
+            }
+        }
+        .patientname{
+            margin-left:60px;
+            color:#20155A;
+            padding-top:8px;
+            padding-bottom: 16px;
+            padding-left: 5px;
+            cursor: default;
+            .nameofpatient{
+                position: relative;
+                width: 100%;
+                font-size: 16px;
+                font-weight:600;
+                .petname-info{
+                    max-width: 100%;
+                    padding-right: 20px;
+                    overflow: hidden;
+                    position: relative;
+                    word-break: break-word;
+                    display: inline-block;
+                }
+                .fav-icon{
+                    position: absolute;
+                    bottom: 2px;
+                    margin-top: 0px;
+                    margin-left: 3px;
+                    z-index: 2;
+                    font-size: 16px;
+                }
+                div{
+                    display: inline-block;
+                    position: relative;
+                    padding-right:20px;
+                    max-width:100%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+            }
+            .typeofpatient{
+                font-size: 13px;
+                font-weight:600;
+                width: 128px;
+                // text-overflow: ellipsis;
+                // overflow: hidden;
+                // white-space: nowrap;
+            }
+    
+        }
+    }
+    .btn-primary{
+        background: transparent linear-gradient(169deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+        color: #FFFFFF;
+        height: inherit;
+        opacity: 1;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+    }
+
+    .p-info{
+        display: inline-block;
+        padding-right:20px;
+        text-align: left;
+        &:last-child {
+            padding-right:0px;
+        }
+        .btn-primary{
+           // position: absolute;
+           // right:0;
+            margin-top:5px;
+          //  margin-right:5px;
+            font-size: 14px;
+        }
+        .p-icon{
+            position: absolute;
+            padding: 5px;
+            background: #fff;
+            width: 30px;
+            border-radius: 50%;
+            text-align: center;
+            color:#1CD1B8;
+        }
+        .p-icon-info{
+            padding-left:35px;
+            div{
+                &:first-child{
+                    font-size: 12px;
+                    font-weight:bold;
+                    color:#1CD1B8;
+                }
+                &:nth-child(2){
+                    font-size: 14px;
+                    font-weight:600;
+                }
+            }
+        }
+    }
+    .bgColor{
+        background: #F3F4F7;
+    }
+
+}
+.changeStudy{
+    // color: #FFFFFF;
+    // background: #679CF6 0% 0% no-repeat padding-box;
+    // box-shadow: 0px 3px 6px #00000029;
+    // opacity: 1;
+    .f-12{
+        font-size: 12px;
+    }
+    .f-16{
+        font-size: 16px;
+    }
+    .plancolor{
+        font: normal normal bold 14px/21px Titillium Web;
+        letter-spacing: -0.28px;
+        color: #1CD1B8;
+        opacity: 1;
+    }
+    .btn-primary{
+        background: transparent linear-gradient(169deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+        color: #FFFFFF;
+        height: inherit;
+        opacity: 1;
+        border-radius: 9px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+}
+.icon-edit1{
+    float: left;
+    font-size: 18px;
+    font-weight: 600;
+}
+.boxItem{
+    cursor: pointer;
+    height:250px;
+    .theme-grey-text{
+        font-size: 12px;
+        color:#9DA1B2;
+        cursor:pointer;
+        margin-top:5px;
+    }
+    .notes-blk{
+        font-size: 13px;
+        .fa-check{
+            border: 1px solid #1EC8E5;
+            padding: 5px;
+            margin-top: 4px;
+            border-radius: 3px;
+            position: absolute;
+          }   
+          > div{
+            position: relative;
+            padding-left:30px;
+            margin-top: 15px;
+            .note-title{        
+                font-weight:600;
+                color:#212F3A;
+                padding-right:68px;
+                text-overflow: ellipsis;
+                overflow: hidden; 
+                white-space: nowrap;
+            }
+            .note-date{
+                color:#9DA1B2;
+                position: absolute;
+                right:0;
+                top:0;
+                font-size: 12px;
+            }
+            .note-dis{
+                color:#9DA1B2;
+                text-overflow: ellipsis;
+                overflow: hidden;  
+                white-space: nowrap;
+            }
+
+        }
+
+    }
+        ul{
+            padding:0px;
+            li{
+                list-style-type: none;
+                border-radius: 5px;
+                background-color:#DBFCF4;
+                padding:6px 10px;
+                margin-top:2px;
+                font-weight: 600;
+                font-size: 14px;
+                a{
+                    color: #212F3A;
+                }
+                &:hover{
+                    background: transparent linear-gradient(180deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+                    a{
+                        color:#FFFFFF;
+                    }
+                }
+            }
+        }
+        .obslist{
+            height:180px;
+            overflow: auto;
+        }
+        .obs-blk{
+            font-size: 13px;
+            position: relative;
+            .p-image{
+                border-radius: 50%;
+                width:36px;
+                position: absolute;
+              }   
+              > div{
+                position: relative;
+                padding-left:40px;
+                margin-top: 15px;
+                .b-title{        
+                    font-weight:600;
+                    color:#212F3A;
+                    text-overflow: ellipsis;
+                    overflow: hidden; 
+                    white-space: nowrap;
+                }
+                .b-date{
+                    color:#9DA1B2;
+                    position: absolute;
+                    right:0;
+                    font-size: 12px;
+                    bottom:0;
+                }
+                .b-dis{
+                    color:#9DA1B2;
+                    text-overflow: ellipsis;
+                    overflow: hidden;  
+                    white-space: nowrap;
+                    padding-right:60px;
+                }
+            }
+        }
+        .filterBox{
+            .device-title{
+                .btn{
+                    background: transparent linear-gradient(194deg, #20DDC5 0%, #1EC8E4 100%) 0% 0% no-repeat padding-box;
+                    border-radius: 4px;
+                    font-size: 13px;
+                    letter-spacing: 0px;
+                    color: #FFFFFF;
+                    text-shadow: 0px 3px 6px #00000029;
+                    height: 22px;
+                    border-radius: 4px;
+                    line-height: 0;
+                    font-size: 12px;
+                    right: 0;
+                    position: absolute;
+                    font-weight: 600;
+                }
+            }
+        }
+}
+
+.pet-list-item.active {
+    background: transparent linear-gradient(180deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+    color: #FFFFFF;
+}
+
+
+@media (max-width: 768px) {
+    .searchblock{
+        display:block;
+    }
+    .showSinfo{ display:block !important;}
+    .hideSinfo{ display:none !important;}
+    .search-content{
+        position: relative;
+        top: 0;
+        width: 100%;
+        // overflow: visible;
+        // ul{
+        //     position: absolute;
+        //     width: 100%;
+        //     left: 0;
+        //     float: left;
+        //     background: #fff;
+        // }
+    }
+    .patients-view {
+        .content-box .content-hdr{
+            display: block;
+            margin-left:0px;
+        }
+        .patient-details{
+            margin-left:0px;
+        }
+    }
+    .patientblk{
+        .icon-right-arrow{
+            display:block !important;
+            transform: rotate(90deg);
+            position: absolute;
+            font-size: 12px;
+            margin-top: 18px;
+            left: 1px;
+            margin-left:6px;
+        }
+        .showPinfo{ display:block !important;}
+        .hidePinfo{ display:none !important;}
+        .patientimg{
+            margin-left:20px !important;
+        }
+        .patientInfoBlock{
+            margin-right:0px;
+        }
+    }
+
+}
+
+.switch-btns {
+    .btn-primary {
+   min-width: 70px;
+   border-radius: 8px !important;
+   margin-right: -10px;
+   padding: 4px 0;
+   font-size: 13px;
+   line-height: 13px;
+    }
+    .btn-secondary {
+        min-width: 70px;
+        color: #FFFFFF;
+        border-radius: 8px !important;
+    padding: 4px 0;
+    font-size: 13px;
+    line-height: 13px;
+    }
+}
+.switch-btns {
+    .btn-primary.active {
+        background: transparent linear-gradient(172deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box !important;  
+        box-shadow: none;
+}
+    .btn-secondary.active {
+            background: transparent linear-gradient(172deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box !important;  
+            box-shadow: none;
+    }
+}
+.pet-status {
+    bottom: -5px;
+    left: 4px;
+    opacity: 1;
+    position: absolute;
+    font: normal normal 600 14px/16px Titillium Web;
+    letter-spacing: -0.21px;
+    opacity: 1;
+    font-size: 12px;
+    width: 70px;
+    text-align: center;
+    margin-left:-11px;
+    .offStudy-status{
+        color: #f36008;
+        background: #f7d9d2 0 0 no-repeat padding-box;
+        border: 1px solid #ef3e08;
+        border-radius: 3px;
+        padding: 0px 6px;
+        width: 100%;
+    }
+    .onStudy-status{
+        background: #E3FFF7 0% 0% no-repeat padding-box;
+        border: 1px solid #1CCF99;
+        color: #1CCF99;
+        border-radius: 3px;
+        padding: 0px 6px;
+        width: 100%;
+    }
+    .deceased-status{
+        color: #cf5e1c;
+        background: #ffe9e3 0 0 no-repeat padding-box;
+        border: 1px solid #cf461c;
+        border-radius: 3px;
+        padding: 0px 6px;
+        width: 100%;
+    }
+
+}
+
+.bg-color-grey{
+    background-color:#F3F4F7;
+    .row{
+        background-color: #FFF;
+        box-shadow: 0px 3px 6px #00000029;
+    }
+}
+.p-video.videopath{
+    width:100%;
+}

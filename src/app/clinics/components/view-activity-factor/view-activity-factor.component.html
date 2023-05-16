@@ -1,0 +1,66 @@
+<div class="content-box">
+   <div class="content-block">
+      <ng-container *ngIf="activityFactorData?.googleSheetUrl || activityFactorData?.hasPrelude; else noData">
+         <div class="row mb-4">
+            <div class="col-3 m-auto">
+               <label class="label w-100" style="font-weight:bold">
+                  Select Data Source </label>
+            </div>
+            <div class="col-9">
+               <fieldset class="w-fieldset" [disabled]="">
+                  <div class="label-value">
+                     <span class="aqua-bg mr-2" *ngIf="activityFactorData?.googleSheetUrl">Google Sheet </span>
+                     <span class="aqua-bg mr-2" *ngIf="activityFactorData?.hasPrelude">Prelude</span>
+                  </div>
+               </fieldset>
+            </div>
+         </div>
+         <div class="row-border" *ngIf="activityFactorData?.googleSheetUrl">
+            <div class="row">
+               <div class="col-6">
+                  <fieldset class="w-fieldset">
+                     <legend>
+                        <label class="label">Google Sheet Url </label>
+                     </legend>
+                     <div class="label-value">
+                        {{activityFactorData?.googleSheetUrl}}
+                     </div>
+                  </fieldset>
+               </div>
+               <div class="col-3">
+                  <fieldset class="w-fieldset">
+                     <legend><label class="label">Start Date </label>
+                     </legend>
+                     <div class="label-value">
+                        {{activityFactorData?.startDate | date: 'MM-dd-yyyy'}}
+                     </div>
+                  </fieldset>
+               </div>
+               <div class="col-3">
+                  <fieldset class="w-fieldset" [disabled]="">
+                     <legend>
+                        <label class="label">End Date </label>
+                     </legend>
+                     <div class="label-value">
+                        {{activityFactorData?.endDate | date: 'MM-dd-yyyy'}}
+                     </div>
+                  </fieldset>
+               </div>
+            </div>
+         </div>
+      </ng-container>
+
+      <div class="row mt-4">
+         <div class="col-12">
+            <div class="float-right">
+               <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+               <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+            </div>
+         </div>
+      </div>
+
+      <ng-template #noData>
+         <p class="no_records">Activity Factor is not yet configured</p>
+      </ng-template>
+   </div>
+</div>

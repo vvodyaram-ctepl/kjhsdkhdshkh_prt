@@ -1,0 +1,134 @@
+<div class="content-block">
+    <!-- {{addPetParentForm.value | json}} -->
+    <!-- 
+    {{addPetParentForm.valid | json}} -->
+    <div class="labelItem" *ngIf="viewFlag && petParentDetails">
+        <div class="row ">
+            <div class="col-3 mb-3">
+                <label>Pet Parent Name</label>
+            </div>
+            <div class="col-6 mb-3">
+                {{petParentDetails.petParentName}}
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-3 mb-3">
+                <label>Email ID</label>
+            </div>
+            <div class="col-6 mb-3">
+                {{petParentDetails.email}}
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-3 mb-3">
+                <label>Mobile</label>
+            </div>
+            <div class="col-6 mb-3">
+                {{petParentDetails.phoneNumber}}
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-3 mb-3">
+                <label>Shipping Address</label>
+            </div>
+            <div class="col-6 mb-3">
+                {{petParentDetails.shippingAddress}}
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-3 mb-3">
+                <label>Status</label>
+            </div>
+            <div class="col-6 mb-3">
+                {{petParentDetails.status == 1 ? 'Active': 'Inactive'}}
+            </div>
+        </div>
+    </div>
+
+    <form [formGroup]="addPetParentForm" novalidate>
+        <div class="row" *ngIf="!viewFlag">
+            <div class="col-6 mb-3">
+                <fieldset class="w-fieldset">
+                    <legend> <label class="label">Pet Parent First Name</label></legend>
+                    <input type="text" class="form-control textbox w-100" formControlName="petParentFirstName">
+                </fieldset>
+                <validation-message [messageToAppend]="" [control]="addPetParentForm.controls.petParentFirstName">
+                </validation-message>
+            </div>
+            <div class="col-6 mb-3">
+                <fieldset class="w-fieldset">
+                    <legend> <label class="label">Pet Parent Last Name <span class="asterisk">*</span></label></legend>
+                    <input type="text" class="form-control textbox w-100" formControlName="petParentLastName">
+                </fieldset>
+                <validation-message [messageToAppend]="" [control]="addPetParentForm.controls.petParentLastName">
+                </validation-message>
+            </div>
+            <div class="col-6 mb-3">
+                <fieldset class="w-fieldset">
+                    <legend> <label class="label">Email<span class="asterisk">*</span></label></legend>
+                    <input type="text" class="form-control textbox w-100" formControlName="email">
+                </fieldset>
+                <validation-message [messageToAppend]="" [control]="addPetParentForm.controls.email">
+                </validation-message>
+            </div>
+            <div class="col-6 mb-3 mobile">
+                <fieldset class="w-fieldset">
+                    <legend> <label class="label">Mobile</label></legend>
+                    <!-- <input type="text" class="form-control textbox w-100" formControlName="mobile"> -->
+                    <div class="dropdown-container">
+                        <select style="width:30%;float:left" class="select-cstom-control form-control"
+                            (change)="phoneCodeChange()" formControlName="phoneNumberCode">
+                            <option value="+1">US(+1)</option>
+                            <option value="+44">UK(+44)</option>
+                        </select>
+                        <input *ngIf="addPetParentForm.value.phoneNumberCode == '+1'" style="width:70%" type="text"
+                            formControlName="phoneNumberValue" id="phoneNumber" mask="(000)000-0000"
+                            [dropSpecialCharacters]="false" [showMaskTyped]="true" class="form-control textbox"
+                            maxlength="" />
+
+                        <input *ngIf="addPetParentForm.value.phoneNumberCode == '+44'" style="width:70%" type="text"
+                            formControlName="phoneNumberValue" id="phoneNumber" mask="00-0000-0000"
+                            [dropSpecialCharacters]="false" [showMaskTyped]="true" class="form-control textbox"
+                            maxlength="" />
+
+                    </div>
+                </fieldset>
+                <validation-message [messageToAppend]="" [control]="addPetParentForm.controls.phoneNumberValue">
+                </validation-message>
+            </div>
+            <div class="col-6 mb-3">
+                <!-- <fieldset class="w-fieldset">
+                    <legend> <label class="label">Shipping Address</label></legend>
+                    <input type="text" class="form-control textbox w-100" maxlength="500" formControlName="address">
+                </fieldset>  -->
+                <app-textarea formControlName="address" labelName="Shipping Address" [maxLengthT]="500"></app-textarea>
+               
+            </div>
+            <div class="col-6 mb-3">
+                <fieldset class="w-fieldset">
+                    <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+
+                    <select class="form-control w-100" formControlName="status">
+                        <option value="">Select</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+
+                </fieldset>
+                <validation-message [messageToAppend]="" [control]="addPetParentForm.controls.status">
+                </validation-message>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-3">
+                <div class="float-right">
+                    <button class="btn btn-secondary" type="button" routerLink="/user/petparent">
+                        Cancel
+                    </button>&nbsp;&nbsp;
+                    <button *ngIf="!editFlag" class="btn btn-primary" type="button" (click)="submit()">Submit</button>
+                    <button *ngIf="editFlag" class="btn btn-primary" type="button" (click)="next()">Next</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,180 @@
+.search-wrapper {
+  position: relative;
+  display: inline;
+}
+
+.icon-search {
+  color: #37b57b;
+  font-size: 13px;
+}
+
+.icon-circle {
+  background: #e0f6ec 0% 0% no-repeat padding-box;
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  top: -1px;
+  right: 5px;
+  text-align: center;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.search-box {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  // box-shadow: 0px 2px 13px #D1D5DF80;
+  border-radius: 7px;
+  opacity: 1;
+  margin-bottom: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 5px 40px 5px 5px;
+}
+
+.search-box.small-padding {
+  padding: 10px;
+}
+
+.sortable {
+  background: #eee;
+  border-radius: 0.25rem;
+  min-height: 40px;
+}
+
+.quesType {
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: #0fd6a8;
+}
+
+.list-group-item {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.ques {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+
+  .ques-name {
+    .ques-number {
+      text-decoration: none !important;
+      color: black !important;
+      font-weight: bold;
+    }
+  }
+
+  .ques-other {
+    input {
+      width: 40%;
+      margin-left: 15px;
+    }
+  }
+
+  .ques-name,
+  .ques-other,
+  .ques-opt {
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.checkbox-wrapper,
+.radio-input-wrapper,
+.text,
+.dropdown {
+  label {
+    width: 95%;
+    margin-bottom: 0;
+  }
+  .check,
+  .radio {
+    position: absolute;
+    margin-top: 1px;
+  }
+
+  .label {
+    margin-left: 25px;
+    line-height: 1.9;
+    cursor: pointer;
+  }
+}
+
+.radio-input-wrapper {
+  .radio {
+    height: 30px;
+    width: 15px;
+  }
+}
+
+.editQues .blue-bg,
+.addQues .blue-bg {
+  width: auto;
+  height: auto;
+  padding: 4.8px;
+}
+
+.downArrow {
+  font-size: x-small;
+  margin: auto;
+}
+
+.preDefinedQuestion {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.selectedQuestion {
+  height: 295px;
+  max-height: 295px;
+  overflow-y: auto;
+}
+
+.acronym {
+  font-size: 10px;
+  padding: 0.25em;
+  border: 0.3px solid #ccc;
+  background-color: white;
+  border-radius: 4px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+:host ::ng-deep .accordion {
+  .card-header {
+    padding: 0.25rem 0.75rem;
+
+    .btn {
+      white-space: unset;
+    }
+
+    .btn-link {
+      text-decoration: none;
+      color: black;
+      padding-left: 0;
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  .card-body {
+    padding: 0.5rem;
+  }
+
+  .card,
+  .card:not(:first-of-type):not(:last-of-type) {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+  }
+}
+.dropdown > select.form-control,
+.addQues select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 32px;
+  background: #fff url(../../../../assets/images/downArrow2.png) no-repeat right;
+}
+::ng-deep .uploadfilecontainer .uploadfilecontainerInner .upload-wrapper .upload-text {
+  font-size: 14px !important;
+}

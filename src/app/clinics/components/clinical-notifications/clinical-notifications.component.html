@@ -1,0 +1,55 @@
+<div class="content-box">
+  <div class="content-hdr">
+    <div class="row">
+      <div class="col-6 block-left-center">
+        Study Notification
+      </div>
+      <div class="col-6">
+        <div class="float-right">
+          <button *ngIf="RWFlag" class="btn btn-primary mr-2" type="button" (click)="OpenNotifications()">
+            Update Study Notification
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-blk">
+    <datatable [headers]="headers" [filterTypeArr]="filterTypeArr" *ngIf="showDataTable" [selectable]="selectable"
+      placeholder="Search" [hideExport]="true" defaultColumn="name" dir="DESC"
+      (selectedRecords)="selectedRecords($event)" url="/api/study/getStudyNotifications"
+      (formatter)="formatter($event)">
+    </datatable>
+  </div>
+</div>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Update Study Notification
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span class="icon-close" aria-hidden="true"></span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row mb-4">
+      <div class="col-12">
+        Are you sure you want to enable/disable notifications ?
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-primary btn-custom mr-3" (click)="enable()">
+          OK
+        </button>
+        <button type="button" class="btn btn-primary btn-custom" (click)="d('Cross click')">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+  </div>
+</ng-template>

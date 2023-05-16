@@ -1,0 +1,88 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span *ngIf="!editProd">Add New Asset Shipment</span>
+                <span *ngIf="editProd">Edit Asset Shipment</span>
+
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-block">
+            <!-- {{assetsForm.value | json}} -->
+            <form [formGroup]="assetsForm" novalidate>
+                <div class="row ">
+                 
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset" [disabled]="editProd">
+                            <legend> <label class="label">Asset Number <span class="asterisk">*</span></label></legend>
+                            <lib-typeahead [data]="unConfiguredAssetList" placeholder="" matcher="deviceNumber" formControlName="assetId"
+                            (onClear)='clearModel()' (selectedItem)="changeDeviceType($event)" class="w-100 mb-0" class="w-100">
+                          </lib-typeahead>
+                            <!-- <input type="text" class="form-control textbox w-100" formControlName="assetId"> -->
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.assetId">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-3">
+                        <fieldset class="w-fieldset">
+                        <legend> <label class="label">Pet Name</label></legend>
+                        <input type="text" disabled class="form-control textbox w-100" formControlName="petId">
+                    </fieldset>
+                           <!-- {{assetsForm.value.petId}} -->
+                       
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Shipment Company <span class="asterisk">*</span></label>
+                            </legend>
+                        
+                            <select class="form-control" formControlName="shipmentCompany">
+                                <option value=''>Select</option>
+                                <option *ngFor="let ship of shipmentCompanies" [ngValue]="ship.shipmentCompanyId">
+                                    {{ship.shipmentCompanyName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.shipmentCompany">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-4  mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Tracking Number <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="shipTrackingId">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.shipTrackingId">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-3">
+                        <fieldset class="w-fieldset">
+                            <legend>
+                                <label class="label">Shipment Date <span 
+                                        class="asterisk">*</span></label>
+                            </legend>
+                            <datepicker class="w-100" formControlName="shipDate" 
+                                format="MM-DD-YYYY" ></datepicker>
+                        </fieldset>
+                        <validation-message [control]="assetsForm.controls.shipDate"></validation-message>
+                    </div>
+                
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" type="button"
+                                (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="submitForm()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

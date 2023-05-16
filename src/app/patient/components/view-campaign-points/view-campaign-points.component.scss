@@ -1,0 +1,157 @@
+app-view-campaign-points {
+    .grey-bg-block {
+        background: #f0f0f0;
+        padding: 10px;
+
+        .c-points {
+            padding-left: 50px;
+            div:nth-child(1) {
+                position: relative;
+                div {
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    background: #ffffff;
+                    margin-top: 4px;
+                    margin-left: -40px;
+                    border-radius: 50%;
+                    i {
+                        font-size: 20px;
+                        position: relative;
+                        padding: 5px;
+                        top: 4px;
+                        left: 2px;
+                    }
+                }
+            }
+            div:nth-child(2) {
+                color: #2dd3bc;
+                font-size: 12px;
+            }
+            div:nth-child(3) {
+                color: #4b4b5a;
+                font-size: 18px;
+                font-weight: 700;
+            }
+        }
+    }
+    .align-right {
+        display: inline-block;
+        float: right;
+        img {
+            width: 22px;
+            margin-right: 5px;
+        }
+    }
+    .petImage {
+        width: 40px;
+        margin-right: 10px;
+        height: 35px;
+        display: inline-block;
+        float: left;
+        padding: 0px;
+        overflow: hidden;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        border: 1px solid #4dd3d9;
+        border-radius: 4px;
+        opacity: 1;
+    }
+
+    .observations {
+        .card {
+            #device-0-header {
+                background: #91ddd1;
+            }
+        }
+    }
+    .videos {
+        .card {
+            #device-1-header {
+                background: #91ddd1;
+            }
+        }
+    }
+    .images {
+        .card {
+            #device-2-header {
+                background: #91ddd1;
+            }
+        }
+    }
+    .questionnaire {
+        .card {
+            #device-3-header {
+                background: #91ddd1;
+            }
+        }
+    }
+    .redemption {
+        .card {
+            #device-4-header {
+                background: #91ddd1;
+            }
+        }
+    }
+
+    .choose-images {
+        position: relative;
+        display: inline-block;
+        margin-right: 2px;
+        border: 1px solid #4dd3d9;
+        border-radius: 4px;
+        text-align: center;
+        width: 60px;
+        height: 48px;
+        .thumbnaildiv {
+            position: relative;
+            overflow: hidden;
+            max-height: 100%;
+            width: 100%;
+            height: 100%;
+            float: left;
+            .p-image {
+                cursor: pointer;
+                max-width: unset !important;
+            }
+            .fa-play-circle {
+                position: absolute;
+                z-index: 9;
+                left: 50%;
+                color: rgba(255, 255, 255, 0.6);
+                top: 50%;
+                margin-top: -19px;
+                font-size: 37px;
+                margin-left: -19px;
+                cursor: pointer;
+            }
+            &:hover {
+                .fa-play-circle {
+                    color: rgba(255, 255, 255, 0.8);
+                }
+            }
+        }
+        img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0 auto;
+            object-fit: cover;
+        }
+        video {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0 auto;
+            object-fit: fill;
+        }
+    }
+}
+
+:host ::ng-deep ngb-accordion .card-header {
+    padding: 0 !important;
+
+    button {
+        padding: 0 !important;
+    }
+}

@@ -1,0 +1,31 @@
+<div class="content-block">
+    <div class="study-table" *ngIf="studyNames.length"> 
+        <table>
+            <thead>
+                <tr>
+                    <th>Study Name</th>
+                    <th>Association Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let study of studyNames; let i = index" [attr.data-index]="i">
+                    <td>{{study.studyName}}</td>
+                    <td>{{study.associatedDate}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="study-table" *ngIf="!studyNames.length">
+        There is no record associated to this plan
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="float-right">
+                <button class="btn btn-secondary" type="button" routerLink="/user/plans">
+                    Close
+                </button>&nbsp;&nbsp;
+                <button class="btn btn-primary" type="button" (click)="next(id)">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

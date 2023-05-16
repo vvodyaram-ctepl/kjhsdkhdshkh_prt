@@ -1,0 +1,126 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col block-left-center">
+                <div *ngIf="editProd">Edit Plan</div>
+                <div *ngIf="!editProd">Add New Plan</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-blk">
+        <div class="content-block">
+            <form [formGroup]="plansForm" novalidate>
+                <!-- {{plansForm.value | json}} -->
+                <div class="row ">
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Plan Name <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="planName">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="plansForm.controls.planName">
+                        </validation-message>
+                    </div>
+                    
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Status</label></legend>
+                            <select class="form-control w-100" formControlName="isActiv">
+                                <option value="">Select</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="plansForm.controls.isActiv">
+                        </validation-message>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <!-- <fieldset class="w-fieldset">
+                            <legend> <label class="label">Plan Description</label></legend>
+                            <textarea class="form-control textbox w-100" maxLength="500"
+                                formControlName="planDescription"></textarea>
+                              
+                        </fieldset>
+                        <div class="charCount mt-2">
+                            Remaining Characters :  {{500 - plansForm.value.planDescription?.length}} out of 500
+                            </div> -->
+                            <app-textarea labelName="Plan Description" formControlName="planDescription" [maxLengthT]="500" ></app-textarea>
+                    </div>
+                </div>
+                <div class="row" *ngIf="editProd">
+                    <div class="col">
+                        <div class="study-table" *ngIf="studyNames && studyNames.length">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Study Name</th>
+                                        <th>Associated Date</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let study of studyNames; let i = index" [attr.data-index]="i">
+                                        <td>{{study.studyName}}</td>
+                                        <td>{{study.associatedDate}}</td>
+                                        <td>
+                                            <div class="card icon-card-list red-bg mb-2 pointer" title="Remove"
+                                                (click)="deleteRecord(study.id,id)">
+                                                <span class="size-14" title="Remove">-</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="table-body" *ngIf="studyNames?.length == 0">
+                                    <tr>
+                                        <td>No Records Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" type="button"
+                                (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="updatePlans()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Remove</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Are you sure you want to remove this record?
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="UpdateStudyRecord()">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>

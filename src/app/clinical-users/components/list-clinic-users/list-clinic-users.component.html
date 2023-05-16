@@ -1,0 +1,50 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                User
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="addNew()">Add New
+                        User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <datatable [headers]="headers" *ngIf="showDataTable" (nodeAction)="getNode($event)" [hideExport]="true"
+            [filterTypeArr]="filterTypeArr" defaultColumn="modifiedDate" dir="DESC" (formatter)="formatter($event)"
+            placeholder="Search" url="/api/users" pageName="userPage">
+        </datatable>
+    </div>
+</div>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Delete</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Do you want to delete <span class="bold-text" style="color:red">{{selectedName}} </span> ?
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="deleteRecord(selectedItem);">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

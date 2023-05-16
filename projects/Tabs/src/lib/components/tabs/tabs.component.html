@@ -1,0 +1,105 @@
+<ul ngbNav *ngIf="!showButtons" #t="ngbNav" (tabChange)="beforeChange($event,'true');activeTab = $event.nextId" class="no-active navigation-tabs" #mainSet>
+    <li ngbNavItem *ngFor="let tab of data;let i=index" id="t-{{i}}">
+      <ng-container *ngIf="!tab.hide"><a ngbNavLink class="tab-link" [routerLink]="[(staticRoute+tab.link+(tab.subIndex ?'/'+tab.sub[0].link : '')),(routeParams ? routeParams : {})]" [queryParams]="{tab:i,sub:(tab.sub ? 0 : null)}">{{tab.name}}<span class="placeholder-arrow"> > </span></a>
+      
+      <ng-template ngbNavContent>
+        <ul ngbNav type="pills" #t1="ngbNav" (tabChange)="beforeChange($event,true);activeSubTab = $event.nextId">
+          <li ngbNavItem *ngFor="let sub of tab.sub;let j=index" id="t1-{{i}}-{{j}}">
+            <ng-container><a ngbNavLink class="tab-link" [routerLink]="[staticRoute+tab.link+'/'+sub.link,(routeParams ? routeParams : {})]" [queryParams]="{tab:i,sub:j}">{{sub.name}}</a>
+            </ng-container>
+            <ng-template ngbNavContent>
+            </ng-template>
+          </li>
+        </ul>
+      </ng-template>
+    </ng-container>
+    </li>
+  </ul>
+  <ul ngbNav *ngIf="showButtons" #t="ngbNav" (navChange)="beforeChange($event,'true');activeTab = $event.nextId" class="no-active navigation-tabs" #mainSet>
+    <li ngbNavItem *ngFor="let tab of data;let i=index" id="t-{{i}}">
+      <ng-container *ngIf="!tab.hide"><a ngbNavLink class="tab-link" href="javascript:void(0)" (click)="changeTab(staticRoute+tab.link+(tab.subIndex ?'/'+tab.sub[0].link : ''),(routeParams ? routeParams : {}),{tab:i,sub:(tab.sub ? 0 : null)},tab,tab)">{{tab.name}}<span class="placeholder-arrow"> > </span></a></ng-container>
+      <ng-template ngbNavContent>
+        <ul ngbNav type="pills" #t1="ngbNav" (navChange)="beforeChange($event,true);activeSubTab = $event.nextId">
+          <li ngbNavItem *ngFor="let sub of tab.sub;let j=index" id="t1-{{i}}-{{j}}">
+            <ng-container><a ngbNavLink class="tab-link" (click)="changeTab(staticRoute+tab.link+'/'+sub.link,(routeParams ? routeParams : {}),{tab:i,sub:j},sub,sub)"
+                href="javascript:void(0)">{{sub.name}}</a></ng-container>
+            <ng-template ngbNavContent>
+            </ng-template>
+          </li>
+        </ul>
+      </ng-template>
+    </li>
+  </ul>
+  <div>
+    <!-- <router-outlet></router-outlet> -->
+    <div class="container-fluid" *ngIf="showButtons">
+      <div class="row mt-1">
+        <div class="col-12 text-right mb-2 buttons">
+          <button type="button" class="btn btn-primary" (click)="back()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableBack) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableBack))"
+            *ngIf="!((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].hideBack) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].hideBack))">Back</button>
+  
+  
+          <button type="button" class="btn btn-primary" (click)="ConfirmSchedule()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableConfirmSchedule) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableConfirmSchedule))"
+            *ngIf="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].showConfirmSchedule) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showConfirmSchedule))">Confirm Schedule</button>
+  
+            
+          <button type="button" class="btn btn-primary" (click)="SaveTentativeSchedule()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableSaveTentativeSchedule) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableSaveTentativeSchedule))"
+            *ngIf="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].showSaveTentativeSchedule) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showSaveTentativeSchedule))">Save Tentative Schedule</button>
+  
+            <button type="button" class="btn btn-primary" (click)="schedule()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableSchedule) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableSchedule))"
+            *ngIf="((this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].showApproveSchedule) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showApproveSchedule))">Schedule</button>
+  
+  
+          <button type="button" class="btn btn-primary" (click)="save()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableSave) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableSave))"
+            *ngIf="!((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].hideSave) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].hideSave))">Save</button>
+  
+  
+          <button type="button" class="btn btn-primary" (click)="saveDraft()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableSaveDraft) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableSaveDraft))"
+            *ngIf="!((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].hideSaveDraft) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].hideSaveDraft))">Save as Draft</button>
+  
+  
+          <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableSubmit) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableSubmit))"
+            *ngIf="((this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].showSubmit) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showSubmit))">Submit</button>
+  
+  
+          <button type="button" class="btn btn-primary" (click)="submitUpdates()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableSubmitUpdates) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableSubmitUpdates))"
+            *ngIf="((this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].SubmitUpdates) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showSubmitUpdates))">Submit Updates</button>
+  
+          <button type="button" class="btn btn-primary" (click)="ApplyDvc()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableApplyDvc) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableApplyDvc))"
+            *ngIf="((this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].showApplyDvc) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showApplyDvc))">Apply DVC</button>
+  
+          <button type="button" class="btn btn-secondary" (click)="Reset()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableReset) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableReset))"
+            *ngIf="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].showReset) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showReset))">Reset</button>
+  
+          <button type="button" class="btn btn-primary" (click)="activate()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableActivate) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableActivate))"
+            *ngIf="((this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].activate) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].activate))">Activate</button>
+  
+          <button type="button" class="btn btn-primary" (click)="inactivate()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableInactivate) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableInactivate))"
+            *ngIf="((this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].inactivate) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].inactivate))">Inactivate</button>
+  
+          <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableCancel) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableCancel))"
+            *ngIf="!((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].hideCancel) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].hideCancel))">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="next()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableNext) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableNext))"
+            *ngIf="!((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].hideNext) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].hideNext))">Next</button>
+  
+            <button type="button" class="btn btn-primary" (click)="createpanel()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disablecreatepanel) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disablecreatepanel))"
+            *ngIf="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].createpanel) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].createpanel))">create panel</button>
+  
+            <button type="button" class="btn btn-primary" (click)="addAnimal()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disableaddAnimal) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disableaddAnimal))"
+            *ngIf="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].showaddAnimal) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].showaddAnimal))">Add Animal</button>
+  
+            <button type="button" class="btn btn-primary" (click)="replicateprimary()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disablereplicateprimary) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disablereplicateprimary))"
+            *ngIf="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].replicateprimary) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].replicateprimary))">Replicate</button>
+  
+            <button type="button" class="btn btn-primary" (click)="replicatesecondary()" [disabled]="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].disablereplicatesecondary) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].disablereplicatesecondary))"
+            *ngIf="((this.data[this.mainTabIndex] && !this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].replicatesecondary) || (this.data[this.mainTabIndex] && this.data[this.mainTabIndex].sub && this.data[this.mainTabIndex].sub[this.subTabIndex].replicatesecondary))">Replicate CK Template</button>
+  
+            
+     
+  
+  
+  
+        </div>
+      </div>
+    </div>
+  </div>

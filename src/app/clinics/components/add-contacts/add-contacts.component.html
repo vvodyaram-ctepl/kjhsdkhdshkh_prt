@@ -1,0 +1,91 @@
+<form [formGroup]="addContactForm" (submit)='onSubmit(addContactForm.value)'>
+    <div class="content-box">
+        <div class="content-block">
+            <div class="row">
+                <div class="col-6">
+                    <label class="label-hdr w-100">Add new contact/select existing contact?
+                    </label>
+                    <div class="radio-input-wrapper">
+                        <input type="radio" formControlName="contact_status" value="1"><span
+                            class="label">&nbsp;&nbsp;Yes, create new
+                            contact</span>
+                    </div>
+                    <div class="radio-input-wrapper">
+                        <input type="radio" formControlName="contact_status" value="2"><span
+                            class="label">&nbsp;&nbsp;No, select a contact that
+                            already exists</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="addContactForm.value.contact_status == '2'">
+                <div class="col-6">
+                    <lib-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" formControlName="contact"
+                        class="w-100 mb-0" placeholder="" class="w-100"></lib-typeahead>
+                </div>
+            </div>
+            <div *ngIf="addContactForm.value.contact_status == '1'">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label class="label"> Username</label>
+                        <input formControlName="user_name" type="text" class="form-control textbox w-100"
+                            maxlength="" />
+                    </div>
+                    <div class="col-6">
+                        <label class="label">Full Name</label>
+                        <input formControlName="full_name" type="text" class="form-control textbox w-100"
+                            maxlength="" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label class="label">City</label>
+                        <input formControlName="city" type="text" class="form-control textbox w-100" maxlength="" />
+                    </div>
+                    <div class="col-3">
+                        <label class="label">State</label>
+                        <lib-typeahead url="http://localhost:4200/assets/b.json" matcher="gender"
+                            formControlName="state" class="w-100 mb-0" placeholder="" class="w-100"></lib-typeahead>
+                    </div>
+                    <div class="col-3">
+                        <label class="label">Postal Code</label>
+                        <input formControlName="postal_code" type="text" class="form-control textbox w-100"
+                            maxlength="" />
+                    </div>
+                    <div class="col-3">
+                        <label class="label">Country</label>
+                        <input formControlName="country" type="text" class="form-control textbox w-100" maxlength="" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label class="label"> Phone</label>
+                        <div class="dropdown-container">
+                            <select style="width:20%;float:left" class="select-cstom-control form-control"
+                                formControlName="phoneNumberCode">
+                                <option value="">Us+1</option>
+                                <option value="1">Ind+91</option>
+                            </select>
+                            <input style="width:80%" type="text" formControlName="phoneNumberValue"
+                                class="form-control textbox" maxlength="" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="label">Email</label>
+                        <input formControlName="email_address" type="text" class="form-control textbox w-100"
+                            maxlength="" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                        <button class="btn btn-primary" type="button">Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

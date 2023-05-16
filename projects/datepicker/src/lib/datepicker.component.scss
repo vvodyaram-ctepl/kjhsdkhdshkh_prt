@@ -1,0 +1,32 @@
+
+datepicker{
+    display:block;
+    position: relative;
+    font-weight: normal;
+    .dropdown-menu{
+        z-index: 1050;
+    }
+    .picker-cont{
+        position: absolute;
+        z-index: 100;
+        background: #fff;
+    }
+    .hidden{
+        visibility: hidden;
+        height: 0 !important;
+        padding: 0 !important;
+    }
+    .mask-input{
+        position: relative;
+        width: 100% !important;
+        font-size: inherit !important;
+    }
+    .close-icon{
+        position: absolute;
+        // top: 0px;
+        top:9px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+}

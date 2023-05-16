@@ -1,0 +1,200 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col block-left-center">
+                <div>View Customer Support</div>
+            </div>
+            <div class="col">
+                <div class="float-right">
+                    <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="editSupport()">Edit Support</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-banner mb-3">
+
+            <div class="row no-gutter border-1">
+                <div class="col-6 block-left-center mb-2">
+                    <span class="banner-heading-text">{{customerSupport.ticketId}}</span>
+                    <span class="status-button"
+                        [ngClass]="customerSupport.status == 'Active' ? 'active-bg' : 'inactive-bg'">{{customerSupport.status}}</span>
+                    <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                    <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right mb-2">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutter mt-1">
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Ticket Title</div>
+                                <div class="green-small-text">{{customerSupport.ticketTitle}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Ticket Type</div>
+                                <div class="green-small-text">{{customerSupport.ticketType}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Priority</div>
+                                <div class="green-small-text">{{customerSupport.priority}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Pet Parent Name</div>
+                                <div class="green-small-text">{{customerSupport.petParentName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Pet Name</div>
+                                <div class="green-small-text">{{customerSupport.petName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Ticket Description</div>
+                                <div class="green-small-text">{{customerSupport.ticketDescription}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Date</div>
+                                <div class="green-small-text">{{customerSupport.ticketCreatedDate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Shipping Status</div>
+                                <div class="green-small-text">{{customerSupport.shippingStatus}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Contact Method</div>
+                                <div class="green-small-text">{{customerSupport.contactMethod}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Issue Category</div>
+                                <div class="green-small-text">{{customerSupport.issueCategory}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mt-2">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Notes</div>
+                                <div class="green-small-text">{{customerSupport.notes}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="content-block">
+            <div class="labelItem" *ngIf="customerSupport">
+                <div class="row" *ngIf="resolutionList.length">
+                    <div class="col-3">
+                        <label>Resolution Provided:</label>
+                    </div>
+                    <div class="col-12">
+                        <div class="custom-table mb-4">
+                            <table>
+                                <thead class="table-hdr">
+                                    <tr>
+                                        <th>Resolution Provided By</th>
+                                        <th>Resolution Status</th>
+                                        <th>Resoution Details</th>
+                                        <th>Resolution Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-body" *ngIf="resolutionList?.length > 0">
+                                    <tr *ngFor="let list of resolutionList; let i = index">
+                                        <td>
+                                            {{ list.resolutionProvidedBy }}
+                                        </td>
+                                        <td>
+                                            {{ list.resolutionStatus }}
+                                        </td>
+                                        <td>
+                                            {{ list.resoutionDetails }}
+                                        </td>
+                                        <td>
+                                            {{ list.resolutionDate }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="table-body" *ngIf="resolutionList?.length == 0">
+                                    <tr>
+                                        <td>No Records Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" type="button" (click)="backToList()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>

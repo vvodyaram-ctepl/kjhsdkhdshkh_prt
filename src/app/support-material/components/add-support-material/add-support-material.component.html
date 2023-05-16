@@ -1,0 +1,242 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Add New Support Material 
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-block">
+            <!-- {{supportForm.value | json}} -->
+        <form novalidate [formGroup]="supportForm">
+            <div formArrayName="form" *ngFor="
+                let form of supportForm.get('form')['controls'];
+                let i = index;
+                let lastValue = last">
+                <hr *ngIf="i > 0" class="line mb-2" />
+                <div [formGroupName]="i">
+                <div class="row">
+                <div class="col-11">
+                    <div class="row">
+                        <div class="col-3 mb-3">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Material Type<span class="asterisk">*</span></label>
+                                </legend>
+                                <select class="form-control" formControlName="materialType"
+                                (change)="addMatTypeValidations(form, i)"
+                                >
+                                    <option value='' disabled="true">Select</option>
+                                    <option *ngFor="let mat of materialTypeList" [ngValue]="mat.materialTypeId">
+                                        {{mat.materialTypeName}}</option>
+                                </select>
+                            </fieldset>
+                            <validation-message [control]="supportForm.get('form').controls[i].controls.materialType">
+                            </validation-message>
+                        </div>
+                        <div class="col-3 mb-3">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Category<span class="asterisk">*</span></label>
+                                </legend>
+                                <select class="form-control" formControlName="category"
+                                (change)="addCategoryValidations(form,i)"
+                                >
+                                    <option value='' disabled="true">Select</option>
+                                    <option *ngFor="let category of materialCategoryList" [ngValue]="category.categoryId">
+                                        {{category.categoryName}}</option>
+                                </select>
+                            </fieldset>
+                            <validation-message [control]="supportForm.get('form').controls[i].controls.category">
+                            </validation-message>
+                        </div>
+                        <div class="col-3 mb-3" *ngIf="supportForm.value.form[i].category == 1">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Sub Category<span class="asterisk">*</span></label>
+                                </legend>
+                                <select class="form-control" formControlName="subcategory">
+                                    <option value='' disabled="true">Select</option>
+                                    <option *ngFor="let sub of materialSubCategoryList" [ngValue]="sub.categoryId">
+                                        {{sub.categoryName}}</option>
+                                </select>
+                            </fieldset>
+                            <validation-message [control]="supportForm.get('form').controls[i].controls.subcategory">
+                            </validation-message>
+                        </div>
+                        <div class="col-3 mb-3" *ngIf="supportForm.value.form[i].category == 2">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Asset Type<span class="asterisk">*</span></label>
+                                </legend>
+                                <select class="form-control" formControlName="assetType"
+                                    (change)="changeDeviceType(supportForm.value.form[i].assetType)">
+                                    <option value='' disabled="true">Select</option>
+                                    <option *ngFor="let asset of assetTypes" [ngValue]="asset.deviceType">
+                                        {{asset.deviceType}}</option>
+                                </select>
+                            </fieldset>
+                            <validation-message [control]="supportForm.get('form').controls[i].controls.assetType">
+                            </validation-message>
+                        </div>
+                        <div class="col-3 mb-3" *ngIf="
+                        supportForm.value.form[i].category == 2">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Asset Model<span class="asterisk">*</span></label>
+                                </legend>
+                                <select class="form-control" formControlName="assetModel">
+                                    <option value='' disabled="true">Select</option>
+                                    <option *ngFor="let device of modelList" [ngValue]="device.deviceModel">
+                                        {{device.deviceModel}}</option>
+                                </select>
+                                <!-- <input type="text" class="form-control textbox w-100" formControlName="deviceModel"> -->
+                            </fieldset>
+                            <validation-message [control]="supportForm.get('form').controls[i].controls.assetModel">
+                            </validation-message>
+                        </div>
+    
+                        <div class="col-12 mb-3" *ngIf="
+                        supportForm.value.form[i].materialType && supportForm.value.form[i].materialType != 2">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Title<span class="asterisk">*</span></label>
+                                </legend>
+                                <input class="form-control textbox w-100" formControlName="title"
+                                    maxlength="500">
+                            </fieldset>
+                        <validation-message 
+                        [control]="form.get('title')">
+                        </validation-message>
+                        </div>
+                         
+                        <div class="col-12 mb-3" *ngIf="supportForm.value.form[i].materialType == 3">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Attachment<span class="asterisk">*</span></label>
+                                </legend>
+                                <app-file-upload validTypes="pdf" formControlName="file" 
+                                [fileLength]="5"
+                                Page="addSupportMat" (selectedItem)="selectFileResult($event , i)">
+                                </app-file-upload>
+                            </fieldset>
+                            <validation-message [control]="supportForm.get('form').controls[i].controls.file">
+                            </validation-message>
+                        </div>
+
+                        <div class="col-12 mb-3" *ngIf="supportForm.value.form[i].materialType == 1">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label w-100">Attachment<span class="asterisk">*</span></label>
+                                </legend>
+                                <app-file-upload formControlName="file" 
+                                validTypes="video/mp4"
+                                [fileLength]="1"
+                                Page="addSupportMat" (selectedItem)="selectFileResult($event , i)">
+                                </app-file-upload>
+                            </fieldset>
+                            <validation-message [control]="supportForm.get('form').controls[i].controls.file">
+                            </validation-message>
+                        </div>
+    
+                    </div>
+                </div>
+                
+                <div class="col-1 center-align">
+                    <!-- *ngIf="supportForm.value.arr.length > 1" -->
+                    <div *ngIf="i > 0"  class="card icon-card-list red-bg mr-2 mt-3 pointer-cursor" title="Remove"
+                         (click)="removeMainItem(i)">
+                        <span class=" pointer-cursor size-17" title="Remove">-</span>
+                    </div>
+
+                    <div class="card icon-card-list blue-bg mt-3" title="Add" *ngIf="lastValue">
+                        <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                            (click)="addMainItem()"></span>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+            <div *ngIf="supportForm.value.form[i].materialType == 2">
+                <div class="row">
+                    <div class="col-12">
+                        FAQ(S)<span class="asterisk">*</span>
+                    </div>
+                </div>
+            
+
+                <!--    <div formArrayName="subMenu"
+                                *ngFor="let submenu of rolesForm.get('permissionMap')['controls'][i].get('subMenu')['controls']; let j = index"> -->
+                <div formArrayName="arr"
+                *ngFor="
+                let sub of supportForm.get('form')['controls'][i].get('arr')['controls'];
+                let j = index;
+                let lastValuee = last" 
+                >
+                <div [formGroupName]="j">
+                    <div class="row mt-2 mb-4"
+                    >
+                    <div class="col-11">
+                        <div class="ques-name">
+                            <div class="row custom-gutters-0">
+                                <div class="col-12 p-3 cstm-col" style="display: inherit;">
+                                    <span class="ques-number mt-2">
+                                        Q{{j+1}}
+                                        &nbsp;</span>
+                                    <!-- (input)="quesUpdated(i)" -->
+                                    <input type="text" class="form-control ml-1 d-inline-block"
+                                        formControlName="faqQuestion">
+
+                                        <validation-message [messageToAppend]="" 
+                                [control]="supportForm.get('form').controls[i].get('arr').controls[j].controls.faqQuestion">
+                                </validation-message>
+                                </div>
+
+                                <div class="col-12 p-3" style="display: inherit;">
+                                    <span class="ques-number  mt-2">
+                                        A{{j+1}}
+                                        &nbsp;</span>
+                                    <!-- (input)="quesUpdated(i)" -->
+                                    <textarea type="text" class="form-control ml-1 d-inline-block"
+                                    formControlName="faqAnswer"></textarea>
+
+                                        <validation-message [messageToAppend]="" 
+                                [control]="supportForm.get('form').controls[i].get('arr').controls[j].controls.faqAnswer">
+                                </validation-message>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 center-align">
+                        
+                        <!--   *ngIf="supportForm.value.form[i].arr.length > 1" -->
+                        <div class="card icon-card-list red-bg mr-2 mt-3 pointer-cursor" title="Remove"
+                           (click)="removeItem(i,j)">
+                            <span class=" pointer-cursor size-17" title="Remove">-</span>
+                        </div>
+
+                        <div class="card icon-card-list blue-bg mt-3" title="Add"  *ngIf="lastValuee">
+                            <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                                (click)="addItem(i)"></span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+
+            </div>
+
+                </div>
+            </div>
+
+            </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" (click)="backToList()"
+                                type="button">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button"
+                                (click)="addSupportMaterial()">Submit</button>&nbsp;&nbsp;
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center"> View Pet Parent</div>
+            <!-- <div class="col-6 text-right"><button class="btn btn-primary" type="button" (click)="addPetParent()">Add
+                    Pet Parent</button></div> -->
+            <div class="col-6 text-right">
+                <div class="float-right">
+                    <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="editPetParent()">Edit Pet
+                        Parent</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-banner mb-3">
+            <div class="row no-gutter border-1">
+                <div class="col-6 block-left-center mb-2" *ngIf="petParentDetails">
+                    <span *ngIf="petParentDetails.lastName != undefined"
+                        class="banner-heading-text">{{(petParentDetails.firstName || '') + ' ' +petParentDetails.lastName}}</span>
+                    <span class="status-button" *ngIf="petParentDetails.status != undefined"
+                        [ngClass]="petParentDetails.status == '1' ? 'active-bg' : 'inactive-bg'">{{petParentDetails.status =='1' ? 'Active':'Inactive'}}</span>
+                    <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                    <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right mb-2">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutter mt-3">
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Email</div>
+                                <div class="green-small-text">{{petParentDetails.email}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Mobile</div>
+                                <div class="green-small-text">{{petParentDetails.phoneNumber ? petParentDetails.phoneNumber : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Shipping Address</div>
+                                <div class="green-small-text">{{petParentDetails.shippingAddress ? petParentDetails.shippingAddress : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <div class="col custom-table">
+                    <table>
+                        <thead class="table-hdr">
+                            <tr>
+                                <th *ngFor="let list of headers; let i = index">
+                                    {{ list.label }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body" *ngIf="existingPetArr?.length > 0">
+                            <tr *ngFor="let list of existingPetArr; let i = index">
+                                <td *ngIf="!list.petPhotoUrl || list.petPhotoUrl == ''">
+                                    <span class="petImage"><img class="dog-circle"
+                                            src="assets/images/no-dogs.svg" height="38" width="38"></span>
+                                </td>
+                                <td *ngIf="list.petPhotoUrl && list.petPhotoUrl != ''">
+                                    <span class="petImage"><img class="dog-circle" src="{{list.petPhotoUrl}}" height="38"
+                                            width="38"></span>
+                                </td>
+
+                                <td>
+                                    <a 
+                                    href="javascript:void(0)" (click)="redirectPetView(list)" class="control-icons ng-star-inserted">{{ list.petName }} </a>
+                                </td>
+                                <td>
+                                    {{ list.breedName }}
+                                </td>
+                                <td>
+                                    {{ list.weight | number : '1.2-2'}}
+                                </td>
+                                <td>
+                                    {{ list.gender }}
+                                </td>
+                                <td>
+                                    {{ list.dob | date: 'dd-MM-yyyy'}}
+                                </td>
+                                <td>
+                                    {{ list.isNeutered == 1 ? 'Yes' : 'No' }}
+                                </td>
+                                <td>
+                                    <span *ngIf="list.petStatus == 1">Off Study</span>
+                                    <span *ngIf="list.petStatus == 2">On Study</span>
+                                    <span *ngIf="list.petStatus == 3">Deceased</span>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                        <tbody class="table-body" *ngIf="existingPetArr?.length == 0">
+                            <tr>
+                                <td>No Records Found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="backToList()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row no-gutter b-1-grey">
+            <div class="col-6 block-left-center">
+                Manage Reports
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <button *ngIf="RWFlag" class="btn btn-primary mb-1" type="button" (click)="addReport()">Add New
+                        Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <!-- <datatable *ngIf="showDataTable" [headers]="headers" [hideExport]="true" placeholder="Search"
+            defaultColumn="reportName" [filterTypeArr]="filterTypeArr" (formatter)="formatter($event)" dir="DESC"
+            url="/api/analyticalReports/getReports" (nodeAction)="getNode($event)" pageName="manageReport">
+        </datatable> -->
+        <reports-datatable *ngIf="showDataTable" [headers]="headers" [hideExport]="true" placeholder="Search"
+        defaultColumn="reportName" [filterTypeArr]="filterTypeArr" (formatter)="formatter($event)" dir="DESC"
+        url="/api/analyticalReports/getReports" (nodeAction)="getNode($event)" pageName="manageReport">
+    </reports-datatable>
+    </div>
+</div>
+
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            {{!statusChangeRec ? 'Delete Report' : 'Activate/Inactivate Report'}}
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mb-4">
+            <div class="col-12" *ngIf="!statusChangeRec; else statusConfirmation">
+                Do you want to delete <span class="bold-text" style="color:red">{{this.reportName}}</span>
+            </div>
+            <ng-template #statusConfirmation>
+                <div class="col-12">
+                    Do you want to {{statusChangeRec.status ? 'Inactivate' : 'Activate'}} <span class="bold-text" style="color:red">{{statusChangeRec.reportName}}</span>
+                </div>
+            </ng-template>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click'); statusChangeRec = ''">
+                    No
+                </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="(!statusChangeRec ? deleteReport() : updateStatus());d('Cross click')">
+                    Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+
+<ng-template #customOptions let-oRecord="rowData">
+    <form *ngIf="RWFlag">
+        <div class="d-inline-flex">
+            <div class="card icon-card-list green-bg mb-2 mr-2 cursor-pointer" title="Edit" (click)="editReport(oRecord)">
+                <span class="icon-tag size-20" title="Edit"></span>
+            </div>&nbsp;
+            <div class="card icon-card-list red-bg mb-2 mr-2 cursor-pointer" title="Delete" (click)="deleteReportConfirm(oRecord)">
+                <span class="fa fa-trash-alt size-14" style="color:red;" title="Delete"></span>
+            </div>&nbsp;
+            <div class="d-flex m-auto">
+                <div class="btn-group custom-radio" role="group" aria-label="status">
+                    <input type="radio" class="btn-check" [attr.checked]="oRecord.status == 1 ? 'checked' : null"
+                        name="status" id="active{{oRecord.reportId}}" (click)="updateStatusConfirm(oRecord, $event)">
+                    <label class="btn btn-outline-primary px-2" for="active{{oRecord.reportId}}">Active</label>
+
+                    <input type="radio" class="btn-check" [attr.checked]="oRecord.status == 0 ? 'checked' : null" name="status"
+                        id="inactive{{oRecord.reportId}}" (click)="updateStatusConfirm(oRecord, $event)">
+                    <label class="btn btn-outline-primary px-2" for="inactive{{oRecord.reportId}}">Inactive</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>

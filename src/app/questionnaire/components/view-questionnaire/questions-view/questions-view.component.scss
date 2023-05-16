@@ -1,0 +1,76 @@
+.review-hdr {
+  background: #babfbf;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.header-text {
+  font-weight: 600;
+}
+
+:host ::ng-deep .accordion {
+  .card-header .btn-link {
+    text-decoration: none;
+    color: black;
+    padding-left: 0;
+    width: 100%;
+    text-align: left;
+
+    span.question {
+      white-space: normal;
+      text-align: justify;
+      padding-left: 45px;
+      display: block;
+    }
+  }
+
+  .card,
+  .card:not(:first-of-type):not(:last-of-type) {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    margin-bottom: 10px;
+  }
+}
+
+.checkbox-wrapper,
+.radio-input-wrapper,
+.text {
+  .check,
+  .radio {
+    position: absolute;
+  }
+
+  .label {
+    margin-left: 30px;
+    cursor: pointer;
+    display: block;
+    padding-top: 4px;
+  }
+}
+
+.radio-input-wrapper {
+  .radio {
+    height: 30px;
+    width: 16px;
+  }
+}
+
+.text label {
+  width: 100%;
+}
+
+.fa-drag-handle {
+  content: "\f142 \f142";
+  letter-spacing: 2px;
+}
+
+.dropdown > select.form-control,
+.addQues select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 32px;
+  background: #fff url(../../../../../assets/images/downArrow2.png) no-repeat right;
+}

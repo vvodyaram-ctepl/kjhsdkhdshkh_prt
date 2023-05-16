@@ -1,0 +1,55 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Mobile App Self Onboarding
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <datatable *ngIf="showDataTable" [headers]="headers" placeholder="Search" [hideExport]="true"
+            [filterDropdown]="false" defaultColumn="modifiedDate" dir="DESC" url="/api/mobileapp/selfOnboard"
+            (formatter)="formatter($event)" (nodeAction)="getNode($event)">
+        </datatable>
+    </div>
+</div>
+
+
+<ng-template #assignStudy let-c="close" let-d="dismiss" *ngIf="studyList.length">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Assign Study
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click');clearStudy()">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="studyForm" (submit)='assignStudySubmit()'>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Study <span class="asterisk">*</span></label></legend>
+                        <lib-typeahead [data]="studyList" [matcher]="'studyName'" formControlName="study"
+                            class="w-100 mb-0" placeholder="" class="w-100">
+                        </lib-typeahead>
+                    </fieldset>
+                    <validation-message [control]="studyForm.controls.study"></validation-message>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <button type="submit" class="btn btn-primary btn-custom float-right">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>

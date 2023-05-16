@@ -1,0 +1,51 @@
+<div class="content-block">
+    <div *ngIf="planDetails">
+        <div class="row labelItem">
+            <div class="col-4">
+                <label>Plan Name:</label>
+            </div>
+            <div class="col-4">
+                <div>{{planDetails.planName}}</div>
+            </div>
+        </div>
+        <div class="row labelItem">
+            <div class="col-4">
+                <label>Plan Description:</label>
+            </div>
+            <div class="col-4">
+                <div>{{planDetails.planDescription}}</div>
+            </div>
+        </div>
+        <div class="row labelItem">
+            <div class="col-4">
+                <label>Created on:</label>
+            </div>
+            <div class="col-4">
+                <div>{{planDetails.createDate}}</div>
+            </div>
+        </div>
+        <div class="row labelItem">
+            <div class="col-4">
+                <label>Total Pets Associated:</label>
+            </div>
+            <div class="col-4">
+                <div>{{planDetails.totalCount}}</div>
+            </div>
+        </div>
+        <div class="row labelItem">
+            <div class="col-4">
+                <label>Status:</label>
+            </div>
+            <div class="col-4">
+                <div>{{planDetails.isActiv =='1' ? 'Active':'Inactive'}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="float-right">
+                <button class="btn btn-primary" type="button" (click)="next(id)">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

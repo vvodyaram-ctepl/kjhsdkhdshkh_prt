@@ -1,0 +1,111 @@
+<div class="content-box">
+    <div class="content-block">
+        <!-- {{this.futureStudies | json}}
+            {{this.inactiveStudies | json}} -->
+        <!-- {{addAssStudyForm.value | json}} -->
+        <div class="row mb-3 ml-1" *ngIf="roleType != 1">
+            <!-- <fieldset class="w-fieldset checkbox"> -->
+            <label class="mr-5">
+                <input type="checkbox" [(ngModel)]="futureStudies" />
+                Associate All Future Studies
+            </label>
+
+            <label>
+                <input type="checkbox" [(ngModel)]="inactiveStudies" />
+                Associate All Inactive Studies
+            </label>
+
+            <!-- </fieldset> -->
+        </div>
+        <div class="row mb-3 ml-1" *ngIf="roleType == 1">
+            <b>Note :</b><span style="padding-left:5px;">Admins will be associated with all the studies in the
+                application.</span>
+        </div>
+        <!-- When only inactive checkbox is selected -->
+        <div class="row mb-3 ml-1" *ngIf="roleType != 1 && inactiveStudies && !futureStudies">
+            <b>Note :</b><span style="padding-left:5px;">User is associated with all inactive studies.</span>
+        </div>
+        <!-- When only future checkbox is selected -->
+        <div class="row mb-3 ml-1" *ngIf="roleType != 1 && !inactiveStudies && futureStudies">
+            <b>Note :</b><span style="padding-left:5px;">User will be associated with all studies created in the
+                future.</span>
+        </div>
+        <!-- When both are selected -->
+        <div class="row mb-3 ml-1" *ngIf="roleType != 1 && inactiveStudies && futureStudies">
+            <b>Note :</b><span style="padding-left:5px;">User is associated with all inactive studies and will be
+                associated with all studies created in the future.</span>
+        </div>
+
+        <form [formGroup]="addAssStudyForm" *ngIf="roleType != 1">
+            <div formArrayName="arr"
+                *ngFor="let a of addAssStudyForm.get('arr')['controls']; let i = index;let last=last">
+                <div class="row row-small-gutter mb-4" [formGroupName]="i">
+                    <div class="col-5">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label">Study</label></legend>
+                            <lib-typeahead [data]="addAssStudyForm.value.arr[i].studyList" matcher="studyName"
+                                (click)="getUniqStudyList(i)" (onClear)="getUniqStudyList(i)" formControlName="clinicName"
+                                (selectedItem)='studySelected($event,i)' class="w-100 mb-0" placeholder=""
+                                class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                        <!-- <validation-message [control]="addAssStudyForm.get('arr').controls[i].controls.clinicName">
+                        </validation-message> -->
+                    </div>
+                    <div class="col-3 labelfield">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label">Principal Investigator</label></legend>
+                            <input formControlName="pInv" disabled="true" type="text" placeholder="-"
+                                class="form-control textbox w-100 hideinput" maxlength="" />
+                        </fieldset>
+                    </div>
+                    <!-- {{addAssStudyForm.value | json}} -->
+                    <!-- <div class="col-3">
+                                <fieldset class="w-fieldset">
+                                    
+                                    <legend> <label class="label">Permission <span class="asterisk">*</span></label></legend>
+                                    <select class="form-control w-100" formControlName="permission">
+                                            <option value="">Set Permissions</option>
+                                            <option *ngFor="let list of permssionArr" [value]="list.menuActionId">
+                                                    {{list.menuActionName}}</option>
+                                        </select>
+                                </fieldset>
+                                <validation-message [control]="addAssStudyForm.get('arr').controls[i].controls.permission"></validation-message>
+                            </div> -->
+                    <div class="col-3 labelfield">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Status</label></legend>
+                            <select class="form-control w-100 hideinput" formControlName="status" disabled="true">
+                                <option value="">-</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </fieldset>
+                        <!-- <validation-message [control]="addAssStudyForm.get('arr').controls[i].controls.status">
+                        </validation-message> -->
+                    </div>
+
+                    <div class="col-1 center-align float-right">
+                        <div class="card icon-card-list red-bg mr-2" title="Remove"
+                            *ngIf="addAssStudyForm.value.arr.length > 1" (click)="removeItem(i)">
+                            <span class="pointer-cursor size-17" title="Remove">-</span>
+                        </div>
+                        <div class="card icon-card-list blue-bg" title="Add" *ngIf="last">
+                            <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                                (click)="addItem();getUniqStudyList(i+1)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-12">
+                <div class="float-right">
+                    <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                    <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                    <button class="btn btn-primary" type="button" (click)="next()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="boxItem petimgpg">
+
+    <div class="content-blk-pet">
+        <datatable [headers]="headers" [hideExport]="true" [filterTypeArr]="filterTypeArr" [hideBottomPagination]="true"
+            defaultColumn="" dir="DESC" (formatter)="formatter($event)" (nodeAction)="getNode($event)"
+            url="/api/pets/getPetImageScaleDtls" hideReportCol="petImagePath" pageName="petImgScoring" [petId]='petId'
+            [hideExport]="false" [isReport]="true" fileName={{reportName}} [hidePdf]="false" [hideExcel]="false"
+            exportTitle={{reportName}}>
+        </datatable>
+
+
+        <!-- <div class="row">
+        <div class="col custom-table">
+            <button class="relative btn btn-primary float-right" style="margin-bottom:20px" (click)="exportAsXLSX()">
+                Export to Excel <i class="icon-excel"></i>
+            </button>
+            <table class="table" id="excel-table">
+                <thead>
+                <tr>
+                    <th scope="col" width="25%">Date</th>
+                    <th scope="col" width="25%">Pet Weight (In KGS)</th>
+                    <th scope="col" width="25%">Pet Weight (In LBS)</th>
+                    <th scope="col" width="25%"></th>
+                </tr>
+                </thead>
+                <tbody class="scrollbar scrollbar-near-moon thin" *ngIf="petFeedingEnthusiasmScaleDtls?.length > 0">
+                <tr *ngFor="let list of petFeedingEnthusiasmScaleDtls | slice: (parentPage-1) * parentpageSize : (parentPage-1) * parentpageSize + parentpageSize">
+                    <td  width="25%">{{list.addDate | date: 'MM-dd-yyyy'}}</td>
+                    <td  width="25%">{{list.weightKgs}}</td>
+                    <td  width="25%">{{list.weight}}</td>
+                    <td width="25%" *ngIf="RWFlag">
+                        <div class="card icon-card-list green-bg mr-2" title="Edit">
+                                <span class="icon-tag size-20" title="Edit" (click)="edit(list)"></span>
+                            </div>&nbsp;
+                   
+                    </td>
+                </tr>
+                </tbody>
+                <tbody class="table-body" *ngIf="!petFeedingEnthusiasmScaleDtls || petFeedingEnthusiasmScaleDtls?.length == 0">
+                <tr>
+                    <td>No Records Found</td>
+                </tr>
+                </tbody>
+            </table>
+      </div> -->
+    </div>
+
+
+
+</div>
+
+<ng-template #archiveContent4 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            View Image
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-4 vertical-scroll">
+            <div class="col-12">
+                <img *ngIf="playImgUrl" src="{{playImgUrl}}" (click)="playImg(submenu.value.Url)" class="img-fluid" />
+
+                <img *ngIf="!playImgUrl" src="assets/images/no-dogs.svg" (click)="playImg(submenu.value.Url)" alt="pet"
+                    class="img-fluid" />
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    Close
+                </button>&nbsp;&nbsp;
+                <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3"  (click)="downloadImage();">
+                    Download
+                </button> -->
+            </div>
+        </div>
+    </div>
+</ng-template>

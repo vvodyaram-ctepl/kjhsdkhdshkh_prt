@@ -1,0 +1,29 @@
+<div class="content-box reports-list">
+    <!-- <div class="content-hdr">
+        <div class="row">
+            <div class="col-12 block-left-center">
+                Pet Questionnaire Response
+            </div>
+        </div>
+    </div> -->
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Pet Questionnaire Response: {{petName}}
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <!-- <button class="btn btn-primary" type="button" >Add New Study</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <reports-datatable [headers]="headers" [filterTypeArr]="filterTypeArr"  [hideExport]="false" [isReport]="true" fileName={{reportName}}  [hideExcel]="false" pageName="reportsPage"
+        exportTitle={{reportName}}  placeholder="Search" 
+       (nodeAction)="getNode($event)" (formatter)="formatter($event)" 
+        defaultColumn="modifiedDate" dir="DESC" url={{this.url}} [petQuesId]="petId">
+        </reports-datatable>
+        <!-- pageName="questionnaireResponse" -->
+    </div>
+</div>

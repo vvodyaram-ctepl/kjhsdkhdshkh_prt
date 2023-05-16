@@ -1,0 +1,13 @@
+<div class="boxItem" *ngIf="ques">
+    <!-- *ngIf="ques" -->
+    <!-- *ngIf="ques" -->
+  <a target="_blank" class="custom-link" routerLink="/user/patients/view-pet-ques-response/{{petId}}">Click to access</a>
+    <!-- /user/responses/view/{{oRecord.questionnaireRespId}}/{{oRecord.studyId}}/{{oRecord.petId}} -->
+   
+</div>
+<!-- <div class="ques-content" *ngIf="!ques" style="color: #1ec8e5;">No Questionnaires Found</div> -->
+<div class="boxItem" *ngIf="!ques">
+  <div class="text-center green-bg">
+    <span class="line-height-30">No records found</span>
+  </div>
+</div>

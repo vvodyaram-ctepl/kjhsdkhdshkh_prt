@@ -1,0 +1,23 @@
+.role-heading{
+    background-color: #E3FFF7;    
+    font-weight:bold;
+    padding:10px 15px;
+    margin-bottom: 10px;
+    input{
+        float:left;
+    }
+    label{
+        margin-bottom: 0;
+        margin-left: 9px;
+        line-height: 1.8;
+    }
+}
+.checkbox-wrapper{
+    line-height: 2.2;
+}
+.permission-header{
+    border-top: 1px solid #00CF99;
+    border-bottom: 1px solid #00CF99;
+    padding-top: 13px;
+    padding-bottom: 13px;
+}

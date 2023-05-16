@@ -1,0 +1,73 @@
+
+    <div class="content-box">
+        <div class="content-block">
+            <div>
+                <h3 class="mainTitle">Mandatory Fields :</h3>
+                <div *ngFor="let a of preludeMandatory;">
+                    <div class="row mb-3">
+                        <div class="col-2">
+                            <legend>
+                                <div class="label legendLabel">{{a.label}}</div>
+                            </legend>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <label class="label">Form </label>
+                                <div>{{a.formName}}</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <label class="label">Category </label>
+                                <div>{{a.category}}</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <label class="label">Prelude Group </label>
+                                <div>{{a.preludeGroup}}</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="label">Field Name</label>
+                            <div>{{a.fieldName}}</div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="mainTitle">Optional Fields :</h3>
+                <div>
+                    <div  *ngFor="let b of optionalFields">
+                        <div class="row mb-3">
+                            <div class="col-2">
+                            </div>
+                            <div class="col">                
+                                <label class="label">Form </label>
+                                <div>{{b.formName}}</div>
+                            </div>
+                            <div class="col">
+                                <label class="label">Category </label>
+                                <div>{{b.category}}</div>
+                            </div>
+                            <div class="col">
+                                <label class="label">Prelude Group </label>
+                                <div>{{b.preludeGroup}}</div>
+                            </div>
+                            <div class="col">
+                                <label class="label">Field Name</label>   
+                                <div>{{b.fieldName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- {{preludeForm.value | json}}  -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

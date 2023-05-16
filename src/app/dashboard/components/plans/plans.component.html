@@ -1,0 +1,18 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Plan
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <datatable [headers]="headers" [hideExport]="true" defaultColumn="name" dir="DESC"
+            url="http://localhost:4200/assets/a.json">
+        </datatable>
+    </div>
+</div>

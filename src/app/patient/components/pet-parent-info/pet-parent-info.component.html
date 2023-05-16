@@ -1,0 +1,235 @@
+<div class="content-box">
+  <div class="content-block">
+    <div class="row mb-4">
+      <div class="col-3">
+        <div class="d-inline-block mr-3">
+          <input type="radio" id="Existing_pet" name="recordtype" [(ngModel)]="recordtype" [value]="1">
+          &nbsp;<label for="Existing_pet">Existing Pet Parent</label><br>
+        </div>
+      </div>
+      <div class="col-3" *ngIf="internalStudy">
+        <div class="d-inline-block">
+          <input type="radio" id="new_pet" name="recordtype" [(ngModel)]="recordtype" [value]="2">
+          &nbsp;<label for="new_pet">Add New Pet Parent</label><br>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="recordtype == 1">
+      <form [formGroup]="existingpetInfoForm" novalidate>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <fieldset class="w-fieldset">
+              <legend><label class="label w-100">Select Pet Parent Record</label></legend>
+              <lib-typeahead [data]="petParentArrList" matcher="petParentName" formControlName="petParent"
+                class="w-100 mb-0" placeholder="" class="w-100">
+              </lib-typeahead>
+            </fieldset>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-primary submit-record" type="button" [disabled]="!addFilterFlag"
+              (click)="existingPetSubmit()">Save</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mt-3">
+            <div class="custom-table mb-4">
+              <table>
+                <thead class="table-hdr">
+                  <tr>
+                    <th style="width:20%" *ngFor="let list of headers; let i = index">
+                      {{ list.label }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="table-body" *ngIf="existingPetParentArr?.length > 0">
+                  <tr *ngFor="let list of existingPetParentArr; let i = index">
+                    <!-- <td>
+                              {{ i + 1 }}
+                            </td> -->
+                    <td>
+                      {{ list.petParentFirstName + ' ' + list.petParentLastName }}
+                    </td>
+                    <td>
+                      {{ list.ppEmail }}
+                    </td>
+                    <td>
+                      {{ list.phoneNumberValue }}
+                    </td>
+                    <td style="width:30%">
+                      {{ list.addr }}
+                    </td>
+                    <td style="display: flex;align-items: center;flex-direction: column;" *ngIf="addFilterFlag">
+                      <!-- <div class="card icon-card-list green-bg mr-2" title="Edit">
+                              <span class="icon-tag size-20" title="Edit" (click)="edit(list)"></span>
+                            </div>&nbsp; -->
+                      <div class="card icon-card-list red-bg" title="Remove" (click)="deleteExPetArr(list)">
+                        <span class="pointer-cursor size-14" title="Remove">-</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody class="table-body" *ngIf="existingPetParentArr?.length == 0">
+                  <tr>
+                    <td>No Records Found</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="recordtype == 2">
+      <form [formGroup]="petInfoForm" (ngSubmit)="onSubmit(petInfoForm.value)">
+        <!-- <div formArrayName="arr" *ngFor="let a of petInfoForm.get('arr')['controls']; let i = index;let last =last">
+          <div [formGroupName]="i"> -->
+        <div class="row mb-3">
+          <div class="col">
+            <fieldset class="w-fieldset">
+              <legend><label class="label">Pet Parent First Name</label></legend>
+              <input formControlName="petParentFirstName" type="text" class="form-control textbox w-100"
+                maxlength="50" />
+            </fieldset>
+            <validation-message [control]="petInfoForm.controls.petParentFirstName"></validation-message>
+          </div>
+          <div class="col">
+            <fieldset class="w-fieldset">
+              <legend><label class="label" style="padding-right:0px">Pet Parent Last Name <span
+                    class="asterisk">*</span></label></legend>
+              <input formControlName="petParentLastName" type="text" class="form-control textbox w-100"
+                maxlength="50" />
+            </fieldset>
+            <validation-message [control]="petInfoForm.controls.petParentLastName"></validation-message>
+          </div>
+          <div class="col">
+            <fieldset class="w-fieldset">
+              <legend><label class="label">Pet Parent Email <span class="asterisk">*</span></label></legend>
+              <input formControlName="ppEmail" type="text" class="form-control textbox w-100" maxlength="" />
+            </fieldset>
+            <validation-message [control]="petInfoForm.controls.ppEmail"></validation-message>
+          </div>
+
+          <div class="col mobile-number">
+            <fieldset class="w-fieldset">
+              <legend><label class="label">Mobile</label></legend>
+              <div class="dropdown-container">
+                <select class="select-cstom-control form-control c-code" formControlName="phoneNumberCode"
+                  (change)="phoneCodeChange()">
+                  <option value="+1">US(+1)</option>
+                  <option value="+44">UK(+44)</option>
+                </select>
+
+                <input *ngIf="petInfoForm.value.phoneNumberCode == '+1'" type="text" formControlName="phoneNumberValue"
+                  id="phoneNumber" mask="(000)000-0000" [dropSpecialCharacters]="false" [showMaskTyped]="true"
+                  class="form-control textbox c-number" maxlength="" />
+
+                <input *ngIf="petInfoForm.value.phoneNumberCode == '+44'" type="text" formControlName="phoneNumberValue"
+                  id="phoneNumber" mask="00-0000-0000" [dropSpecialCharacters]="false" [showMaskTyped]="true"
+                  class="form-control textbox c-number" maxlength="" />
+
+              </div>
+            </fieldset>
+            <validation-message [control]="petInfoForm.controls.phoneNumberValue"></validation-message>
+          </div>
+          <div class="col">
+            <!-- <fieldset class="w-fieldset">
+              <legend><label class="label">Shipping Address</label></legend>
+              <input formControlName="addr" type="text" class="form-control w-100" maxlength="500" />
+            </fieldset> -->
+            <app-textarea formControlName="addr" labelName="Shipping Address" [maxLengthT]="500"></app-textarea>
+            <!-- <validation-message [control]="petInfoForm.controls.addr"></validation-message> -->
+          </div>
+          <!-- <div class="col-1 center-align mtop-15 float-right">
+                    <div class="card icon-card-list red-bg mr-2" title="Delete" *ngIf="petInfoForm.value.arr.length > 1">
+                        <span class="fa fa-trash-alt pointer-cursor size-17" title="Delete" (click)="removeItem(i)" ></span>
+                        </div>
+                  
+                        <div class="card icon-card-list blue-bg" title="Add" *ngIf="last">
+                        <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                        (click)="addItem()"></span>
+                      </div>
+                </div> -->
+
+        </div>
+
+        <!-- </div>
+      </div> -->
+        <div class="row mb-5">
+          <div class="col-12">
+            <div class="float-right">
+              <button class="btn btn-primary" type="button" [disabled]="!addFilterFlag" (click)="newPetSubmit()">
+                Save</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col mt-3">
+            <div class="custom-table mb-4">
+              <table>
+                <thead class="table-hdr">
+                  <tr>
+                    <th style="width:20%" *ngFor="let list of newPetheaders; let i = index">
+                      {{ list.label }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="table-body" *ngIf="newPetParentArr?.length > 0">
+                  <tr *ngFor="let list of newPetParentArr; let i = index">
+                    <!-- <td>
+                        {{ i + 1 }}
+                      </td> -->
+                    <td>
+                      {{ list.petParentFirstName + ' ' + list.petParentLastName }}
+                    </td>
+                    <td>
+                      {{ list.ppEmail }}
+                    </td>
+                    <td>
+                      {{ list.phoneNumberValue ? list.phoneNumberCode + ' ' + list.phoneNumberValue : ''}}
+                    </td>
+                    <td style="width:30%">
+                      {{ list.addr }}
+                    </td>
+                    <td style="display: flex;align-items: center;flex-direction: column;" *ngIf="addFilterFlag">
+                      <!-- <div class="card icon-card-list green-bg mr-2" title="Edit">
+                              <span class="icon-tag size-20" title="Edit" (click)="editNewPet(list)"></span>
+                            </div>&nbsp; -->
+                      <!-- <div class="card icon-card-list red-bg" title="Delete">
+                        <span class="fa fa-trash-alt size-14" style="color:red;" title="Delete"
+                          (click)="deleteNewPetArr(list)"></span>
+                      </div> -->
+
+                      <div class="card icon-card-list red-bg" title="Remove" (click)="deleteNewPetArr(list)">
+                        <span class="pointer-cursor size-14" title="Remove">-</span>
+                      </div>
+
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody class="table-body" *ngIf="newPetParentArr?.length == 0">
+                  <tr>
+                    <td>No Records Found</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="float-right">
+          <button class="btn btn-secondary" type="button" (click)="back()">
+            Back</button>&nbsp;&nbsp;
+          <button class="btn btn-primary" type="button" (click)="next()">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+tabs{
+    width: 100%;
+    a{
+        text-decoration: none !important;
+    }
+    .nav-tabs{
+        flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+        padding-left: 10px;
+    }
+    .nav-tabs .nav-item{
+        font-weight: 500;
+        text-align: center;
+    }
+    .nav-tabs .nav-link{
+        padding: 0;
+    }
+    .nav-tabs .nav-link .tab-link{
+        padding: 8px 15px;
+        display: block;
+    }
+    .nav-pills{
+        border-bottom: 1px solid #007bff;
+        padding-left: 10px;
+    }
+    .nav-pills .nav-link .tab-link{
+        background-color: transparent;
+        // color: #007bff !important;
+        padding: 5px 14px;
+        display: block;
+        border-radius: 0;
+    }
+    .nav-pills .nav-link{
+        padding: 0;
+        background-color: transparent;
+        opacity: .5;
+    }
+    .nav-item .nav-link.active,.nav-item .nav-link:hover{        
+        opacity: 1;
+        background: transparent radial-gradient(closest-side at 50% 50%, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+        position: relative;
+        border-radius: 0;
+    }
+    .nav-pills .nav-link.active,.nav-link.active a{
+        font-weight: bold;
+    }
+/*    .no-active .active a{
+        font-weight: inherit !important;
+    }
+    .no-active .active{
+        background: transparent !important;
+        border-color: transparent !important;
+    }
+    */
+    .buttons{
+        button{
+            margin-left: 10px;
+        }
+    }
+
+    .placeholder-arrow {
+        overflow: hidden;
+        padding: 0 !important;
+        font-size: 1px;
+        display: inline-block !important;
+        color: transparent !important;
+    }
+    li a {
+        padding: 0 10px 0 25px;
+    }
+    li a:before {
+        right: -10px;
+        z-index: 3;
+        border-left-color:#2ec5e0;
+        border-left-style: solid;
+        border-left-width: 11px;
+    }
+    li a:after, li a:before {
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 0;
+        content: '';
+        border-top: 18px solid transparent;
+        border-bottom: 18px solid transparent;
+    }
+    li a:after {
+        right: -11px;
+        z-index: 2;
+        border-left: 11px solid #3bafda;
+    }
+    
+      .nav {
+        background: aliceblue;
+      }
+}

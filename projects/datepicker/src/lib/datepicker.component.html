@@ -1,0 +1,5 @@
+<input #maskpicker [disabled]="disabled" [(ngModel)]="(this.controlContainer && this.controlContainer.control.get(this.formControlName) && this.controlContainer && this.controlContainer.control.get(this.formControlName).value) || maskModel" class="form-control mask-input" (click)="openPicker($event,dp);$event.stopPropagation();" (document:click)="outsideClick($event,dp)" (keyup)="validateInputType($event)" (ngModelChange)="changedInput($event)" [placeholder]="placeholder ? placeholder : ''"  (blur)="onBlur($event)">
+<ng-container *ngIf="!hideClose && !disabled">
+	<i class="icon ion-ios-close-outline size-18 close-icon" *ngIf="maskModel" (click)="clearInput()"></i>
+</ng-container>	
+<input class="form-control full hidden"  placeholder="dd-mm-yyyy" name="dp" [(ngModel)]="ngModel" [placement]="popoverPlacement" ngbDatepicker #dp="ngbDatepicker" (ngModelChange)="dateSelected($event)" [maxDate]="maxDate" [minDate]="minDate">

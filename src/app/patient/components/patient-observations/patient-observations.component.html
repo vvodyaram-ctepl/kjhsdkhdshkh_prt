@@ -1,0 +1,122 @@
+<div class="boxItem">
+<div class="custom-table mb-4">
+<table class="table">
+    <thead>
+      <tr>
+        <th width="20%">OBSERVATION</th>
+        <th width="20%">BEHAVIOR</th>
+        <th width="20%">MODIFIED DATE</th>
+        <th width="40%">MEDIA</th>
+      </tr>
+    </thead>
+    <tbody class="scrollbar scrollbar-near-moon thin" *ngIf="petObservations?.length > 0">
+      <tr *ngFor="let list of petObservations">
+        <td style="text-align:left;vertical-align: middle;" width="20%">{{list.observationText}}</td>
+        <td style="text-align:left;vertical-align: middle;" width="20%">{{list.activityType}}</td>
+        <td style="text-align:left;vertical-align: middle;" width="20%">{{list.observationTime | date: 'MM-dd-yyyy'}}</td>
+        <td style="text-align:left;vertical-align: middle;" class="images-blk" width="20%" 
+        >
+          <span *ngFor="let imgUrl of list.imageList;">
+            <img class="choose-images" src="{{imgUrl}}" (click)="playImg(imgUrl)" alt="pet" width="59" height="46" />
+          </span>
+          
+          <span *ngFor="let vid of list.videoThumbnailList;let vidIndex=index"
+          class="video-thumbnail"
+          (click)="playVideo(list.videoList[vidIndex])"
+          >
+            <img src="{{vid || 'assets/images/no-video.png'}}" 
+            class="p-image"
+            style="border-radius: 4px;border: 1px solid #4dd3d9;"
+            width="59" height="46" />
+            <i class="far fa-play-circle"></i>
+          </span>
+        
+        </td>
+      </tr>
+    </tbody>
+    <tbody class="table-body" *ngIf="!petObservations || petObservations?.length == 0">
+      <tr>
+        <td>No Records Found</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- pagination -->
+  <div class="row" *ngIf="petObservations">
+    <div class="col-12 float-right">
+      <div style="text-align: right">
+        <ngb-pagination class="pagination" size="sm" [collectionSize]="pagination.searchElments"
+        [(page)]="pagination.page" [maxSize]="5" [rotate]="true"
+        [pageSize]="pagination.noOfElements" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination>
+        <!-- <ngb-pagination *ngIf="petObservations.length > 0" size="sm" [collectionSize]="petObservations.length" [(page)]="parentPage"
+          [pageSize]="parentpageSize" [maxSize]="5" [rotate]="true" [ellipses]="true" [boundaryLinks]="true" (pageChange)="pageChanged()">
+        </ngb-pagination> -->
+      </div>
+    </div>
+   
+  </div>
+  <!-- pagination -->
+</div>
+</div>
+<ng-template #archiveContent3 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">
+          Observation Video
+      </h5>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <div class="close-wrapper">
+              <span aria-hidden="true">&#10006;</span>
+          </div>
+      </button>
+  </div>
+  <div class="modal-body">
+      <div class="row mb-4">
+          <div class="col-12 video-wrapper">
+              <video controls class="p-video videopath" controls autoplay width="100%" style="margin:0 auto;">
+                  <source src="{{playVideoUrl}}" type="video/mp4">
+                  Your browser does not support the video tag.
+              </video>
+          </div>
+      </div>
+      <div class="row text-right">
+          <div class="col-12 mb-4">
+              <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                  Cancel
+              </button>&nbsp;&nbsp;
+              <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="downloadvideo();">
+                  Download
+              </button>
+          </div>
+      </div>
+  </div>
+</ng-template>
+
+<ng-template #observationImageEle let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">
+          View Image
+      </h5>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <div class="close-wrapper">
+              <span aria-hidden="true">&#10006;</span>
+          </div>
+      </button>
+  </div>
+  <div class="modal-body">
+      <div class="row mb-4 vertical-scroll">
+          <div class="col-12">
+              <img src="{{playImgUrl}}" alt="pet" class="img-fluid" />
+          </div>
+      </div>
+      <div class="row text-right">
+          <div class="col-12 mb-4">
+              <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                  Close
+              </button>&nbsp;&nbsp; 
+              <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3"  (click)="downloadImage();">
+                  Download
+              </button> -->
+          </div>
+      </div>
+  </div>
+</ng-template>

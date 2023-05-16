@@ -1,0 +1,27 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-12 block-left-center">
+                View Ticket <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+            </div>
+            <!-- <div class="col-6">
+                <div class="float-right">
+                    <button class="btn btn-primary" (click)="editCustomerSupport()">Edit Ticket</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="navtabsBackground">
+            <ul ngbNav class="row nav-tabs tabsDesign">
+                <li class="col" [ngbNavItem]="flatTab.name" *ngFor="let flatTab of flatTabs">
+                    <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                        (click)="activateTab(flatTab)"><span>{{ flatTab.name }}</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <router-outlet></router-outlet>
+    </div>
+</div>

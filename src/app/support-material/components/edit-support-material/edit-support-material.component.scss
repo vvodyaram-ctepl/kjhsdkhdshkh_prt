@@ -1,0 +1,43 @@
+.icon-card-list {
+    bottom: 0px;
+    box-shadow: none;
+    width: 30px;
+    height: 30px;
+}
+.ques-name {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f5f5f5 0% 0% no-repeat padding-box;
+}
+.custom-gutters-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+  
+    > .col,
+    > [class*="col-"] {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+
+  .cstm-col {
+      padding:10px;
+      border-bottom: 1px solid #ccc;
+  }
+  .upldBlk {
+    max-height: 180px;
+    overflow: auto;
+    overflow-x: hidden;
+    border: 1px dashed #B8C5D3;
+    padding: 5px 15px;
+    border-radius: 9px;
+}
+.filedec {
+    color: blue;
+    text-decoration: underline;
+    }
+    .crossIcon {
+        font-size: 12px;
+        color: #da151e;
+        cursor: pointer;
+    }    

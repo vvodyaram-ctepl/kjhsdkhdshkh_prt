@@ -1,0 +1,29 @@
+<p class="text-muted">operations works!</p>
+
+<datatable [headers]="headers" [hideExport]="true" defaultColumn="name" dir="DESC"
+    url="http://localhost:4200/assets/a.json">
+</datatable>
+{{analyteMatrixResultform.value.userNameActAss | json}}
+<form [formGroup]="analyteMatrixResultform">
+    <div style="width:400px">
+        <lib-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" formControlName="userNameActAss"
+            class="w-100 mb-0" placeholder="" class="w-100"></lib-typeahead>
+    </div>
+</form>
+adsd
+{{userNameActAs | json}}
+<div style="width:400px">
+    <multi-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" [(ngModel)]="userNameActAs"
+        ngDefaultControl placeholder="" class="w-100"></multi-typeahead>
+</div>
+
+<div style="width:400px">
+    <multi-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" [(ngModel)]="testt" placeholder=""
+        class="w-100"></multi-typeahead>
+</div>
+<!-- <div style="width:400px">
+    <multi-typeahead url="http://localhost:4200/assets/b.json" matcher="company" [(ngModel)]="testt" placeholder="" class="w-100"></multi-typeahead>
+    </div> -->
+<!-- <div style="width:400px">
+<datepicker style="width:120px" [minDate]="startDate" [(ngModel)]="endDate" format="MM-DD-YYYY" (select)="changeEndDate($event)" (onClear)="clearDate()" ></datepicker>
+</div> -->

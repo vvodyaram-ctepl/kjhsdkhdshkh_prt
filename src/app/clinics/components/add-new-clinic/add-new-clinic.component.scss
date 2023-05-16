@@ -1,0 +1,26 @@
+app-add-new-clinic {
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .carousel-control-prev {
+    width: 22px !important;
+    height: 49px;
+    left: 0px;
+    position: absolute;
+    opacity: 1 !important;
+    background: #23cacc;
+  }
+  .carousel-control-prev-icon {
+    width: 16px !important;
+  }
+  .carousel-control-next {
+    width: 16px !important;
+    height: 49px;
+    right: 0px;
+    position: absolute;
+    opacity: 1 !important;
+    background: #23cacc;
+  }
+}

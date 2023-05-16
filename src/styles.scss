@@ -1,0 +1,173 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+* {
+    font-family: "Titillium Web", sans-serif;
+}
+
+@media (min-width: 768px) {
+    .smallMenu {
+        .sidebar-nav {
+            ul {
+                padding: 10px 1px 10px 0;
+                .sidebar-item {
+                    .sidebar-link {
+                        border-radius: 0px !important;
+                        margin-left: 0px;
+                        padding: 3px 0px 3px 0px;
+                        .menu-icon {
+                            left: 0;
+                            margin: 0 auto;
+                            right: 0;
+                        }
+                        div {
+                            border-radius: 0px !important;
+                        }
+                    }
+                }
+                .sidebar-item.active {
+                    .sidebar-link {
+                        .miniText {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+        .submenu-item {
+            li {
+                a {
+                    div {
+                        .menu-icon {
+                            top: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+/* Input field fieldset design*/
+
+fieldset.w-fieldset.no-border {
+    border: 0px;
+}
+fieldset.w-fieldset {
+    border: 1px solid #b8c5d3;
+    padding: 5px 15px;
+    border-radius: 9px;
+    legend {
+        background-color: #fff;
+        width: inherit;
+        color: #4b4b5a;
+        margin-bottom: 0px;
+        font-size: 13px;
+        label {
+            display: inline-block;
+            margin-bottom: 0;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+    .form-control {
+        border: 0;
+        box-shadow: none;
+        &:focus {
+            border-color: #fff;
+            outline: 0;
+            box-shadow: none;
+        }
+    }
+}
+
+input:-webkit-autofill {
+    background-color: #fff;
+    background-image: none !important;
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.btn-primary.list-pet-btn {
+    min-width: inherit !important;
+    padding: 1px 12px;
+    font-weight: normal;
+}
+
+.content-block {
+    background: #ffffff;
+}
+
+.accordion.questions .card-header {
+    padding: 0.5em;
+
+    button {
+        width: 100%;
+        text-decoration: none;
+        padding: 0;
+    }
+}
+
+.boxItem {
+    .card {
+        border: 0;
+        .card-header {
+            padding: 0;
+            display: block;
+            .btn.btn-link {
+                width: 100%;
+                text-align: left;
+                padding: 3px 5px;
+                color: #212f3a;
+                font-weight: 600;
+                padding: 5px 15px;
+                background: transparent linear-gradient(180deg, #0fd6a8 0%, #2ec5e0 100%) 0% 0% no-repeat padding-box;
+                color: #fff;
+                div {
+                    padding-right: 20px;
+                    font-size: 14px;
+                    i {
+                        position: absolute;
+                        right: 10px;
+                        margin-top: 5px;
+                        font-size: 12px;
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+        .collapse {
+            .card-body {
+                padding: 5px;
+            }
+        }
+    }
+}
+.dataBox .popover {
+    max-width: 350px;
+    width: 350px;
+    background: #f3f3f3;
+}
+.vertical-scroll {
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: center;
+}
+.w-12 {
+    width: 12%;
+}
+.cursor-pointer {
+    cursor: pointer;
+}

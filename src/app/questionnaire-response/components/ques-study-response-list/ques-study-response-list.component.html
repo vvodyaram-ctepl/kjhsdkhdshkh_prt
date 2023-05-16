@@ -1,0 +1,16 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-12 block-left-center">
+                <span *ngIf="studyName != 'NA'">{{this.studyName}} : </span> &nbsp; <span>{{ this.questionnareName }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <reports-datatable [headers]="headers" [filterTypeArr]="filterTypeArr" placeholder="Search" 
+        [hideExport]="true" (nodeAction)="getNode($event)" (formatter)="formatter($event)" 
+        defaultColumn="name" dir="DESC" 
+        url={{this.url}}>
+        </reports-datatable>
+    </div>
+</div>

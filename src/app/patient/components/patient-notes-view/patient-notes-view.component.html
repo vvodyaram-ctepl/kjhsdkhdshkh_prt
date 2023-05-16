@@ -1,0 +1,51 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span>Add Pet Notes</span>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-block">
+            <form [formGroup]="addNoteForm" novalidate>
+                <div class="row ">
+                    <div class="col-8 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Title<span class="asterisk">*</span></label>
+                            </legend>
+                            <!-- <textarea class="form-control textbox w-100" formControlName="noteType"
+                                maxlength="500"></textarea> -->
+                                <input formControlName="noteType" type="text" class="form-control textbox w-100"
+                                maxLength="100" />
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="addNoteForm.controls.noteType">
+                        </validation-message>
+                    </div>
+                    <div class="col-8 mb-3">
+                        <!-- <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Description<span class="asterisk">*</span></label>
+                            </legend>
+                            <textarea class="form-control textbox w-100" formControlName="content"
+                                maxlength="500"></textarea>
+                                
+                        </fieldset> -->
+                        <app-textarea formControlName="content" isRequired="true" [maxLengthT]="500"></app-textarea>
+                      
+                        <validation-message [messageToAppend]="" [control]="addNoteForm.controls.content">
+                        </validation-message>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button"
+                            (click)="backToNotes()">Cancel</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="updateNotes()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

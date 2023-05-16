@@ -1,0 +1,9 @@
+<div class="mt-4 boxItem">
+    <div class="scrollbar scrollbar-near-moon thin">
+        <datatable [headers]="headers" [isReport]="true" [hidePdf]="false" [hideExcel]="false" dir="DESC"
+            searchFilter="false" defaultColumn="name" [exportTitle]="reportName" [fileName]="reportName"
+            reportHeaderOverflow="linebreak" url="/api/pets/getPetActivityFactorResult?petId={{petId}}"
+            (formatter)="formatter($event)">
+        </datatable>
+    </div>
+</div>

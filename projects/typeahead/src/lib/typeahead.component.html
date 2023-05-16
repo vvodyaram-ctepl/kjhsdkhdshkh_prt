@@ -1,0 +1,17 @@
+<div class="autofil">
+  <i class="icon ion-ios-refresh-outline" size-20-imp loader *ngIf="searching"></i>
+  <input *ngIf="url" [disabled]="disabled" id="typeahead-http" type="text" class="form-control typeahead {{class}}" [class.is-invalid]="searchFailed"
+     [ngbTypeahead]="search" [placeholder]="placeholder" (selectItem)="selectItem($event)" [resultFormatter]="formatMatches"
+    [inputFormatter]="formatMatches" (keyup)="changedInput($event)" [value]="(controlContainer && formControlName && controlContainer.control.get(formControlName) && controlContainer.control.get(formControlName).value && controlContainer.control.get(formControlName).value[matcher])" editable="false" (blur)="typeBlur()" [resultTemplate]="rt" #input  [maxLength]="maxlength?maxlength:5000"/>
+  <input #input *ngIf="data" [disabled]="disabled" id="typeahead-http" type="text" class="form-control typeahead {{class}}" [class.is-invalid]="searchFailed"
+    [ngbTypeahead]="searchLocal" [placeholder]="placeholder" (selectItem)="selectItem($event)" [resultFormatter]="formatMatches"
+    [inputFormatter]="formatMatches" (keyup)="changedInput($event)" (blur)="typeBlur()" (focus)="focus$.next($event.target.value)"
+    (click)="click$.next($event.target.value)" #instance="ngbTypeahead" [resultTemplate]="rt" [value]="(controlContainer && formControlName && controlContainer.control.get(formControlName).value && controlContainer.control.get(formControlName).value[matcher])" [maxLength]="maxlength?maxlength:5000"/>
+  
+    <input *ngIf="offlineURL" [disabled]="disabled" id="typeahead-http" type="text" class="form-control typeahead {{class}}" [class.is-invalid]="searchFailed"
+    [ngbTypeahead]="offlineSearchURL" [placeholder]="placeholder" (selectItem)="selectItem($event)" [resultFormatter]="formatMatches"
+   [inputFormatter]="formatMatches" (keyup)="changedInput($event)" [value]="(controlContainer && formControlName && controlContainer.control.get(formControlName).value && controlContainer.control.get(formControlName).value[matcher])" editable="false" (blur)="typeBlur()" [resultTemplate]="rt" #input  [maxLength]="maxlength?maxlength:5000"/>
+</div>
+<ng-template #rt let-r="result" let-t="term">
+  <span [ngStyle]="r.style">{{ r[display ? display : matcher]}}</span>
+</ng-template>

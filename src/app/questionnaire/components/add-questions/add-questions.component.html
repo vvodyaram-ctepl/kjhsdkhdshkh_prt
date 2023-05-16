@@ -1,0 +1,448 @@
+<div class="content-block">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="d-inline-block mr-3">
+                <input type="radio" id="existing_Question" (change)="formReset('editQues')" name="isExist"
+                    [(ngModel)]="isExistQues" [value]="1">
+                &nbsp;<label for="existing_Question">Select Predefined Question(s)</label><br>
+            </div>
+            <div class="d-inline-block">
+                <input type="radio" id="new_Question" (change)="formReset('addQues')" name="isExist"
+                    [(ngModel)]="isExistQues" [value]="2">
+                &nbsp;<label for="new_Question">Add New Question</label><br>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isExistQues == 1">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="quesType">Predefined Question(s)</p>
+                <div class="search-wrapper">
+                    <input type="text" placeholder="Search Question" [(ngModel)]="searchText" class="search-box"
+                        (keydown.enter)="getPreDefinedQuestions()">
+                    <div class="icon-circle" style="cursor:pointer;" (click)="getPreDefinedQuestions()">
+                        <i class="icon-search"></i>
+                    </div>
+                </div>
+                <div class="preDefinedQuestion">
+                    <ngb-accordion [closeOthers]="true" [sortablejs]="preDefinedQuestions"
+                        [sortablejsOptions]="options1">
+                        <ngb-panel id="{{i}}" *ngFor="let ques of preDefinedQuestions; let i = index">
+                            <ng-template ngbPanelTitle>
+                                <div class="row">
+                                    <div class="col-1 px-1">
+                                        <div class="acronym" *ngIf="ques.questionTypeId == 1">LIST</div>
+                                        <div class="acronym" *ngIf="ques.questionTypeId == 2">RB</div>
+                                        <div class="acronym" *ngIf="ques.questionTypeId == 3">MCQ</div>
+                                        <div class="acronym"
+                                            *ngIf="ques.questionTypeId == 4">TB</div>
+                                            <div class="acronym"
+                                            *ngIf="ques.questionTypeId == 5">TA</div>
+                                         
+                                        <div class="acronym" *ngIf="ques.questionTypeId == 6">SS</div>
+                                        <div class="acronym" *ngIf="ques.questionTypeId == 7">IMG</div>
+                                        <div class="acronym" *ngIf="ques.questionTypeId == 8">VID</div>
+                                    </div>
+                                    <div class="col-10">{{ques.preDefinedQuestion}}</div>
+                                    <div class="col-1 downArrow text-right"><i class="icon-right-arrow"></i></div>
+                                </div>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div class="row">
+                                    <div class="dropdown col-12" *ngIf="ques.questionTypeId == 1">
+                                        <select class="form-control">
+                                            <option *ngFor="let opt of ques.questionAnswerOptions">
+                                                {{opt.questionAnswer}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div *ngIf="ques.questionTypeId == 2 || ques.questionTypeId == 3 || ques.questionTypeId == 6">
+                                    <div class="row" *ngFor="let opt of ques.questionAnswerOptions">
+                                        <div class="col-12">
+                                            <div class="radio-input-wrapper" *ngIf="ques.questionTypeId == 2">
+                                                <label>
+                                                    <input type="radio" class="radio" disabled />
+                                                    <span class="label">
+                                                        {{opt.questionAnswer}}
+                                                    </span>
+                                                </label>
+                                            </div>
+
+                                            <div class="checkbox-wrapper" *ngIf="ques.questionTypeId == 3">
+                                                <label>
+                                                    <input type="checkbox" class="check checkbox-width-20" disabled />
+                                                    <span class="label">
+                                                        {{opt.questionAnswer}}
+                                                    </span>
+                                                </label>
+                                            </div>
+
+                                            <div class="row" *ngIf="ques.questionTypeId == 6">
+                                                <div class="col-3 m-auto">
+                                                    {{opt.questionAnswer}}
+                                                </div>
+                                                <div class="col-9">
+                                                    <div class="custom-slider">
+                                                        <ngx-slider [value]="ques.other.floor" [options]="ques.other"></ngx-slider>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text" *ngIf="ques.questionTypeId == 4">
+                                            <label>
+                                                <input type="text" class="form-control d-inline-block" readonly>
+                                            </label>
+                                        </div>
+
+                                        <div class="text" *ngIf="ques.questionTypeId == 5">
+                                            <label>
+                                                <textarea class="form-control d-inline-block" readonly></textarea>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="ques.questionTypeId == 7 || ques.questionTypeId == 8">
+                                    <div class="col-12">
+                                        <div class="cloud-img ml-4"><i class="icon-upload size-30"></i></div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <p class="quesType">Selected Question(s)</p>
+                <ul class="list-group sortable selectedQuestion" [sortablejs]="selectedQuestions"
+                    [sortablejsOptions]="options2">
+                    <li class="list-group-item" *ngFor="let ques of selectedQuestions; let i = index">
+                        <span>{{ ques.preDefinedQuestion }}</span>
+                        <span class="float-right">
+                            <span class="icon-tag size-20" title="Edit"
+                                (click)="editPreDefinedQuestion(ques, i)"></span>&nbsp;&nbsp;
+                            <span class="fa fa-trash-alt" style="position: relative; bottom: 3px; font-size: 14px;"
+                                title="Delete" (click)="delPreDefinedQuestion(i)"></span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <form class="editQues mt-4 col-12" [formGroup]="editQuesForm" *ngIf="isEditPreDefined">
+                <div class="ques">
+                    <div class="ques-name p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="text-box" class="form-control" formControlName="preDefinedQuestion">
+                            </div>
+                            <div class="col-4 dropdown">
+                                <select class="form-control w-100" formControlName="questionTypeId"
+                                    (change)="typeChanged(editQuesForm.value.questionTypeId, 'editQues')">
+                                    <option *ngFor="let type of questionTypes" [ngValue]="type.questionTypeId">
+                                        {{type.questionType}}</option>
+                                </select>
+                            </div>
+                            <validation-message class="ml-3" [control]="editQuesForm.controls.preDefinedQuestion">
+                            </validation-message>
+                        </div>
+                    </div>
+                    <div class="ques-other p-3" *ngIf="editQuesForm.value.questionTypeId == 6">
+                        <div formGroupName="other" class="row px-4">
+                            <div class="col-4">
+                                Minimum Value <input type="number" formControlName="floor"
+                                    class="form-control d-inline-block mb-2" (input)="minMaxCompare(editQuesForm)">
+                                <validation-message [control]="editQuesForm.controls.other.controls.floor">
+                                </validation-message>
+                            </div>
+                            <div class="col-4">
+                                Maximum Value <input type="number" formControlName="ceil"
+                                    class="form-control d-inline-block mb-2" (input)="minMaxCompare(editQuesForm)">
+                                <validation-message [control]="editQuesForm.controls.other.controls.ceil">
+                                </validation-message>
+                            </div>
+                            <div class="col-4">
+                                Step Value <input type="number" formControlName="tickStep"
+                                    class="form-control d-inline-block mb-2" (input)="stepValidation(editQuesForm)">
+                                <validation-message [control]="editQuesForm.controls.other.controls.tickStep">
+                                </validation-message>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ques-opt p-3">
+                        <div formArrayName="questionAnswerOptions"
+                            *ngFor="let opt of editQuesForm.get('questionAnswerOptions')['controls']; let i = index; let last = last">
+                            <div class="row">
+                                <div class="col-11" [formGroupName]="i">
+                                    <div class="dropdown slider"
+                                        *ngIf="editQuesForm.value.questionTypeId == 1 || editQuesForm.value.questionTypeId == 6">
+                                        <label class="ml-4">
+                                            <input type="text" class="form-control d-inline-block mb-2"
+                                                formControlName="questionAnswer">
+                                            <validation-message [control]="opt.controls.questionAnswer">
+                                            </validation-message>
+                                        </label>
+                                    </div>
+
+                                    <div class="radio-input-wrapper" *ngIf="editQuesForm.value.questionTypeId == 2">
+                                        <label>
+                                            <input type="radio" class="radio" disabled>
+                                            <span class="label">
+                                                <input type="text" class="ml-2 form-control d-inline-block mb-2"
+                                                    formControlName="questionAnswer">
+                                            </span>
+                                        </label>
+                                    </div>
+
+                                    <div class="checkbox-wrapper" *ngIf="editQuesForm.value.questionTypeId == 3">
+                                        <label>
+                                            <input type="checkbox" class="check checkbox-width-20" disabled/>
+                                            <span class="label">
+                                                <input type="text" class="ml-2 form-control d-inline-block mb-2"
+                                                    formControlName="questionAnswer">
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-1 p-1"
+                                    *ngIf="editQuesForm.value.questionTypeId == 1 || editQuesForm.value.questionTypeId == 2 || editQuesForm.value.questionTypeId == 3">
+                                    <div class="card icon-card-list red-bg mr-1" title="Remove"
+                                        *ngIf="editQuesForm.value.questionAnswerOptions.length > 1">
+                                        <span class=" pointer-cursor size-15" title="Remove"
+                                            (click)="removeQuesAns('editQues', i)">-</span>
+                                    </div>
+
+                                    <div class="card icon-card-list blue-bg" title="Add" *ngIf="last">
+                                        <span class="fa fa-plus pointer-cursor size-14" style="color:white;" title="Add"
+                                            (click)="addQuesAns('editQues')"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-11">
+                                <div class="text" *ngIf="editQuesForm.value.questionTypeId == 4">
+                                    <label class="ml-4">
+                                        <input type="text" class="form-control d-inline-block" disabled>
+                                    </label>
+                                </div>
+
+                                <div class="text" *ngIf="editQuesForm.value.questionTypeId == 5">
+                                    <label class="ml-4">
+                                        <textarea class="form-control d-inline-block" disabled></textarea>
+                                    </label>
+                                </div>
+
+                                <div class="upload"
+                                    *ngIf="editQuesForm.value.questionTypeId == 7 || editQuesForm.value.questionTypeId == 8">
+                                    <app-file-upload [disableBtn] ="true">
+                                    </app-file-upload>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ques-footer p-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <div class="checkbox-wrapper">
+                                        <label>
+                                            <input type="checkbox" class="check checkbox-width-20"
+                                                formControlName="isMandatory" />
+                                            <span class="label">
+                                                Mark this question as mandatory
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn btn-primary float-right mt-2" type="button"
+                        (click)="updateSelectedQues()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="isExistQues == 2"  >
+        <form class="addQues" [formGroup]="addQuesForm">
+            <div class="row mt-2" formArrayName="questions"
+                *ngFor="let ques of addQuesForm.get('questions')['controls']; let i = index; let last = last">
+                <div class="col-11">
+                    <div class="ques" [formGroupName]="i">
+                        <div class="ques-name p-3">
+                            <div class="row">
+                                <div class="col-8" style="display: inherit;">
+                                    <span class="ques-number mt-2">Q{{i+1}}&nbsp;</span>
+                                    <input type="text" class="form-control ml-1 d-inline-block"
+                                        formControlName="preDefinedQuestion" (input)="quesUpdated(i)">
+                                </div>
+                                <div class="col-4 dropdown">
+                                    <select class="form-control w-100" formControlName="questionTypeId"
+                                        (change)="typeChanged(addQuesForm.value.questions[i].questionTypeId, 'addQues', i)">
+                                        <option *ngFor="let type of questionTypes" [ngValue]="type.questionTypeId">
+                                            {{type.questionType}}</option>
+                                    </select>
+                                </div>
+                                <validation-message class="ml-3" [control]="ques.controls.preDefinedQuestion">
+                                </validation-message>
+                            </div>
+                        </div>
+                        <div class="ques-other p-3" *ngIf="ques.value.questionTypeId == 6">
+                            <div formGroupName="other" class="row px-4">
+                                <div class="col-4">
+                                    Minimum Value <input type="number" formControlName="floor"
+                                        class="form-control d-inline-block mb-2" (input)="minMaxCompare(ques)">
+                                    <validation-message [control]="ques.controls.other.controls.floor">
+                                    </validation-message>
+                                </div>
+                                <div class="col-4">
+                                    Maximum Value <input type="number" formControlName="ceil"
+                                        class="form-control d-inline-block mb-2" (input)="minMaxCompare(ques)">
+                                    <validation-message [control]="ques.controls.other.controls.ceil">
+                                    </validation-message>
+                                </div>
+                                <div class="col-4">
+                                    Step Value <input type="number" formControlName="tickStep"
+                                        class="form-control d-inline-block mb-2" (input)="stepValidation(ques)">
+                                    <validation-message [control]="ques.controls.other.controls.tickStep">
+                                    </validation-message>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ques-opt p-3">
+                            <div formArrayName="questionAnswerOptions"
+                                *ngFor="let opt of ques.get('questionAnswerOptions')['controls']; let j = index; let lastOpt = last">
+                                <div class="row">
+                                    <div class="col-11" [formGroupName]="j">
+                                        <div class="dropdown slider"
+                                            *ngIf="ques.value.questionTypeId == 1 || ques.value.questionTypeId == 6">
+                                            <label class="ml-4">
+                                                <input type="text" class="form-control d-inline-block mb-2"
+                                                    formControlName="questionAnswer" (input)="quesUpdated(i)">
+                                                <validation-message [control]="opt.controls.questionAnswer">
+                                                </validation-message>
+                                            </label>
+                                        </div>
+
+                                        <div class="radio-input-wrapper" *ngIf="ques.value.questionTypeId == 2">
+                                            <label>
+                                                <input type="radio" class="radio" id="{{i}}" name="{{i}}" disabled>
+                                                <span class="label">
+                                                    <input type="text" class="ml-1 form-control d-inline-block mb-2"
+                                                        formControlName="questionAnswer" (input)="quesUpdated(i)">
+                                                </span>
+                                            </label>
+                                        </div>
+
+                                        <div class="checkbox-wrapper" *ngIf="ques.value.questionTypeId == 3">
+                                            <label>
+                                                <input type="checkbox" class="check checkbox-width-20" disabled />
+                                                <span class="label">
+                                                    <input type="text" class="ml-1 form-control d-inline-block mb-2"
+                                                        formControlName="questionAnswer" (input)="quesUpdated(i)">
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-1 p-1"
+                                        *ngIf="ques.value.questionTypeId == 1 || ques.value.questionTypeId == 2 || ques.value.questionTypeId == 3 || ques.value.questionTypeId == 6">
+                                        <div class="card icon-card-list red-bg mr-1" title="Remove"
+                                            *ngIf="addQuesForm.value.questions[i].questionAnswerOptions.length > 1">
+                                            <span class="pointer-cursor size-15" title="Remove"
+                                                (click)="removeQuesAns('addQues', j, i)">-</span>
+                                        </div>
+
+                                        <div class="card icon-card-list blue-bg" title="Add" *ngIf="lastOpt">
+                                            <span class="fa fa-plus pointer-cursor size-14" style="color:white;"
+                                                title="Add" (click)="addQuesAns('addQues', i)"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="text" *ngIf="ques.value.questionTypeId == 4">
+                                        <label class="ml-4">
+                                            <input type="text" class="form-control d-inline-block" disabled>
+                                        </label>
+                                    </div>
+
+                                    <div class="text" *ngIf="ques.value.questionTypeId == 5">
+                                        <label class="ml-4">
+                                            <textarea class="form-control d-inline-block" disabled></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 upload"
+                                    *ngIf="ques.value.questionTypeId == 7 || ques.value.questionTypeId == 8">
+                                    <app-file-upload [disableBtn] ="true"></app-file-upload>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ques-footer p-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="checkbox-wrapper">
+                                        <label>
+                                            <input type="checkbox" class="check checkbox-width-20"
+                                                formControlName="isMandatory" (change)="quesUpdated(i)" />
+                                            <span class="label">
+                                                Mark this question as mandatory
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6" *ngIf="!(editFlag && ques.value.questionId)">
+                                    <div class="checkbox-wrapper">
+                                        <label>
+                                            <input type="checkbox" class="check checkbox-width-20"
+                                                formControlName="saveForFuture" />
+                                            <span class="label">
+                                                Save this question for future use
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1 mt-2">
+                    <div class="card icon-card-list red-bg mr-1" title="Remove">
+                        <span class=" pointer-cursor size-15" title="Remove" (click)="removeQues(i)">-</span>
+                    </div>
+
+                    <div class="card icon-card-list blue-bg" title="Add" *ngIf="last">
+                        <span class="fa fa-plus pointer-cursor size-14" style="color:white;" title="Add"
+                            (click)="addQues()"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="text-center" *ngIf="addQuesForm.value.questions.length === 0">
+            <button class="btn btn-primary" type="button" (click)="addQues()">Add Question</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="float-right">
+                <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

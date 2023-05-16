@@ -1,0 +1,50 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span *ngIf="!editFlag">Add New Study</span>
+                <span *ngIf="editFlag">Edit Study</span>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <ng-container *ngIf="flatTabs.length >= 7; else tabs">
+            <ngb-carousel #carousel [showNavigationIndicators]="false" [showNavigationArrows]="true" [interval]="false"
+                (slide)="onSlide($event, carousel)">
+                <ng-template ngbSlide *ngFor="let item of tabData;let i = index" id="{{i}}">
+                    <div class="navtabsBackground">
+                        <!-- {{isExternal}} -->
+                        <ul ngbNav class="row nav-tabs tabsDesign">
+                            <ng-container *ngFor="let flatTab of item">
+                                <li class="col" [ngbNavItem]="flatTab.name" *ngIf="flatTab.show">
+                                    <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                                        (click)="activateTab(flatTab)"><span>{{
+                                            flatTab.name
+                                            }}</span></a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </ng-container>
+        <ng-template #tabs>
+            <ng-container ngbSlide *ngFor="let item of tabData;let i = index" id="{{i}}">
+                <div class="navtabsBackground">
+                    <!-- {{isExternal}} -->
+                    <ul ngbNav class="row nav-tabs tabsDesign">
+                        <ng-container *ngFor="let flatTab of item">
+                            <li class="col" [ngbNavItem]="flatTab.name" *ngIf="flatTab.show">
+                                <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                                    (click)="activateTab(flatTab)"><span>{{
+                                        flatTab.name
+                                        }}</span></a>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </ng-container>
+        </ng-template>
+        <router-outlet></router-outlet>
+    </div>
+</div>

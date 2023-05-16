@@ -1,0 +1,51 @@
+<div class="boxItem petimgpg">
+  
+    <div class="content-blk-pet">
+        <datatable [headers]="headers"
+        [hideExport]="true" [filterTypeArr]="filterTypeArr"
+        [hideBottomPagination]="true"
+        defaultColumn="" dir="DESC" (formatter)="formatter($event)"
+        url="/api/pets/getPetFeedingEnthusiasmScaleDtls" pageName="petEatingPage" [petId]='petId'  [hideExport]="false" [isReport]="true" fileName={{reportName}} [hidePdf]="false" [hideExcel]="false"
+        exportTitle={{reportName}}>
+        </datatable>
+    
+
+      <!-- <div class="row">
+        <div class="col custom-table">
+            <button class="relative btn btn-primary float-right" style="margin-bottom:20px" (click)="exportAsXLSX()">
+                Export to Excel <i class="icon-excel"></i>
+            </button>
+            <table class="table" id="excel-table">
+                <thead>
+                <tr>
+                    <th scope="col" width="25%">Date</th>
+                    <th scope="col" width="25%">Pet Weight (In KGS)</th>
+                    <th scope="col" width="25%">Pet Weight (In LBS)</th>
+                    <th scope="col" width="25%"></th>
+                </tr>
+                </thead>
+                <tbody class="scrollbar scrollbar-near-moon thin" *ngIf="petFeedingEnthusiasmScaleDtls?.length > 0">
+                <tr *ngFor="let list of petFeedingEnthusiasmScaleDtls | slice: (parentPage-1) * parentpageSize : (parentPage-1) * parentpageSize + parentpageSize">
+                    <td  width="25%">{{list.addDate | date: 'MM-dd-yyyy'}}</td>
+                    <td  width="25%">{{list.weightKgs}}</td>
+                    <td  width="25%">{{list.weight}}</td>
+                    <td width="25%" *ngIf="RWFlag">
+                        <div class="card icon-card-list green-bg mr-2" title="Edit">
+                                <span class="icon-tag size-20" title="Edit" (click)="edit(list)"></span>
+                            </div>&nbsp;
+                   
+                    </td>
+                </tr>
+                </tbody>
+                <tbody class="table-body" *ngIf="!petFeedingEnthusiasmScaleDtls || petFeedingEnthusiasmScaleDtls?.length == 0">
+                <tr>
+                    <td>No Records Found</td>
+                </tr>
+                </tbody>
+            </table>
+      </div> -->
+    </div>
+
+
+  
+  </div>

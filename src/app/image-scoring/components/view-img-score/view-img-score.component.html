@@ -1,0 +1,181 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">View Image Score</div>
+            <div class="col-6 text-right">
+                <button *ngIf="RWFlag && !publishedFlag" class="btn btn-primary" type="button"
+                    (click)="editImg(id)">Edit
+                    Image Score</button>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+
+        <div class="content-banner mb-3">
+
+            <div class="row no-gutter border-1">
+                <div class="col-6 block-left-center mb-2">
+                    <span class="banner-heading-text">{{imageScoringScale.imageScaleName}}</span>
+                    <span class="status-button"
+                        [ngClass]="imageScoringScale.statusClass">{{imageScoringScale.status}}</span>
+                    <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                    <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right mb-2">
+                        <!-- <span class="pi_text mr-2">Principal Investigator</span> -->
+                        <!-- <span class="phone_number_text mr-4">{{clinicForm.value.pinv}}</span> -->
+
+                        <!-- <button class="btn btn-primary" routerLink="/user/clinics/edit-clinic/{{id}}">Edit
+                            Study</button> -->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutter mt-3">
+                <!-- <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap ml-3">
+                                <div class="small-text">Plan Name</div>
+                                <div class="green-small-text">{{imageScoringScale.planName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Scoring Type</div>
+                                <div class="green-small-text">
+                                    {{imageScoringScale.scoringType ? imageScoringScale.scoringType : '-'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Classification</div>
+                                <div class="green-small-text">{{imageScoringScale.classification }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Modified Date</div>
+                                <div class="green-small-text">{{imageScoringScale.modifiedDate | date: 'MM-dd-yyyy' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Species</div>
+                                <div class="green-small-text">{{imageScoringScale.speciesName }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="custom-table mb-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="10%">image</th>
+
+                                    <th scope="col" width="20%"> Label</th>
+                                    <th scope="col" width="20%" *ngIf="imageScoringScale.classificationId == 1">score
+                                    </th>
+                                    <th scope="col" width="20%" *ngIf="imageScoringScale.classificationId == 2">UOM</th>
+                                    <th scope="col" width="50%">description</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody class="scrollbar scrollbar-near-moon thin" *ngIf="imgDetails?.length > 0">
+                                <tr *ngFor="let list of imgDetails">
+
+                                    <td width="10%">
+                                        <img *ngIf="list.imagePath" class="img-icon" src="{{list.imagePath}}"
+                                            alt="imagePath" width="65" height="65" (click)="playImg(list.imagePath)" />
+                                        <img *ngIf="!list.imagePath" src="assets/images/no-dogs.svg" width="65"
+                                            height="65" />
+                                    </td>
+
+
+                                    <td width="20%">{{list.imageLabel}}</td>
+                                    <td width="20%" *ngIf="imageScoringScale.classificationId == 1">{{list.score}}</td>
+                                    <td width="20%" *ngIf="imageScoringScale.classificationId == 2">{{list.unitName}}
+                                    </td>
+                                    <td width="50%" class="img_scoring_desc">{{list.description}}</td>
+
+                                </tr>
+                            </tbody>
+                            <tbody class="table-body" *ngIf="!imgDetails || imgDetails?.length == 0">
+                                <tr>
+                                    <td>No Records Found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" routerLink="/user/imagescore">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<ng-template #ImageEle let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            View Image
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-4 vertical-scroll">
+            <div class="col-12">
+                <img src="{{playImgUrl}}" alt="pet" class="img-fluid" />
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    Close
+                </button>&nbsp;&nbsp;
+                <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3"  (click)="downloadImage();">
+                    Download
+                </button> -->
+            </div>
+        </div>
+    </div>
+</ng-template>

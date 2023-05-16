@@ -1,0 +1,392 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col block-left-center">
+                <div *ngIf="editProd">Edit Ticket</div>
+                <div *ngIf="!editProd">Add New Ticket</div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-block">
+            <form [formGroup]="supportForm" novalidate>
+                <div class="row ">
+                    <div class="col-4 mb-3" *ngIf="editProd">
+                        <div><label class="label">Ticket # </label><b>{{this.id}}</b></div>
+                    </div>
+                    <div class="col-4 mb-3" *ngIf="editProd">
+                        <div><label class="label">Created Date:
+                            </label>&nbsp; <b>{{supportForm.value.ticketCreatedDate}}</b></div>
+                    </div>
+                    <div class="col-4 mb-3" *ngIf="editProd">
+                        <div><label class="label">Created By:
+                            </label>&nbsp; <b>{{supportForm.value.createdBy}}</b></div>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Ticket Title <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" maxlength="200"
+                                formControlName="ticketTitle">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.ticketTitle">
+                        </validation-message>
+                    </div>
+                    <!-- <div class="col-4" *ngIf="editProd">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Created Date </label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="ticketCreatedDate"
+                                disabled>
+                        </fieldset>
+                    </div> -->
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Assigned To </label>
+                            </legend>
+                            <lib-typeahead [data]="assignedToList" matcher="userName" formControlName="userId"
+                                class="w-100 mb-0" placeholder="" class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Priority <span class="asterisk">*</span></label></legend>
+                            <select class="form-control" formControlName="priorityId">
+                                <option [ngValue]=null>Select Priority</option>
+                                <option *ngFor="let priority of ticketPriorities" [ngValue]="priority.priorityId">
+                                    {{priority.priorityName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.priorityId">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Ticket Status <span class="asterisk">*</span></label>
+                            </legend>
+                            <!-- {{supportForm.value.status | json}} -->
+                            <select class="form-control" formControlName="status" (change)="changeStatus()">
+                                <option [ngValue]=null>Select Status</option>
+                                <option *ngFor="let petstatus of statusList" [ngValue]="petstatus.statusId">
+                                    {{petstatus.statusName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.status">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Pet Name</label></legend>
+                            <lib-typeahead [data]="petList" matcher="petName" formControlName="petId" class="w-100 mb-0"
+                                placeholder="" class="w-100" (selectedItem)='getParent()' (onClear)='clearPetDetails()'>
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Pet Parent Name</label></legend>
+                            <lib-typeahead [data]="parentlist" matcher="petParentName" formControlName="petParentId"
+                                class="w-100 mb-0" placeholder="" class="w-100"
+                                (selectedItem)='getParentAdress($event)'>
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Contact Method <span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control" formControlName="contactMethodId">
+                                <option [ngValue]=null>Select Contact Method</option>
+                                <option *ngFor="let contact of contactMethodList" [ngValue]="contact.contactMethodId">
+                                    {{contact.contactMethodName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.contactMethodId">
+                        </validation-message>
+                    </div>
+                    <div class="col-8 mb-3">
+                        <!-- <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Pet Parent Address</label></legend>
+                            <textarea class="form-control textbox w-100" formControlName="petParentAddress"
+                                maxlength="500"></textarea>
+                        </fieldset> -->
+                        <app-textarea formControlName="petParentAddress" labelName="Pet Parent Address" [maxLengthT]="500" ></app-textarea>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Study</label></legend>
+                            <lib-typeahead [data]="studyList" matcher="studyName" formControlName="studyId"
+                                class="w-100 mb-0" placeholder="" class="w-100" (selectedItem)="getSensorName()"
+                                (onClear)='clearStudyDetails()'>
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-3 labelfield">
+                        <fieldset class="w-fieldset" [disabled]="true">
+                            <legend><label class="label">Start Date </label></legend>
+                            <datepicker class="w-100" formControlName="studyStartDate" format="MM-DD-YYYY"
+                                [disabled]="true" *ngIf="supportForm.value.studyId.studyId"></datepicker>
+                        </fieldset>
+                    </div>
+                    <div class="col-3 labelfield">
+                        <fieldset class="w-fieldset" [disabled]="true">
+                            <legend>
+                                <label class="label">End Date </label>
+                            </legend>
+                            <datepicker class="w-100" formControlName="studyEndDate" format="MM-DD-YYYY"
+                                [disabled]="true" *ngIf="supportForm.value.studyId.studyId"></datepicker>
+                        </fieldset>
+                    </div>
+                    <div class="col-2 labelfield" *ngIf="supportForm.value.studyId.studyId">
+                        <fieldset class="w-fieldset">
+                            <legend>
+                                <label class="label">Study Status</label>
+                            </legend>
+                            <div class="form-control disabled-Text"
+                                [ngClass]="supportForm.value.studyStatus?'active-bg':'inactive-bg'">
+                                {{ supportForm.value.studyStatus?'Active':'Inactive' }}</div>
+                        </fieldset>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Issue</label></legend>
+                            <select class="form-control" formControlName="issueId"
+                                (change)="getRootCause($event.target.value.split(':')[1].trim())">
+                                <option [ngValue]=null>Select Issue</option>
+                                <option *ngFor="let issue of issueList" [ngValue]="issue.issueId">
+                                    {{issue.issueName}}</option>
+                            </select>
+                        </fieldset>
+                        <!-- <validation-message [messageToAppend]="" [control]="supportForm.controls.issueId">
+                        </validation-message> -->
+                    </div>
+                    <div class="col-3 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Root Cause</label>
+                            </legend>
+                            <select class="form-control" formControlName="rootCauseId">
+                                <option [ngValue]=null>Select Root Cause</option>
+                                <option *ngFor="let rootcause of rootCauseList" [ngValue]="rootcause.rootCauseId">
+                                    {{rootcause.rootCauseName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.rootCauseId">
+                        </validation-message>
+
+                    </div>
+                    <div class="col-3 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Asset Number</label>
+                            </legend>
+                            <lib-typeahead [data]="sensorList" matcher="sensorName" formControlName="sensorId"
+                                class="w-100 mb-0" placeholder="" class="w-100" (onClear)="clearSensorDetails()"
+                                (selectedItem)='getInventoryStatus($event)'>
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-3 mb-3 labelfield">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Asset Location</label></legend>
+                            <lib-typeahead [data]="sensorLocations" matcher="storageLocationName" disabled="true"
+                                formControlName="storageLocationId" class="w-100 mb-0" placeholder="" class="w-100"
+                                (selectedItem)='clearOtherLocation($event)'>
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    
+                    <div class="col-4 mb-3 labelfield" *ngIf="showOtherLocation">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Other Location</label></legend>
+                            <input type="text" class="form-control" formControlName="sensorOtherLocation"
+                                maxlength="50" />
+                        </fieldset>
+                    </div>
+                    <div class="col-3 mb-3 labelfield">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Asset Status</label>
+                            </legend>
+                            <lib-typeahead [data]="inventoryStatusList" matcher="inventoryStatusName" disabled="true"
+                                formControlName="inventoryStatusId" class="w-100 mb-0" placeholder="" class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-3 mb-3 labelfield">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Manufacturer Serial Number</label>
+                            </legend>
+                            <input *ngIf="!editProd" type="text" class="form-control" style="font-weight: bold;" formControlName="mfgSerialNumber"
+                                />
+                                <input *ngIf="editProd" type="text" class="form-control" style="font-weight: bold;" formControlName="mfgSerialNumber"
+                                readonly
+                                />
+                            
+
+                        </fieldset>
+                    </div>
+                    <div class="col-3 mb-3 labelfield">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Bluetooth MAC Address</label>
+                            </legend>
+                            <input *ngIf="!editProd"  type="text" class="form-control" style="font-weight: bold;"  formControlName="mfgMacAddr"
+                            />
+                            <input *ngIf="editProd"  type="text" class="form-control" style="font-weight: bold;"  formControlName="mfgMacAddr" readonly
+                            />
+                        </fieldset>
+                    </div>
+                    <div class="col-3 mb-3 labelfield">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Wifi MAC Address</label>
+                            </legend>
+                            <input *ngIf="!editProd" type="text" class="form-control" style="font-weight: bold;"  formControlName="wifiMacAddr"
+                            />
+                            <input *ngIf="editProd" type="text" class="form-control" style="font-weight: bold;"  formControlName="wifiMacAddr" readonly
+                            />
+                        </fieldset>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Agent/System Action- Initial</label></legend>
+                            <lib-typeahead [data]="agentActionListInitial" matcher="agentActionName"
+                                formControlName="agentActionIdInitial" (selectedItem)='displayAgentActionSecondary()'
+                                (onClear)='clearDefective()' class="w-100 mb-0" placeholder="" class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-12 mb-3" *ngIf="secondary ||supportForm.value.agentActionIdInitial.agentActionId">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Agent Action- Secondary</label></legend>
+                            <lib-typeahead [data]="agentActionListSecondary" matcher="agentActionName"
+                                (onClear)='clearDefective()' formControlName="agentActionIdSecondary"
+                                (selectedItem)='displayAgentActionTertiary()' class="w-100 mb-0" placeholder=""
+                                class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-12 mb-3"
+                        *ngIf="tertiary || (supportForm.value.agentActionIdSecondary.agentActionId  && supportForm.value.agentActionIdInitial.agentActionId)">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Agent Action- Tertiary</label></legend>
+                            <lib-typeahead [data]="agentActionListTertiary" matcher="agentActionName"
+                                (onClear)='clearDefective()' formControlName="agentActionIdTertiary" class="w-100 mb-0"
+                                placeholder="" class="w-100" (selectedItem)='checkDefectiveTertiary()'>
+                            </lib-typeahead>
+                        </fieldset>
+                    </div>
+                    <div class="col-8 mb-3" *ngIf="showDefectiveSensor">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Defective Sensor Action <span
+                                        class="asterisk">*</span></label></legend>
+                            <lib-typeahead [data]="defectiveSensorActionList" matcher="defectiveSensorActionName"
+                                formControlName="defectiveSensorActionId" (selectedItem)='changeInventoryStatus($event)'
+                                (onClear)='clearDefective()' class="w-100 mb-0" placeholder="" class="w-100">
+                            </lib-typeahead>
+                        </fieldset>
+                        <validation-message [messageToAppend]=""
+                            [control]="supportForm.controls.defectiveSensorActionId">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <!-- <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Notes</label></legend>
+                            <textarea class="form-control textbox w-100" formControlName="notes"
+                                maxlength="4000"></textarea>
+                        </fieldset> -->
+                        <app-textarea formControlName="notes" labelName="Notes" [maxLengthT]="4000" ></app-textarea>
+                    </div>
+                    <div style="width:100%" class="col-12 pt-1 pb-1 pl-2 rytBdr lytWhiteBdr"
+                        *ngIf="supportForm.value.fileEdit">
+                        <div class="upldBlk mb-3" *ngIf="supportForm.value.fileEdit.length">
+                            <div class="col-12 mb-3" *ngFor="let list of supportForm.value.fileEdit;let k=index">
+                                <a href="javascript:void(0)" class="filedec">{{list.originalFileName}}</a>
+                                <span class="ml-2 crossIcon" (click)="deleteRecord(list,k)">X</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Attachment</label>
+                            </legend>
+                            <app-file-upload formControlName="file" (selectedItem)="selectFileResult($event)">
+                            </app-file-upload>
+                        </fieldset>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" (click)="backToList()"
+                                type="button">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button"
+                                (click)="updateCustomerSupport()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Delete</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true" class="icon-close"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Do you want to delete <span class="bold-text" style="color:red">{{list.originalFileName}}</span> ?
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="deleteAttachment();">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #archiveContent2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Alert</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click');unChangeValue();">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+              Do you want to change the ticket status ?
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+            
+                <button type="button" class="btn btn-secondary btn-custom float-right"
+                    (click)="d('Cross click');unChangeValue();">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="d('Cross click');changeValue();">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

@@ -1,0 +1,65 @@
+
+/* Floating Label start */
+.form-label-group {
+    position: relative;
+    font-family: 'Rubik', sans-serif;
+
+    label {
+        position: absolute;
+        top: 20px;
+        padding-left: 14px;
+        display: block;
+        width: 100%;
+        margin-bottom: 0; /* Override default `<label>` margin */
+        line-height: 1.5;
+        color: #495057;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        transition: all .1s ease-in-out;
+    }
+
+    input:not(:placeholder-shown) + label, input:focus + label {
+        position: absolute;
+        top: 3px;
+        font-size: 12px;
+    }
+
+    input:not(:-ms-input-placeholder) + label {
+        position: absolute;
+        top: 3px;
+        font-size: 12px;
+    }
+}
+    
+.form-label-group input::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+    color: transparent!important;
+}
+
+.form-label-group input::-moz-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::placeholder {
+    color: transparent;
+}
+
+.form-control {
+    height: calc(1.5em + 0.75rem + 20px);
+    border-radius: none;
+    border-bottom: 1px solid gray;
+    padding: 20px 15px 10px!important;
+    border: none;
+    color: #0276A7;
+
+    &:focus {
+        border-color: #cccccc;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+}
+
+/* Floating Label end */

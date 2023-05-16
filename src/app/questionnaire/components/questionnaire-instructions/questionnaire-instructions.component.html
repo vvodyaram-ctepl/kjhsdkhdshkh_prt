@@ -1,0 +1,106 @@
+<div class="content-block">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="d-inline-block mr-3">
+                <input type="radio" id="existing_Instruction" (change)="formReset()" name="insType"
+                    [(ngModel)]="insType" [value]="1">
+                &nbsp;<label for="existing_Instruction">Existing Instruction</label><br>
+            </div>
+            <div class="d-inline-block">
+                <input type="radio" id="new_Instruction" (change)="formReset()" name="insType" [(ngModel)]="insType"
+                    [value]="2">
+                &nbsp;<label for="new_Instruction">Add New Instruction</label><br>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="insType == 1">
+        <form [formGroup]="addInstForm">
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label w-100">Select Instruction</label></legend>
+                        <lib-typeahead [data]="preDefinedInstructions" matcher="preDefinedInstruction"
+                            (selectedItem)='instructionSelected($event)' formControlName="definedInstruction"
+                            class="w-100 mb-0 form-control" placeholder="" class="w-100">
+                        </lib-typeahead>
+                    </fieldset>
+                </div>
+            </div>
+            <ng-container *ngIf="changeInstruction" [ngTemplateOutlet]="newInstruction"></ng-container>
+        </form>
+    </div>
+    <div *ngIf="insType == 2">
+        <ng-container [ngTemplateOutlet]="newInstruction"></ng-container>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">INSTRUCTION</th>
+                        <th scope="col">SAVE INSTRUCTION FOR FUTURE</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let instruction of addedInstructions; let i = index">
+                        <td>{{instruction.instruction}}</td>
+                        <td style="width: 250px;">{{instruction.saveForFuture ? 'Yes' : 'No'}}</td>
+                        <td style="width: 80px;" class="text-right">
+                            <div class="card icon-card-list green-bg" style="cursor: pointer;" title="Edit"
+                                *ngIf="editFlag" (click)="updateInstruction(i, instruction)">
+                                <span class="icon-tag size-20" title="Edit"></span>
+                            </div>&nbsp;&nbsp;
+                            <!-- <div class="card icon-card-list red-bg" style="cursor: pointer;"
+                                (click)="deleteInstruction(i)" style="bottom: 0">
+                                <span class="fa fa-trash-alt" title="Delete" style="color:red;"></span>
+                            </div> -->
+
+                            <div class="card icon-card-list red-bg float-right" title="Remove" (click)="deleteInstruction(i)">
+                                <span class="pointer-cursor size-14" title="Remove">-</span>
+                              </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="float-right">
+                <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #newInstruction>
+    <form [formGroup]="addInstForm">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <!-- <fieldset class="w-fieldset">
+                    <legend> <label class="label">Instruction</label></legend>
+                    <textarea class="form-control textbox w-100" formControlName="instruction"></textarea>
+                </fieldset> -->
+                <app-textarea labelName="Instruction" formControlName="instruction" [maxLengthT]="500"></app-textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="checkbox-wrapper" *ngIf="insType == 2">
+                    <label>
+                        <input type="checkbox" class="check checkbox-width-20" formControlName="saveForFuture" />
+                        <span class="label p-absolute ml-2" style="cursor: pointer;">
+                            Save this instruction for future use
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary float-right" type="button" (click)="addInstruction()">Save</button>
+            </div>
+        </div>
+    </form>
+</ng-template>

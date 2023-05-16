@@ -1,0 +1,42 @@
+.border-1 {
+    border-bottom: 1px solid #00CF99;
+}
+.b-1-grey {
+    // border-bottom: 1px solid #707070;
+    border-bottom: 1px solid #e2dbdb;
+}
+
+.img-box-blue {
+   background: #F4F0FF 0% 0% no-repeat padding-box;
+   border-radius: 6px;
+   width: 40px;
+height: 40px;
+color:#00CF99;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.icon-dog-blue {
+ color: #561FDD;
+}
+.small-text {
+   font: normal normal bold 13px/15px Titillium Web;
+   letter-spacing: -0.4px;
+   color: #212F3A;
+}
+.count-text {
+   letter-spacing: -0.6px;
+   color: #212F3A;
+   margin-top:5px;
+}
+
+.dog-circle {
+   border :0;
+   border-radius: 50%;
+}
+
+.petImage {
+   height: 38px;
+   width: 38px;
+}

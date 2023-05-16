@@ -1,0 +1,579 @@
+<div class="content-box">
+  <div class="grey-bg-block">
+    <div class="row">
+      <div class="col-md-3 offset-md-1">
+        <div class="c-points">
+          <div>
+            <div><i class="icon-pointsearned"></i></div>
+          </div>
+          <div>Points Earned</div>
+          <div *ngIf="petCampaignPoints">{{petCampaignPoints.totalEarnedPoints}}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="c-points">
+          <div>
+            <div><i class="icon-pointsutilized"></i></div>
+          </div>
+          <div>Points Utilized</div>
+          <div *ngIf="petCampaignPoints">{{petCampaignPoints.pointsUtilized}}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="c-points">
+          <div>
+            <div><i class="icon-redeempoints"></i></div>
+          </div>
+          <div>Redeemable Points</div>
+          <div *ngIf="petCampaignPoints">{{petCampaignPoints.redeemablePoints}}</div>
+        </div>
+      </div>
+      <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-primary btn-pink" *ngIf="RWFlag" (click)="redeem()">Redeem</button>
+      </div>
+    </div>
+  </div>
+  <div class="campaign-blk">
+    <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="device-0" [ngClass]="activeClass"
+      (panelChange)="toggleAccordian($event.panelId, acc)">
+      <!--
+        activeIds="device-0" 
+        
+        *ngFor="let devices of petDevices | slice: (devPage-1) * devpageSize : (devPage-1) * devpageSize + devpageSize; let i=index"
+        id="device-{{i}}"
+    -->
+      <ngb-panel id="device-0">
+        <ng-template ngbPanelTitle>
+          <div class="row">
+            <div class="col-6 text-left">Observations&nbsp;</div>
+            <div class="col-6 text-right">
+              <span class="align-right">
+                <!-- <i class="icon-Component-79--1"></i> -->
+                <img src="assets/images/starnew.svg" />
+                <b *ngIf="petCampaignPoints">{{petCampaignPoints.observations}} points</b>
+                <i class="icon-right-arrow"></i>
+              </span>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <!-- <div class="row labelItem mt-1"> -->
+          <!--table starts  -->
+          <div class="custom-table">
+            <table>
+              <thead class="table-hdr">
+                <tr>
+                  <th *ngFor="let list of observationHeaders; let i = index">
+                    {{ list.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length > 0">
+                <tr *ngFor="let list of showPanelContentData; let i = index">
+                  <!-- <td>
+                                    {{ list.studyId }}
+                                  </td> -->
+                  <td>
+                    {{ list.createdDate }}
+                  </td>
+                  <td>
+                    {{ list.campaignName }}
+                  </td>
+                  <td>
+                    {{ list.observation }}
+                  </td>
+                  <!-- <td>
+                    {{ list.behaviourName }}
+                  </td>
+                  <td>
+                    <span class="petImage" *ngIf="list.imageUrl"><img src={{list.imageUrl}} height="38" width="38"></span>
+                  </td> -->
+                  <td>
+                    {{ list.points }}
+                  </td>
+                  <td>
+                    {{ list.status }}
+                  </td>
+                  <!-- <td>
+                                    <span [ngClass]="list.isActive == 'Active' ? 'active-status' :'inactive-status'">{{list.isActive}}</span>
+                                  </td> -->
+                </tr>
+              </tbody>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length == 0">
+                <tr>
+                  <td>No Records Found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table ends -->
+          <!-- </div> -->
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="device-1">
+        <ng-template ngbPanelTitle>
+          <div class="row">
+            <div class="col-6 text-left">Videos&nbsp;</div>
+            <div class="col-6 text-right">
+              <span class="align-right">
+                <!-- <i class="icon-Component-79--1"></i> -->
+                <img src="assets/images/starnew.svg" />
+                <b *ngIf="petCampaignPoints">{{petCampaignPoints.videos}} points</b>
+                <i class="icon-right-arrow"></i>
+              </span>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <!-- <div class="row labelItem mt-1"> -->
+          <!--table starts  -->
+          <div class="custom-table">
+            <table>
+              <thead class="table-hdr">
+                <tr>
+                  <th *ngFor="let list of headers; let i = index">
+                    {{ list.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length > 0">
+                <tr *ngFor="let list of showPanelContentData; let i = index">
+                  <!-- <td>
+                                    {{ list.studyId }}
+                                  </td> -->
+                  <td>
+                    {{ list.createdDate }}
+                  </td>
+                  <td>
+                    {{ list.campaignName }}
+                  </td>
+                  <td>
+                    {{ list.observation }}
+                  </td>
+                  <td>
+                    {{ list.behaviourName }}
+                  </td>
+                  <td>
+                    <div class="choose-images" (click)="playVideo(list.videoUrl)">
+                      <div class="thumbnaildiv"><img
+                          [src]='list.videoThumbnailUrl ? list.videoThumbnailUrl : "assets/images/no-video.png"'
+                          class="p-image"><i class="far fa-play-circle"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    {{ list.points }}
+                  </td>
+                  <td>
+                    {{ list.status }}
+                  </td>
+                  <!-- <td>
+                                    <span [ngClass]="list.isActive == 'Active' ? 'active-status' :'inactive-status'">{{list.isActive}}</span>
+                                  </td> -->
+                </tr>
+              </tbody>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length == 0">
+                <tr>
+                  <td>No Records Found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table ends -->
+          <!-- </div> -->
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="device-2">
+        <ng-template ngbPanelTitle>
+          <div class="row">
+            <div class="col-6 text-left">Images&nbsp;</div>
+            <div class="col-6 text-right">
+              <span class="align-right">
+                <!-- <i class="icon-Component-79--1"></i> -->
+                <img src="assets/images/starnew.svg" />
+                <b *ngIf="petCampaignPoints">{{petCampaignPoints.images}} points</b>
+                <i class="icon-right-arrow"></i>
+              </span>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <!-- <div class="row labelItem mt-1"> -->
+          <!--table starts  -->
+          <div class="custom-table">
+            <table>
+              <thead class="table-hdr">
+                <tr>
+                  <th *ngFor="let list of headers; let i = index">
+                    {{ list.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length > 0">
+                <tr *ngFor="let list of showPanelContentData; let i = index">
+                  <!-- <td>
+                                    {{ list.studyId }}
+                                  </td> -->
+                  <td>
+                    {{ list.createdDate }}
+                  </td>
+                  <td>
+                    {{ list.campaignName }}
+                  </td>
+                  <td>
+                    {{ list.observation }}
+                  </td>
+                  <td>
+                    {{ list.behaviourName }}
+                  </td>
+                  <td>
+                    <span class="petImage"><img [src]="list.imageUrl ? list.imageUrl : 'assets/images/no-dogs.svg'"
+                        (click)="playImg(list.imageUrl)" height="38" width="38"></span>
+                  </td>
+                  <td>
+                    {{ list.points }}
+                  </td>
+                  <td>
+                    {{ list.status }}
+                  </td>
+                  <!-- <td>
+                                    <span [ngClass]="list.isActive == 'Active' ? 'active-status' :'inactive-status'">{{list.isActive}}</span>
+                                  </td> -->
+                </tr>
+              </tbody>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length == 0">
+                <tr>
+                  <td>No Records Found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table ends -->
+          <!-- </div> -->
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="device-3">
+        <ng-template ngbPanelTitle>
+          <div class="row">
+            <div class="col-6 text-left">Questionnaire&nbsp;</div>
+            <div class="col-6 text-right">
+              <span class="align-right">
+                <!-- <i class="icon-Component-79--1"></i> -->
+                <img src="assets/images/starnew.svg" />
+                <b *ngIf="petCampaignPoints">{{petCampaignPoints.questionnaire}} points</b>
+                <i class="icon-right-arrow"></i>
+              </span>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <!-- <div class="row labelItem mt-1"> -->
+          <!--table starts  -->
+          <div class="custom-table">
+            <table>
+              <thead class="table-hdr">
+                <tr>
+                  <th *ngFor="let list of questionnaireHeaders; let i = index">
+                    {{ list.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length > 0">
+                <tr *ngFor="let list of showPanelContentData; let i = index">
+                  <!-- <td>
+                                    {{ list.studyId }}
+                                  </td> -->
+                  <td>
+                    {{ list.createdDate }}
+                  </td>
+                  <td>
+                    {{ list.campaignName }}
+                  </td>
+                  <td>
+                    {{ list.questionnaireName }}
+                  </td>
+                  <td>
+                    {{ list.points }}
+                  </td>
+                  <td>
+                    {{ list.status }}
+                  </td>
+                  <!-- <td>
+                                    <span [ngClass]="list.isActive == 'Active' ? 'active-status' :'inactive-status'">{{list.isActive}}</span>
+                                  </td> -->
+                </tr>
+              </tbody>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length == 0">
+                <tr>
+                  <td>No Records Found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table ends -->
+          <!-- </div> -->
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="device-5">
+        <ng-template ngbPanelTitle>
+          <div class="row">
+            <div class="col-6 text-left">Feedback&nbsp;</div>
+            <div class="col-6 text-right">
+              <span class="align-right">
+                <!-- <i class="icon-Component-79--1"></i> -->
+                <img src="assets/images/starnew.svg" />
+                <b *ngIf="petCampaignPoints">{{petCampaignPoints.feedback}} points</b>
+                <i class="icon-right-arrow"></i>
+              </span>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <!-- <div class="row labelItem mt-1"> -->
+          <!--table starts  -->
+          <div class="custom-table">
+            <table>
+              <thead class="table-hdr">
+                <tr>
+                  <th *ngFor="let list of feedbackHeaders; let i = index">
+                    {{ list.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length > 0">
+                <tr *ngFor="let list of showPanelContentData; let i = index">
+                  <!-- <td>
+                                    {{ list.studyId }}
+                                  </td> -->
+                  <td>
+                    {{ list.createdDate }}
+                  </td>
+                  <td>
+                    {{ list.campaignName }}
+                  </td>
+                  <td style="max-width: 350px;">
+                    {{ list.feedback }}
+                  </td>
+                  <td>
+                    {{ list.points }}
+                  </td>
+                  <td>
+                    {{ list.status }}
+                  </td>
+                  <!-- <td>
+                                    <span [ngClass]="list.isActive == 'Active' ? 'active-status' :'inactive-status'">{{list.isActive}}</span>
+                                  </td> -->
+                </tr>
+              </tbody>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length == 0">
+                <tr>
+                  <td>No Records Found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table ends -->
+          <!-- </div> -->
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel id="device-4">
+        <ng-template ngbPanelTitle>
+          <div class="row">
+            <!-- (click)="loadRedemptionHistory()" -->
+            <div class="col-6 text-left">Redemption History&nbsp;</div>
+            <div class="col-6 text-right">
+              <span class="align-right">
+                <i class="icon-right-arrow"></i>
+              </span>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <!-- <div class="row labelItem mt-1"> -->
+          <!--table starts  -->
+          <div class="custom-table">
+            <table>
+              <thead class="table-hdr">
+                <tr>
+                  <th *ngFor="let list of redemptionHistory; let i = index">
+                    {{ list.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length > 0">
+                <tr *ngFor="let list of showPanelContentData; let i = index">
+                  <!-- <td>
+                                    {{ list.studyId }}
+                                  </td> -->
+                  <td>
+                    {{ list.createdDate }}
+                  </td>
+                  <td>
+                    {{ list.totalPoints }}
+                  </td>
+                  <td>
+                    {{ list.pointsRedeemed }}
+                  </td>
+                  <td>
+                    {{ list.balancePoints }}
+                  </td>
+
+                  <td>
+                    {{ list.redeemedByUser }}
+                  </td>
+                  <!-- <td>
+                                    <span [ngClass]="list.isActive == 'Active' ? 'active-status' :'inactive-status'">{{list.isActive}}</span>
+                                  </td> -->
+                </tr>
+              </tbody>
+              <tbody class="table-body" *ngIf="showPanelContentData?.length == 0">
+                <tr>
+                  <td>No Records Found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- table ends -->
+          <!-- </div> -->
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Redeem Points
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span class="icon-close" aria-hidden="true"></span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row mb-3">
+      <div class="col-12">
+        <fieldset class="w-fieldset">
+          <legend><label class="label">Please select the points to be redeemed</label></legend>
+          <select class="form-control" [(ngModel)]="redeemPointNumber">
+            <option value=''>Select </option>
+            <option value='50'>50 Points</option>
+            <option value='100'>100 Points</option>
+            <option value='150'>150 Points</option>
+            <option value='200'>200 Points</option>
+            <option value='250'>250 Points</option>
+            <option value='300'>300 Points</option>
+          </select>
+        </fieldset>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mb-4">
+        <button type="submit" class="btn btn-primary btn-custom float-right" (click)="redeemPoints()">
+          Submit
+        </button>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #archiveContent2 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Alert
+    </h5>
+  </div>
+  <!--
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span class="icon-close" aria-hidden="true"></span>
+      </div>
+    </button> 
+  -->
+  <div class="modal-body">
+
+    <div class="row mb-3">
+      <div class="col-12">
+        <p>You are redeeming {{redeemPointNumber}} Points of ‘{{petDetails.petName}}’.</p>
+        <p>Please Click ‘Yes’ to confirm and ‘No’ to cancel.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mb-4 text-center">
+        <button type="submit" class="btn btn-primary btn-custom" (click)="submitRedeem();">
+          Yes
+        </button> &nbsp;&nbsp;
+        <button type="submit" class="btn btn-secondary btn-custom" (click)="d('Cross click')">
+          No
+        </button>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #archiveContent3 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Video
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span aria-hidden="true">&#10006;</span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-4">
+      <div class="col-12 video-wrapper">
+        <video controls class="p-video videopath" controls autoplay width="100%" style="margin:0 auto;">
+          <source src="{{playVideoUrl}}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          Cancel
+        </button>&nbsp;&nbsp;
+        <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="downloadvideo();">
+                  Download
+              </button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #archiveContent4 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      View Image
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span aria-hidden="true">&#10006;</span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-4 vertical-scroll">
+      <div class="col-12">
+        <img src="{{playImgUrl}}" alt="pet" class="img-fluid" />
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          Close
+        </button>&nbsp;&nbsp;
+        <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3"  (click)="downloadImage();">
+                  Download
+              </button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>

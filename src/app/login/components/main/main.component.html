@@ -1,0 +1,133 @@
+<!-- spinner -->
+<!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="default" color="#fff" loadingText="Loading..." type="square-jelly-box">
+</ngx-spinner> -->
+
+<div id="main-wrapper" [ngClass]="{'show-sidebar': showMobileMenu}" dir="ltr" data-theme="light" data-layout="vertical"
+    [attr.data-sidebartype]="sidebartype" data-sidebar-position="absolute" data-header-position="fixed"
+    data-boxed-layout="full">
+    <header class="fixed-top">
+        <!-- Nav click -->
+        <nav class="d-flex top-navbar navbar-expand-md navbar-light">
+            <div class="navbar-header d-md-none" [ngClass]="(expandLogo)?'expand-logo':''">
+                <!-- This is for the sidebar toggle which is visible on mobile only -->
+                <a (click)="showMobileMenu = !showMobileMenu"
+                    class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
+                    <i [ngClass]="(showMobileMenu)?'fa fa-times':'fa fa-bars'"></i>
+                </a>
+            </div>
+            <div class="navbar-header d-none d-md-block">
+                <!-- This is for the sidebar toggle which is visible on desktop only -->
+                <a (click)=" toggleSidebarType()" class="nav-toggler waves-effect waves-light d-block"
+                    href="javascript:void(0)">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+
+        </nav>
+
+        <div class="container-fluid header">
+            <div class="row hdrtop">
+                <div class="col pr-0">
+                    <div class="logo">
+                        <div class="logo-img">
+                            <img src="assets/images/logo-wearables.svg" />
+                        </div>
+                        <!-- <div class="logo-text">
+                            <div class="logo-h1">Wearables</div>
+                            <div class="logo-h2">Clinical Portal</div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col text-right">
+
+                    <!-- <div class="usersettings float-right dropdown mr-3">
+                        <span class="icon-settings" style="cursor: pointer" (click)="myFunction()"></span>
+                        <div id="myDropdown" class="dropdown-content ">
+                            <a routerLink="/user/changePassword" (click)="changePwd()">Change Password</a>
+                            <a href="javascript:void(0)" (click)="logout()">Logout</a>
+                        </div>
+                    </div> -->
+                    <div class="usersettings float-right dropdown mr-3">
+                        <span class="icon-settings" style="cursor: pointer" (click)="myFunction()">
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class="hovered-paths"><g><linearGradient xmlns="http://www.w3.org/2000/svg" id="a" gradientUnits="userSpaceOnUse" x1="256" x2="256" y1="0" y2="512"><stop offset="0" stop-color="#2af598"/><stop offset="1" stop-color="#009efd"/></linearGradient><path xmlns="http://www.w3.org/2000/svg" d="m256 512c-68.378906 0-132.667969-26.628906-181.019531-74.980469-48.351563-48.351562-74.980469-112.640625-74.980469-181.019531s26.628906-132.667969 74.980469-181.019531c48.351562-48.351563 112.640625-74.980469 181.019531-74.980469s132.667969 26.628906 181.019531 74.980469c48.351563 48.351562 74.980469 112.640625 74.980469 181.019531s-26.628906 132.667969-74.980469 181.019531c-48.351562 48.351563-112.640625 74.980469-181.019531 74.980469zm0-472c-119.101562 0-216 96.898438-216 216s96.898438 216 216 216 216-96.898438 216-216-96.898438-216-216-216zm138.285156 182-28.285156-28.285156-110 110-110-110-28.285156 28.285156 138.285156 138.285156zm0 0" fill="url(#a)" data-original="url(#a)" style="" class="hovered-path"/></g></svg> -->
+                        </span>
+                        <div id="myDropdown" class="dropdown-content ">
+                            <a routerLink="/user/changePassword/user-profile" (click)="changePwd()">Profile</a>
+                            <a href="javascript:void(0)" (click)="logout()">Logout</a>
+                        </div>
+                    </div>
+                    <div class="userInfo float-right">
+                        <div class="user-img mt-1 mr-1">
+                            <!-- <img src="assets/images/user-image.png" /> -->
+                        </div>
+                        <div class="user-text text-left">
+                            <div class="user-name">{{userProfileData?.fullName}}</div>
+                            <!-- {{userProfileData.roleName | json}} -->
+
+                            <!--  *ngIf="roleArr.length == 0" -->
+                            <div class="user-role" [title]="userProfileData.roleName">{{userProfileData.roleName}}</div>
+                            
+                            <!-- <div class="user-role" *ngIf="roleArr.length > 0">
+                                <span *ngFor="let list of roleArr; let i = index; let last= last">
+                                    {{ list }} <span *ngIf="!last"> ,</span>
+                                </span>
+                            </div> -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- spinner -->
+    <ngx-spinner bdColor="rgba(0,0,0,.6)" class="mySpinner">
+        <img src='assets/images/loader.gif' />
+    </ngx-spinner>
+    <!-- spinner -->
+
+    <aside class="left-sidebar scrollbar scrollbar-near-moon thin" data-sidebarbg="sidebar-gradient-blue"
+        (mouseover)="Logo()" (mouseout)="Logo()">
+        <div class="scroll-sidebar">
+            <app-sidebar (closeMobileMenu)="showMobileMenu = !showMobileMenu">
+            </app-sidebar>
+        </div>
+    </aside>
+    <div class="page-wrapper">
+        <router-outlet></router-outlet>
+        <!-- <div class="footer">
+            Copyright © 2020. All rights reserved.
+        </div> -->
+    </div>
+</div>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Logout
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-4 no-gutter">
+            <div class="col-12">
+                Are you sure you want to logout ?
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-primary btn-custom mr-3" (click)="enable();d('Cross click')">
+                    Yes
+                </button>
+                <button type="button" class="btn btn-secondary btn-custom" (click)="d('Cross click')">
+                    No
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

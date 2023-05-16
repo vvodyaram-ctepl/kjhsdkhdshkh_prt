@@ -1,0 +1,99 @@
+
+app-view-clinic{
+.pi_text {
+    font: normal normal normal 13px/8px Titillium Web;
+letter-spacing: -0.32px;
+color: #30394C;
+}
+.phone_number_text {
+    font: normal normal 600 13px/8px Titillium Web;
+letter-spacing: -0.36px;
+color: #00CF99;
+}
+
+
+ .img-box-blue {
+    background: #F4F0FF 0% 0% no-repeat padding-box;
+    border-radius: 6px;
+    width: 40px;
+height: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+ }
+
+ .cal-box-blue {
+    background:#2cc6dc 0% 0% no-repeat padding-box;
+    border-radius: 50%;
+    width: 40px;
+height: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+ }
+.cal-image {
+ width: 18px;
+ height: 40px;
+}
+.not-image {
+    width: 28px;
+    height: 40px;
+}
+.icon-style{
+    i{
+        color:#00CF99
+    }
+}
+
+.icon-notification.disabled{
+    color:#de1313;
+}
+
+    // .content-blk .navtabsBackground .tabsDesign .nav-item {
+    //     max-width: 190px !important;
+    // }
+    // .content-blk .navtabsBackground .tabsDesign .nav-item .nav-link span {
+    //     padding-left: 5px !important;
+    // }
+    // .content-blk .navtabsBackground .tabsDesign .nav-item .nav-link {
+    //     font-size: 13px;
+    // }
+    .carousel-control-prev {
+        // left: 0;
+        // width: 42px !important;
+        // left: -56px;
+        width: 22px !important;
+        height:49px;
+        left: 0px;
+        position: absolute;
+        opacity: 1 !important;
+        background: #23cacc;
+    }
+    .carousel-control-prev-icon {
+        width: 16px !important;
+    }
+    .carousel-control-next {
+        // left: 0;
+        // width: 42px !important;
+        // right: -43px;
+        width: 16px !important;
+        height:49px;
+        right: 0px;
+        position: absolute;
+        opacity: 1 !important;
+        background: #23cacc;
+    }
+    // .carousel-control-next {
+    //     background: #23cacc;
+    // }
+
+    .content-blk .navtabsBackground .tabsDesign .nav-item {
+        max-width: 310px !important;
+    }
+    .content-blk .navtabsBackground .tabsDesign .nav-item .nav-link span {
+        padding-left: 5px !important;
+    }
+    .content-blk .navtabsBackground .tabsDesign .nav-item .nav-link {
+        font-size: 13px;
+    }
+}

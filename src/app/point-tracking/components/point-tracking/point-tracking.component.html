@@ -1,0 +1,21 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Point Tracking
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <button *ngIf="RWFlag" class="btn btn-primary" [routerLink]="['/user/point-tracking/add']">Add New
+                        Campaign</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <datatable [headers]="headers" [filterTypeArr]="filterTypeArr" [studyAll]="false" placeholder="Search" [hideExport]="true"
+            (nodeAction)="getNode($event)" (formatter)="formatter($event)" defaultColumn="" dir="DESC"
+            url="/api/pointTrackers" pageName="pointTracking">
+        </datatable>
+    </div>
+</div>

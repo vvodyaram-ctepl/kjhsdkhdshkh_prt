@@ -1,0 +1,259 @@
+<form [formGroup]="deviceForm">
+  <div class="content-box">
+    <!-- {{deviceForm.value | json}} -->
+    <div class="content-block">
+      <div formArrayName="arr" *ngFor="
+          let a of deviceForm?.get('arr')['controls'];
+          let i = index;
+          let last = last
+        ">
+        <div [formGroupName]="i">
+          <div class="row custom-gutters-5 mb-4">
+            <!-- [ngClass]="!(deviceForm.value.arr[i].disabled) ? 'col-2' : 'col-3'" -->
+            <div [ngClass]="addFilterFlag ? 'col-2' : 'col-4'">
+              <fieldset class="w-fieldset" [disabled]="!addFilterFlag">
+                <legend><label class="label w-100">Study</label></legend>
+
+                <select class="form-control w-100" formControlName="study" (change)="onSelectStudy($event,i)">
+                  <option value="">Select</option>
+                  <option *ngFor='let list of studyArr' [value]="list.studyId">{{list.studyName}}</option>
+                </select>
+                <!-- <lib-typeahead [data]="studyArr"
+                  matcher="studyName" formControlName="study" class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead> -->
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.study"></validation-message>
+            </div>
+            <!-- <div class="col-3">
+              <fieldset class="w-fieldset">
+                <legend><label class="label">Asset Type</label></legend>
+                <lib-typeahead [data]="assetTypeArr" matcher="deviceNumber" (selectedItem)='deviceSelected($event,i)'
+                  formControlName="assetType" class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.assetType">
+              </validation-message>
+            </div>
+            <div class="col-3">
+              <fieldset class="w-fieldset">
+                <legend><label class="label">Model</label></legend>
+                <lib-typeahead [data]="assetModelArr" matcher="deviceNumber" (selectedItem)='deviceSelected($event,i)'
+                  formControlName="model" class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.deviceNumber">
+              </validation-message>
+            </div> -->
+            <div class="col-2">
+              <fieldset class="w-fieldset" [disabled]="!addFilterFlag">
+                <legend><label class="label">Asset Type <span class="asterisk" *ngIf="displayStar">*</span></label>
+                </legend>
+                <lib-typeahead [data]="deviceForm.value.arr[i].assetTypeList" matcher="name" formControlName="assetType"
+                  class="w-100 mb-0" placeholder="" class="w-100"
+                  (selectedItem)='assetTypeSelected($event,i);populateType($event,i)' (onClear)="onClearAssetType(i)">
+                </lib-typeahead>
+
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.assetType">
+              </validation-message>
+              <!-- {{deviceForm.value.arr[i].assetType | json}} -->
+            </div>
+            <div class="col-2">
+              <fieldset class="w-fieldset" [disabled]="!addFilterFlag">
+                <legend><label class="label">Asset Model</label></legend>
+                <lib-typeahead [data]="deviceForm.value.arr[i].assetModelList" matcher="name"
+                  (selectedItem)='assetModelSelected($event,i);populateModel($event,i);' (onClear)="onClearModel(i)"
+                  formControlName="model" class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.model">
+              </validation-message>
+              <!-- {{deviceForm.value.arr[i].model | json}} -->
+            </div>
+            <div class="col-2">
+
+              <fieldset class="w-fieldset" [disabled]="!addFilterFlag">
+
+                <legend><label class="label">Asset Number <span class="asterisk" *ngIf="displayStar">*</span></label></legend>
+                <lib-typeahead [data]="deviceForm.value.arr[i].deviceList" matcher="deviceNumber"
+                  (selectedItem)='populate($event,i);deviceSelected($event,i)' (onClear)="onClearAssetNum(i)"
+                  formControlName="deviceNumber" class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.deviceNumber">
+              </validation-message>
+              <!-- {{deviceForm.value.arr[i].deviceNumber | json}} -->
+            </div>
+            <!-- <div class="col-3">
+              <fieldset class="w-fieldset">
+                <legend><label class="label">Device Number</label></legend>
+                <lib-typeahead [disabled]="!deviceForm.value.arr[i].study.studyName" [data]="deviceArr"
+                  matcher="deviceNumber" (selectedItem)='deviceSelected($event,i)' formControlName="deviceNumber"
+                  class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.deviceNumber">
+              </validation-message>
+            </div>
+            <div class="col-3">
+              <fieldset class="w-fieldset">
+                <legend><label class="label">Model</label></legend>
+                <input disabled="true" formControlName="model" type="text" class="form-control textbox w-100"
+                  maxlength="" />
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.model"></validation-message>
+            </div> -->
+            <div class="col-2">
+              <fieldset class="w-fieldset" [disabled]="!addFilterFlag || !(deviceForm.value.arr[i].disabled)">
+                <legend><label class="label">Association Date</label></legend>
+                <datepicker class="w-100" formControlName="assignedOn"
+                  [minDate]="deviceForm.value.arr[i].studyAssignedOn" [maxDate]="deviceForm.value.arr[i].studyEndDate"
+                  format="MM-DD-YYYY" (select)="dateSelected($event,i)" (onClear)="onClearDate()"></datepicker>
+
+              </fieldset>
+              <validation-message [control]="deviceForm.get('arr').controls[i].controls.assignedOn">
+              </validation-message>
+              <!-- {{deviceForm.value.arr[i].assignedOn | json}} -->
+            </div>
+            <div class="col-1" *ngIf="!(deviceForm.value.arr[i].disabled) && addFilterFlag">
+              <!-- <fieldset class="w-fieldset checkbox"> -->
+              <label style="text-align:center">
+                <div class="label" style="color: #4B4B5A;font-size: 13px;padding-left: 10px;margin-bottom: 5px;">
+                  Unassign
+                </div>
+                <input type="checkbox" formControlName="unassignCheck" class="check checkbox-width-20"
+                  (change)="onCheckboxChange($event,i)" />
+              </label>
+              <!-- </fieldset> -->
+            </div>
+            <!-- deviceForm.value.arr.length > 1 -->
+            <div class="col-1 center-align mtop-15 float-right" *ngIf="addFilterFlag">
+              <div class="card icon-card-list red-bg mr-2 pointer-cursor" title="Remove"
+                *ngIf="deviceForm.value.arr.length > 1 && deviceForm.value.arr[i].disabled" (click)="removeItem(i)">
+                <span class="pointer-cursor size-17" title="Remove">-</span>
+              </div>
+
+              <div class="card icon-card-list blue-bg" title="Add" *ngIf="editFlag && last && !isVirtual">
+                <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                  (click)="addItem()"></span>
+              </div>
+              <div class="card icon-card-list blue-bg" title="Add" *ngIf="!editFlag && last">
+                <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                  (click)="addItem()"></span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row mb-4">
+              <div class="col-10 center-align">
+                <div class="border-line"></div>
+              </div>
+                <div class="col-2 center-align mtop-15 float-right">
+                    <div class="card icon-card-list red-bg" title="Delete" *ngIf="deviceForm.value.arr.length > 1">
+                        <span class="fa fa-trash-alt pointer-cursor size-17" title="Delete" (click)="removeItem(i)" ></span>
+                        </div>
+                  
+                        <div class="card icon-card-list blue-bg mr-2" title="Add" *ngIf="last">
+                        <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                        (click)="addItem()"></span>
+                      </div>
+                </div>
+            </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="float-right">
+            <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+            <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click');cancelCheck(i)">
+      <div class="close-wrapper">
+        <span aria-hidden="true" class="icon-close"></span>
+      </div>
+    </button>
+
+    <div class="heading">
+      <h5 class="modal-title" id="modal-basic-title">
+        Unassign Asset
+      </h5>
+    </div>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="UnassignForm">
+      <div class="row mb-3">
+        <div class="col-12 mb-3">
+          <fieldset class="w-fieldset">
+            <legend><label class="label">Reason  <span class="asterisk" >*</span></label></legend>
+            <select class="form-control w-100" formControlName="reason">
+              <option value="">Select</option>
+              <option *ngFor='let list of reasonArr' [value]="list.reasonId">{{list.reasonName}}</option>
+            </select>
+          </fieldset>
+          <validation-message [control]="UnassignForm.controls.reason"></validation-message>
+        </div>
+        <div class="col-12 mb-3">
+          <!-- {{UnassignForm.value.unAssignedOn | json}} -->
+          <fieldset class="w-fieldset">
+            <legend><label class="label">Unassigned On  <span class="asterisk" >*</span></label></legend>
+            <datepicker class="w-100" formControlName="unAssignedOn"
+            format="MM-DD-YYYY"></datepicker>
+          </fieldset>
+          <validation-message [control]="UnassignForm.controls.unAssignedOn"></validation-message>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="UnassignForm.value.reason == '3'">
+        <div class="row mb-3">
+          <div class="col-6">
+            <fieldset class="w-fieldset">
+              <legend><label class="label">Enter Device Number</label></legend>
+              <lib-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" formControlName="deviceNumber"
+                class="w-100 mb-0" placeholder="" class="w-100">
+              </lib-typeahead>
+            </fieldset>
+            <validation-message [control]="UnassignForm.controls.deviceNumber"></validation-message>
+          </div>
+          <div class="col-6">
+            <fieldset class="w-fieldset">
+              <legend><label class="label">Model</label></legend>
+              <lib-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" formControlName="model"
+                class="w-100 mb-0" placeholder="" class="w-100">
+              </lib-typeahead>
+            </fieldset>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <fieldset class="w-fieldset">
+              <legend><label class="label">Assigned On</label></legend>
+              <lib-typeahead url="http://localhost:4200/assets/b.json" matcher="gender" formControlName="assignedOn"
+                class="w-100 mb-0" placeholder="" class="w-100">
+              </lib-typeahead>
+            </fieldset>
+          </div>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col-12 mb-4">
+
+          <button type="button" class="btn btn-secondary btn-custom float-right"
+            (click)="d('Cross click');cancelCheck(i);">
+            No
+          </button>&nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary btn-custom float-right  mr-3" (click)="unassignDevSubmit()">
+            Yes
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

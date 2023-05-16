@@ -1,0 +1,307 @@
+app-view-support-material {
+  .search-wrapper {
+    position: relative;
+  }
+  .size-14 {
+    font-size: 14px;
+  }
+  .fileName {
+    word-break: break-all;
+  }
+  .cstm-btn {
+    width: 11px;
+    padding: 2px;
+    font-size: 13px;
+    display: inline-block;
+    height: 30px;
+  }
+  .text-cstm {
+    word-wrap: break-word;
+    display: block;
+    background: none;
+    border: none;
+    text-align: left;
+    // padding: 0;
+    color: #4b4b5a;
+    line-height: inherit !important;
+    height: auto !important;
+    font-size: 14px !important;
+    // padding: 0 !important;
+  }
+  .icon-search {
+    color: #37b57b;
+    font-size: 13px;
+  }
+  .pet-on-status {
+    font: normal normal 600 15px/16px Titillium Web;
+    letter-spacing: -0.15px;
+    color: #1ccf99;
+    padding: 0px 8px;
+    font-size: 13px;
+    text-transform: capitalize;
+    background: #e3fff7 0% 0% no-repeat padding-box;
+    border: 1px solid #1ccf99;
+    border-radius: 3px;
+
+    width: 85px !important;
+    display: inline-block;
+    line-height: 1.4 !important;
+    text-align: center;
+  }
+  .pet-off-status {
+    font: normal normal 600 15px/16px Titillium Web;
+    letter-spacing: -0.15px;
+    color: #f36008;
+    padding: 0px 8px;
+    font-size: 13px;
+    text-transform: capitalize;
+    background: #f7d9d2 0% 0% no-repeat padding-box;
+    border: 1px solid #ef3e08;
+    border-radius: 3px;
+
+    width: 85px !important;
+    display: inline-block;
+    line-height: 1.4 !important;
+    text-align: center;
+  }
+  .pet-decease-status {
+    font: normal normal 600 15px/16px Titillium Web;
+    letter-spacing: -0.15px;
+    color: rgb(207, 94, 28);
+    padding: 0px 8px;
+    font-size: 13px;
+    text-transform: capitalize;
+    background: rgb(255, 233, 227) 0% 0% no-repeat padding-box;
+    //   border: 1px solid rgb(207, 70, 28);
+    border-radius: 3px;
+
+    width: 85px !important;
+    display: inline-block;
+    line-height: 1.4 !important;
+    text-align: center;
+  }
+
+  .icon-circle {
+    background: #e0f6ec 0% 0% no-repeat padding-box;
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    text-align: center;
+    padding: 4px;
+    border-radius: 50%;
+  }
+  .search-box {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 13px #d1d5df80;
+    border-radius: 7px;
+    opacity: 1;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 0px;
+    padding: 10px 43px 10px 10px;
+  }
+  .search-box.small-padding {
+    padding: 10px;
+  }
+  .table-responsive.outer-table-padding {
+    padding: 20px;
+    background: #fff;
+  }
+  .filter-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 13px #d1d5df80;
+    border-radius: 8px;
+    width: 100%;
+    border: 0;
+    padding: 10px;
+    padding-right: 32px;
+    background: #fff url(../../../../../src/assets/images/downArrow.png) no-repeat right;
+  }
+  .filter-icon {
+    position: relative;
+  }
+  .filter-icon select::-ms-expand {
+    display: none;
+  }
+
+  /*Table*/
+  .dataBox thead tr {
+    color: #00cf99;
+    font-size: 14px;
+  }
+  .dataBox .table .thead {
+    vertical-align: middle;
+    background: #fff;
+    color: #00cf99;
+    border-color: #fff;
+    font-family: Titillium Web;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-top: 1px solid #00cf99;
+    border-bottom: 1px solid #00cf99;
+    margin-bottom: 10px;
+    div {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+  .dataBox tbody tr {
+    font-size: 14px;
+  }
+  .dataBox thead tr th {
+    border-bottom: 1px solid #00cf99;
+    border-top: 1px solid #00cf99;
+    font-size: 14px;
+  }
+  .dataBox tbody tr td {
+    border-top: 0;
+  }
+  .bg-green {
+    background: #ebfbfd;
+  }
+  .images-blk {
+    color: #00cf99;
+  }
+  .v-center {
+    vertical-align: middle;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .choose-images {
+    position: relative;
+    display: inline-block;
+    margin-right: 2px;
+    border: 1px solid #4dd3d9;
+    border-radius: 4px;
+    text-align: center;
+    width: 80px;
+    height: 62px;
+    .thumbnaildiv {
+      position: relative;
+      overflow: hidden;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      float: left;
+      .p-image {
+        cursor: pointer;
+        max-width: unset !important;
+      }
+      .fa-play-circle {
+        position: absolute;
+        z-index: 9;
+        left: 50%;
+        color: rgba(255, 255, 255, 0.6);
+        top: 50%;
+        margin-top: -20px;
+        font-size: 40px;
+        margin-left: -22px;
+        cursor: pointer;
+      }
+      &:hover {
+        .fa-play-circle {
+          color: rgba(255, 255, 255, 0.8);
+        }
+      }
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0 auto;
+      object-fit: cover;
+    }
+    video {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0 auto;
+      object-fit: fill;
+    }
+  }
+  .patient-name {
+    position: relative;
+    img {
+      height: 40px;
+      width: 40px;
+      border: 1px solid #00cf99;
+      // border-radius: 50%;
+      position: absolute;
+    }
+    div {
+      padding-left: 30px;
+      padding-top: 5px;
+      padding-bottom: 10px;
+    }
+  }
+
+  .page-item.active .page-link {
+    background: #fff !important;
+    color: #00cf99 !important;
+  }
+  .button-wrapper {
+    position: absolute;
+    top: 6%;
+  }
+  .btn-primary {
+    min-width: 74px;
+  }
+  .btn-pink {
+    border-radius: 6px !important;
+  }
+
+  datepicker .mask-input {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 13px #d1d5df80;
+    border-radius: 7px;
+    opacity: 1;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 0px;
+    padding: 10px;
+    height: 40px;
+  }
+  lib-typeahead .typeahead {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 13px #d1d5df80;
+    border-radius: 7px;
+    opacity: 1;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 0px;
+  }
+  .blue-hdr {
+    background-color: #16d2b4;
+    color: white;
+    display: block;
+    width: 100%;
+    padding: 1px 10px;
+  }
+  .red {
+    color: red;
+    float: right;
+    .uppercase {
+      text-transform: uppercase;
+    }
+  }
+  .page-link {
+    border-radius: 9px !important;
+    margin-left: 1px !important;
+  }
+  .p-video.videopath {
+    width: 100%;
+  }
+  .checkImg {
+    position: absolute;
+    // top:2px;
+    right: 2px;
+    z-index: 1;
+  }
+}

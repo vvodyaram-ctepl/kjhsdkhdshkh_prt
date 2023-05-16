@@ -1,0 +1,51 @@
+<div class="content-block">
+  <div class="btn-content">
+    <div class="row">
+      <div class="col-12">
+        <div class="float-right">
+          <!-- <button type="button" class="btn btn-primary" (click)="addStudy()">Add Associated Study</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-table mb-4">
+    <table>
+      <thead class="table-hdr">
+        <tr>
+          <th style="width:50%" *ngFor="let list of headers; let i = index">
+            {{ list.label }}
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body" *ngIf="dataArr?.length > 0">
+        <tr *ngFor="let list of dataArr; let i = index" >
+          <td>
+            <a 
+            href="javascript:void(0)" (click)="redirectPetView(list)" class="control-icons ng-star-inserted">{{ list.petName }} </a>
+            
+          </td>
+          <td>
+            {{ list.petStatus }}
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="table-body" *ngIf="dataArr?.length == 0">
+        <tr>
+          <td>No Records Found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row" mt-2>
+    <div class="col-12">
+      <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+      <div class="float-right">
+        <button class="btn btn-secondary" type="button" routerLink="/user/clinics/view-clinic/{{editId}}/view-plans">
+          Back</button>&nbsp;&nbsp;
+        <button class="btn btn-primary" type="button" routerLink="/user/clinics/view-clinic/{{editId}}/view-notes">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

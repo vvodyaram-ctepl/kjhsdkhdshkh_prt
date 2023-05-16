@@ -1,0 +1,30 @@
+<div class="content-box reports-list">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="ml-3 current-view">Currently Viewing: </div>
+            <div class="col-3 block-left-center">
+                <select class="select-box form-control w-100" [(ngModel)]="report_type" (change)="onChangeReport()">
+                    <!-- <option value="">Select Report</option> -->
+                    <option value="1">Asset Details Report</option>
+                    <option value="2">Asset Tracking Report</option>
+                    <option value="3">Asset History Report</option>
+                    <option value="4">Asset Inventory Report</option>
+                    <option value="5">Asset Malfunction Report</option>
+                    <option value="6">Study Based Report</option>
+                    <option value="7">Point Tracker Report</option>
+                    <option value="8">Customer Support Report</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <reports-datatable *ngIf="showDataTable" (formatter)="formatter($event)" [filterTypeArr]="filterTypeArr"
+            [headers]="headers" [studyAll]="studyAll" reportFontSize="6" reportCellAlign="left" placeholder="Search"
+            reportHeaderOverflow="linebreak" defaultColumn="name" method="GET" dir="DESC" [url]="reportUrl"
+            [hideExport]="false" [isReport]="true" fileName={{reportName}}
+            [studyAll]="(reportName == 'Asset Malfunction Report' || reportName == 'Study Based Report' || reportName == 'Customer Support Report' || reportName == 'Point Tracker Report') ? false: true"
+            [hidePdf]="false" [hideExcel]="false"
+            exportTitle={{reportName}} pageName="reportsPage" reportInfo="{{reportNameInfo}}">
+        </reports-datatable>
+    </div>
+</div>

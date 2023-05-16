@@ -1,0 +1,22 @@
+// Theme colors
+#main-wrapper{
+    &[data-layout="vertical"]{
+        /*This is for the logo bg*/
+        .topbar .top-navbar .navbar-header{
+            &[data-logobg="sidebar-gradient-blue"]{
+                background: $sidebar-gradient-blue;
+            }
+        }
+        .topbar .navbar-collapse, .topbar{
+            &[data-navbarbg="header-gradient-blue"]{
+                background: $header-gradient-blue;
+            }
+        }
+        /*This is for the sidebar bg*/
+        // .left-sidebar{
+        //     &[data-sidebarbg="sidebar-gradient-blue"], &[data-sidebarbg="sidebar-gradient-blue"] ul{
+        //         background: $sidebar-gradient-blue;
+        //     }
+        // }
+    }
+}

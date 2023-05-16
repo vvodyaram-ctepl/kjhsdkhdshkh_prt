@@ -1,0 +1,10 @@
+<div ngbDropdown class="d-inline-block" [autoClose]="false" placement="bottom-right" #myDrop="ngbDropdown">
+    <button class="btn" id="dropdownBasic1" ngbDropdownToggle>Search Preferences </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" [sortablejs]="data" [sortablejsOptions]="options">
+  
+      <div class="dropdown-item list-item" *ngFor="let item of data">
+        <input class="form-check-input" type="checkbox" value="" id="{{item.id}}" [(ngModel)]="item.checked" (ngModelChange)="changeChecked()" [disabled]="item.disabled || item.disabledAlways">
+        <label class="form-check-label" for="{{item.id}}">{{ item[matcher] }}</label>
+      </div>
+  
+    </div>

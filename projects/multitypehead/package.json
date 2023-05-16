@@ -1,0 +1,13 @@
+{
+  "name": "mutlitypehead",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "ngx-toastr": "^8.1.1",
+    "rxjs": "^6.0.0",
+    "rxjs-compat": "^6.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^2.0.0",
+    "@ng-select/ng-select": "^0.35.1"
+  }
+}

@@ -1,0 +1,45 @@
+<div class="uploadfilecontainer" appDragDrop (onFileDropped)="uploadFile($event)">
+  <!-- <div class="upload-title pl-3" *ngIf="bulkuploadText">Visits Bulk Upload</div> -->
+  <!-- {{files | json}} -->
+  <div class="uploadfilecontainerInner">
+    <div class="row">
+      <div [ngClass]="Page == 'addSupportMat' ? 'col-7' : 'col-8'" >
+        <div class="files-list" *ngFor="let file of files; let i = index">
+          <span class="file-ico" *ngIf="(file.name.split('.')[1] == 'xlsx')">
+            <img src="assets/images/filetypes/excel.svg" />
+          </span>
+
+          <span class="file-ico" *ngIf="(file.type.split('/')[0] == 'image')">
+            <img src="assets/images/filetypes/image.png" />
+          </span>
+
+          <span class="file-ico" *ngIf="(file.name.split('.')[1] == 'pdf')">
+            <img src="assets/images/filetypes/pdf.svg" />
+          </span>
+
+          <span class="file-ico"
+            *ngIf="(file.name.split('.')[1] !== 'pdf') && (file.type.split('/')[0] !== 'image') && file.name.split('.')[1] !== 'xlsx'">
+            <img src="assets/images/filetypes/docs.png" />
+          </span>
+
+          <p class="file-name">{{ file.name }}</p>
+          <button class="delete-file" (click)="deleteAttachment(i)">
+            <!-- <img src="/assets/images/delete.png"> -->
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+      </div>
+      <div [ngClass]="Page == 'addSupportMat' ? 'col-5' : 'col-4'" class=" text-right">
+        <div class="upload-wrapper" (click)="fileInput.click()" [ngClass]="{'diablebtn' : disableBtn}">
+          <div class="cloud-img"><i class="icon-upload">&nbsp;</i></div>
+          <span class="upload-text">Upload Or Drag and Drop</span>
+        </div>
+        <input hidden type="file" #fileInput (change)="uploadFile($event.target.files)" (click)="click($event)" [disabled]="disableBtn"/>
+      </div>
+    </div>
+  </div>
+  <div class="upload-info pl-3" *ngIf="bulkuploadText">
+    <div class="title-info">INFORMATION:</div>
+    <div class="description-info">Download the template and upload once completed.</div>
+  </div>
+</div>

@@ -1,0 +1,132 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span>View Role</span>
+            </div>
+            <div class="col-6 text-right">
+                <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="editPage()">Edit Role</button>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk" *ngIf="responseData">
+
+        <div class="content-banner mb-3">
+
+            <div class="row no-gutter border-1">
+                <div class="col-6 block-left-center mb-2">
+                    <span class="banner-heading-text">{{responseData.roleName}}</span>
+                    <span class="status-button"  *ngIf="responseData.isActive != undefined"
+                        [ngClass]="responseData.isActive == true ? 'active-bg' : 'inactive-bg'">{{responseData.isActive
+                        == true ? 'Active':'Inactive'}}</span>
+                    <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                    <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right mb-2">
+                        <!-- <span class="pi_text mr-2">Principal Investigator</span> -->
+                        <!-- <span class="phone_number_text mr-4">{{clinicForm.value.pinv}}</span> -->
+
+                        <!-- <button class="btn btn-primary" routerLink="/user/clinics/edit-clinic/{{id}}">Edit
+                                    Study</button> -->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutter mt-3">
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Role Name</div>
+                                <div class="green-small-text">{{responseData.roleName ? responseData.roleName : '-'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="small-text">Role Type</div>
+                                <div class="green-small-text">{{responseData.roleType ? responseData.roleType :
+                                    selectedRole}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---->
+        <div class="content-block" *ngIf="responseData">
+            <!-- <div class="labelItem">
+                <div class="row ">
+                    <div class="col-3 mb-3">
+                        <label>Role Name</label>
+                    </div>
+                    <div class="col-6 mb-3">
+                        {{responseData.roleName}}
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-3 mb-3">
+                        <label>Role Type</label>
+                    </div>
+                    <div class="col-6 mb-3" *ngIf="responseData.roleTypeId">
+                        {{selectedRole}}
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-3 mb-3">
+                        <label>Status</label>
+                    </div>
+                    <div class="col-6 mb-3">
+                        {{responseData.isActive == true ? 'Active':'Inactive'}}
+                    </div>
+                </div> -->
+            <div class="custom-table">
+                <table>
+                    <thead class="table-hdr">
+                        <tr>
+                            <th>
+                                MODULE
+                            </th>
+                            <th>
+                                PERMISSION
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body" *ngIf="menulist.length > 0">
+                        <ng-container>
+                            <tr *ngFor="let role of menulist">
+                                <td>
+                                    {{ role.menuName }}
+                                </td>
+                                <td>
+                                    {{ role.menuActionName }}
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    <tbody class="table-body" *ngIf="menulist.length == 0">
+                        <tr>
+                            <td>No Records Found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12 mt-2">
+                    <div class="float-right">
+                        <button class="btn btn-secondary" (click)="backToList()" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

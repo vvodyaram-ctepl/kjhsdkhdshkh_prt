@@ -1,0 +1,35 @@
+{
+    "ROWSET": {
+        "totalRecords": 710,
+        "ROW": [
+            {
+                "id": "1",
+                "name": "Administrator",
+                "type": "Administrator",
+                "permissions": "Clinic Management (read-write), Plan Management (read-write), Clinic User Management (read-write) Patient Management (read-write), Pet Parent Management (read-write), Asset Management (read-write), Mobile App Management (read-write), Role Management (read-write) , Customer Support Management (read-write)",
+                "status": "active"
+            },
+            {
+                "id": "2",
+                "name": "Customer Support L1",
+                "type": "Customer Support",
+                "permissions": "Clinic Management (read-write), Plan Management (read-only), Patient Management (read-write), Pet Parent Management (read-write), Asset Management (read-write), Mobile App Management (read-write),",
+                "status": "active"
+            },
+            {
+                "id": "3",
+                "name": "Standard User",
+                "type": "Clinic Manager",
+                "permissions": "Asset Management (read-only), Mobile App Management (read-only),",
+                "status": "active"
+            },
+            {
+                "id": "4",
+                "name": "Limited User",
+                "type": "Report Users",
+                "permissions": "Asset Management (read-only), Mobile App Management (read-only),",
+                "status": "active"
+            }
+        ]
+    }
+}

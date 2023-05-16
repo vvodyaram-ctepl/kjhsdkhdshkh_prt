@@ -1,0 +1,15 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-12 block-left-center">
+                Questionnaire Response
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <datatable [headers]="headers" [studyAll]="false" [filterTypeArr]="filterTypeArr" placeholder="Search" 
+        [hideExport]="true" (nodeAction)="getNode($event)" (formatter)="formatter($event)" 
+        defaultColumn="modifiedDate" dir="DESC" url="/api/questionnaire/responseList" pageName="questionnaireResponse">
+        </datatable>
+    </div>
+</div>

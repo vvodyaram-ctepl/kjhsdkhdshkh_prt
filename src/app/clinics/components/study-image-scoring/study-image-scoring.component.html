@@ -1,0 +1,96 @@
+<form [formGroup]="imageScoringForm">
+    <div class="content-box">
+        <!-- <div class="content-hdr">
+    </div> -->
+   
+        <div class="content-block">
+            <div formArrayName="arr" *ngFor="
+            let a of imageScoringForm.get('arr')['controls'];
+            let i = index;
+            let last = last
+          ">
+            <div class="row mb-3" [formGroupName]="i">
+                <div class="col-3">
+                    <!-- [disabled]="imageScoringForm.value.arr[i].disabled && editFlag" -->
+                    <fieldset class="w-fieldset" >
+                        <legend><label class="label">Image Scale Name</label></legend>
+                            <lib-typeahead [data]="imageScoringForm.value.arr[i].pushList" matcher="imageScaleName"
+                            formControlName="imageScoring" (selectedItem)='populate($event,i)' (click)="getUniqPushList(i)" (onClear)="getUniqPushList(i);onClear(i)"
+                             class="w-100 mb-0" placeholder="" class="w-100">
+                        </lib-typeahead>
+
+                    </fieldset>
+                    <validation-message [control]="imageScoringForm.get('arr').controls[i].controls.imageScoring"></validation-message>
+                </div>
+                <div class="col-2">
+                    <!-- [disabled]="imageScoringForm.value.arr[i].disabled && editFlag" -->
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Frequency <span *ngIf="imageScoringForm.value.arr[i].imageScoring.imageScaleName"
+                            class="asterisk">*</span></label>
+                        </legend>
+                        <div class="dropdown-container">
+                            <!-- style="width:24%;float:left" -->
+                            <select class="select-cstom-control form-control"
+                                formControlName="frequency" (change)="fSelected(i)">
+                                <option value="">Select</option>
+                                <option value="1">Only Once</option>
+                                <option value="2">Weekly</option>
+                                <option value="3">Monthly</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <validation-message [control]="imageScoringForm.get('arr').controls[i].controls.frequency"></validation-message>
+
+                </div>
+                <div class="col-2">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Start Date <span *ngIf="imageScoringForm.value.arr[i].imageScoring.imageScaleName"
+                                    class="asterisk">*</span></label></legend>
+                        <datepicker class="w-100" formControlName="startDate" (select)="startdateSelect()"  [minDate]="studyStartDate" [maxDate]="studyEndDate"
+                            format="MM-DD-YYYY" [disabled]="displayURLField"></datepicker>
+                    </fieldset>
+                    <validation-message [control]="imageScoringForm.get('arr').controls[i].controls.startDate"></validation-message>
+                </div>
+                <div class="col-2">
+                    <fieldset class="w-fieldset" >
+                        <legend>
+                            <label class="label">End Date <span *ngIf="imageScoringForm.value.arr[i].imageScoring.imageScaleName"
+                                class="asterisk">*</span></label>
+                        </legend>
+                        <datepicker class="w-100" formControlName="endDate" [minDate]="imageScoringForm.value.arr[i].startDate" [maxDate]="imageScoringForm.value.arr[i].frequency == '1' ? imageScoringForm.value.arr[i].startDate : studyEndDate"
+                            format="MM-DD-YYYY" [disabled]="displayURLField"></datepicker>
+                    </fieldset>
+                    <validation-message [control]="imageScoringForm.get('arr').controls[i].controls.endDate"></validation-message>
+                </div>
+
+                <div class="col-1 center-align">
+                    <div class="card icon-card-list red-bg mr-2 mt-3 pointer-cursor" title="Remove" *ngIf="imageScoringForm.value.arr.length > 1" (click)="removeItem(i)"
+                    >   
+                        <span class=" pointer-cursor size-17" title="Remove">-</span>
+                    </div>
+
+                    <div class="card icon-card-list blue-bg mt-3" title="Add" *ngIf="last">
+                        <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                            (click)="addItem()"></span>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="back()">
+                            Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button"
+                            (click)="next()">
+                            <span>Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

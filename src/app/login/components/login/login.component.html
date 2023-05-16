@@ -1,0 +1,38 @@
+<div class="login-form">
+  <!-- <h4 class="mt-3">Enter Username and Password to Login</h4> -->
+  <form [formGroup]="loginForm">
+    <div class="form-group mt-3">
+      <input class="form-control" autocomplete="off" type="text" id="loginUser" placeholder="Username"
+        formControlName="username" />
+      <validation-message [control]="loginForm.controls.username"></validation-message>
+    </div>
+    <div class="form-group mt-4">
+      <div class="input-group">
+        <input class="form-control border-0" autocomplete="off" [type]="showPassword ? 'text' : 'password'"
+          id="loginPassword" placeholder="Password" formControlName="password" />
+        <div class="input-group-addon m-auto px-3 pointer-cursor">
+          <i class="fa fa-eye-slash" *ngIf="showPassword" title="Hide Password" aria-hidden="true"
+            (click)="showPassword = !showPassword"></i>
+          <i class="fa fa-eye" *ngIf="!showPassword" title="Show Password" aria-hidden="true"
+            (click)="showPassword = !showPassword"></i>
+        </div>
+      </div>
+      <validation-message [control]="loginForm.controls.password"></validation-message>
+    </div>
+    <button type="submit" (click)="login()" class="btn btn-primary btn-block font-weight-bold mt-4"
+      style="font-weight:600 !important">
+      <span>LOGIN</span>
+    </button>
+
+    <div class="row mt-3 size-14 no-gutters">
+      <div class="col text-right">
+        <a class="forgot-password float-right" [routerLink]="['/auth/forgotPassword']">Forgot Password ?</a>
+      </div>
+    </div>
+  </form>
+  <!-- spinner -->
+  <ngx-spinner bdColor="rgba(0,0,0,.6)" class="mySpinner">
+    <img src='assets/images/loader.gif' />
+  </ngx-spinner>
+  <!-- spinner -->
+</div>

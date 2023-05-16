@@ -1,0 +1,18 @@
+.content-block{
+    .showEditBtn{
+        position: absolute;
+        right: 0;
+        margin-top: -141px;
+        margin-right: 5px;
+    }
+    .ticket-details{
+        font-size: 14px;
+        label{
+            font-weight: 600;
+        }  
+    }
+    .filedec {
+        color: blue;
+        text-decoration: underline;
+        }
+}

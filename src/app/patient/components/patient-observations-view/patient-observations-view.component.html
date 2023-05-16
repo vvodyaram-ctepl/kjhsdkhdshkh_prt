@@ -1,0 +1,419 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">Observation Media</div>
+            <!-- <div class="col-6">
+                <div class="float-right">
+                    <button class="btn btn-primary">Download All</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="row">
+            <div *ngIf="filterType != 'dateType' && filterType != 'questionnaireDate' && filterType != 'Study'"
+                [ngClass]="filterDropdown ? 'col' : 'col'">
+                <div class="search-wrapper">
+                    <input type="text" placeholder="Search" [(ngModel)]="query" id="listSearch" class="search-box"
+                        (keydown.enter)="changedInput($event)">
+                    <div class="icon-circle" (click)="searchText(query)" style="cursor:pointer;">
+                        <i class="icon-search"></i>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="filterType == 'dateType' || filterType == 'questionnaireDate' || filterType == 'Study'"
+                [ngClass]="filterDropdown ? 'col' : 'col'">
+                <div class="search-wrapper">
+                    <input type="text" placeholder="Search" [(ngModel)]="query" id="listSearch" class="search-box"
+                        (keydown.enter)="changedInput($event)">
+                    <div class="icon-circle" (click)="searchText(query)" style="cursor:pointer;">
+                        <i class="icon-search"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="relative"
+                *ngIf="filterType != 'dateType' && filterType != 'questionnaireDate' && filterType != 'Study'"
+                [ngClass]="FilterFlag ?'col-2' : 'col-4'">
+                <div class="filter-icon">
+                    <select class="filter-select" (change)="changeField($event)" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="filterType">
+                        <option value="">Filter By</option>
+                        <option *ngFor='let list of filterTypeArr' [value]="list.id">{{list.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="relative"
+                *ngIf="(filterType == 'dateType' || filterType == 'questionnaireDate' || filterType == 'Study')"
+                [ngClass]="FilterFlag ?'col-3' : 'col-4'">
+                <div class="filter-icon">
+                    <select class="filter-select" (change)="changeField($event)" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="filterType">
+                        <option value="">Filter By</option>
+                        <option *ngFor='let list of filterTypeArr' [value]="list.id">{{list.name}}</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- filter value -->
+            <!-- <div [ngClass]="filterType == 'Study' ? 'col-4' : 'col-2'"
+                *ngIf="FilterFlag && filterType != 'dateType' && filterType != 'questionnaireDate'">
+                <div class="filter-icon" *ngIf="filterdrop == true">
+                    <select class="filter-select" [(ngModel)]="filterValue" [ngModelOptions]="{standalone: true}">
+                        <option value="" disabled="true">Filter Value</option>
+                        <ng-container *ngIf="filterType == 'Status'">
+                            <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'questionnaireStatus'">
+                            <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'notificationStatus'">
+                            <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'petStatus'">
+                            <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'trackerStatus'">
+                            <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'assetStatus'">
+                            <option *ngFor='let list of filterValArr' [value]="list.deviceStatusId">{{list.statusName}}
+                            </option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'supportStatus'">
+                            <option *ngFor='let list of filterValArr' [value]="list.statusId">{{list.statusName}}
+                            </option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'Role'">
+                            <option *ngFor='let list of filterValArr' [value]="list.roleId">{{list.
+                                roleName}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'RoleType'">
+                            <option *ngFor='let list of filterValArr' [value]="list.roleTypeId">{{list.
+                                roleType}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'trackerActivity'">
+                            <option *ngFor='let list of filterValArr' [value]="list.activityId">{{list.
+                                activityName}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'ticketPriority'">
+                            <option *ngFor='let list of filterValArr' [value]="list.priorityId">{{list.
+                                priorityName}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'location'">
+                            <option *ngFor='let list of filterValArr' [value]="list.storageLocationId">{{list.
+                                storageLocationName}}</option>
+                        </ng-container>
+
+                        <ng-container *ngIf="filterType == 'behavior'">
+                            <option *ngFor='let list of filterValArr' [value]="list.metricId">{{list.
+                                metricName}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'feedbackPage'">
+                            <option *ngFor='let list of filterValArr' [value]="list.pageName">{{list.
+                                pageName}}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'deviceType'">
+                            <option *ngFor='let list of filterValArr' [value]="list">{{list
+                                }}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'Model'">
+                            <option *ngFor='let list of filterValArr' [value]="list">{{list
+                                }}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'Menu'">
+                            <option *ngFor='let list of filterValArr' [value]="list.menuId">{{list.menuName
+                                }}</option>
+                        </ng-container>
+                        <ng-container *ngIf="filterType == 'Action'">
+                            <option *ngFor='let list of filterValArr' [value]="list">{{list}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+
+                <input *ngIf="filterdrop == false && (filterType != 'assignedTo' && filterType != 'Study')" type="text"
+                    class="search-box small-padding" [(ngModel)]="filterValue">
+                <lib-typeahead *ngIf="filterdrop == false && filterType == 'assignedTo'" [data]="filterValArr"
+                    matcher="userName" [(ngModel)]="filterValue" class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+                <lib-typeahead *ngIf="filterdrop == false && filterType == 'Study'" [data]="filterValArr"
+                    matcher="studyName" [(ngModel)]="filterValue" class="w-100 mb-0" placeholder="" class="w-100">
+                </lib-typeahead>
+            </div> -->
+
+            <!-- <div class="col-2"
+                *ngIf="filterdrop == false && (filterType == 'dateType' || filterType == 'questionnaireDate')">
+                <datepicker class="w-100" [(ngModel)]="startDate" placeholder="Start Date" (select)="startdateSelect()"
+                    format="MM-DD-YYYY"></datepicker>
+            </div>
+            <div class="col-2"
+                *ngIf="filterdrop == false && (filterType == 'dateType' || filterType == 'questionnaireDate')">
+                <datepicker class="w-100" [(ngModel)]="endDate" [minDate]="startDate" placeholder="End Date"
+                    format="MM-DD-YYYY"></datepicker>
+            </div> -->
+            <!-- filter value -->
+            <div class="col-2">
+                <div class="button-wrapper">
+                    <button class="btn btn-primary mr-2" type="button" (click)="searchText(query)">
+                        search
+                    </button>
+                    <button class="btn btn-primary btn-pink" type="button" (click)="reset()">
+                        reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 mb-2">
+                <!-- <select class="filter-select" [(ngModel)]="statusFilter" [ngModelOptions]="{standalone: true}">
+                    <option value="" disabled="true">Status</option>
+                    <option *ngFor='let list of filterStatusArr' [value]="list.id">{{list.name}}</option>
+                </select> -->
+                
+                
+                <data-multiselect alignment="vertical" type="checkbox" [data]="filterStatusArr" [(ngModel)]="statusFilter" ngDefaultControl matcher="name"
+                primaryKey="id" labelName="Status" dropdownSettingsText="Status"></data-multiselect> 
+            </div>
+            <div class="col-4 mb-15">
+                <!-- studyList -->
+                <!-- <lib-typeahead [data]="studyList"
+                matcher="studyName" [(ngModel)]="studyfilterValue" class="w-100 mb-0"  placeholder="Study"  class="w-100">
+            </lib-typeahead> -->
+            <multi-typeahead [data]="studyList" placeholder="Study" [(ngModel)]="studyfilterValue" matcher="studyName" display="studyName"></multi-typeahead>
+            </div>
+            <div class="col-2">
+                <datepicker class="w-100" [(ngModel)]="startDate" placeholder="Start Date" (select)="startdateSelect()"
+                    format="MM-DD-YYYY"></datepicker>
+            </div>
+            <div class="col-2">
+                <datepicker class="w-100" [(ngModel)]="endDate" [minDate]="startDate" placeholder="End Date"
+                    format="MM-DD-YYYY"></datepicker>
+            </div>
+        </div>
+        <div class="content-block pl-3 pr-3">
+            <!-- {{this.rolesForm.value | json}} -->
+            <form [formGroup]="rolesForm" novalidate>
+                <div class="dataBox">
+                    <div class="table text-cstm" *ngIf="petObservations">
+                        <div class="row thead">
+                            <div class="col">PET NAME</div>
+                            <div class="col">BREED</div>
+                            <div class="col">STUDY</div>
+                            <div class="col">CURRENT STATUS</div>
+                            <div class="col">&nbsp;</div>
+                        </div>
+                        <!-- </table>
+                    <table> -->
+                        <!-- <table class="table" *ngIf="petObservations"> -->
+                        <div>
+                            <div class="mb-3" formArrayName="permissionMap"
+                                *ngFor="let role of rolesForm.get('permissionMap')['controls']; let i = index">
+                                <div [formGroupName]="i">
+
+                                    <!-- <ng-container *ngFor="let list of petObservations;let i = index "> -->
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="patient-name">
+                                                <img [src]='role.value.photoName ? role.value.photoName : "assets/images/no-dogs.svg"'
+                                                    alt="pet" width="15" />
+                                                <div>{{role.value.petName}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col">{{role.value.petType}}</div>
+                                        <div class="col">{{role.value.study}}</div>
+                                        <div class="col">
+                                            <span class="status-button" [ngClass]="role.value.petStatusId == 1 ? 'pet-off-status': (role.value.petStatusId == 2 ? 'pet-on-status' : 'pet-decease-status')">
+                                                {{role.value.petStatus}}
+                                           </span>
+                                            <!-- commented for file size display -->
+                                            <!-- <span *ngIf="role.value.display" class="red">{{role.value.filSizeArr}} of 300 Mb Selected</span> -->
+                                        </div>
+                                        <div class="v-center col"><button class="btn btn-primary float-right mr-3"
+                                                (click)="downloadPop(role.value.petName,role.value.filSizeArr)">Download</button>
+                                        </div>
+                                    </div>
+                                    <div class="row bg-green">
+
+                                        <div class="col-6">
+                                            <div class="images-blk px-2 py-2">
+                                                <div class="font-weight-bold">IMAGE</div>
+                                                <div class="choose-images" formArrayName="imageMap"
+                                                    *ngFor="let submenu of rolesForm.get('permissionMap')['controls'][i].get('imageMap')['controls']; let j = index">
+                                                    <!-- *ngFor="let record of list.imageList" -->
+                                                    <div [formGroupName]="j">
+                                                        <!-- (click)="playImg(submenu.value.Url)" -->
+                                                        <input type="checkbox"
+                                                            (change)="onCheckboxChange($event,i,role.value.petName)"
+                                                            class="checkImg" formControlName="checkBox"
+                                                            [value]="submenu.value.checkBox" />
+                                                        <img src="{{submenu.value.Url}}" (click)="playImg(submenu.value.Url)"
+                                                            alt="pet" width="80" height="60" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="images-blk px-2 py-2">
+                                                <div class="font-weight-bold">VIDEO</div>
+                                                <div class="choose-images" formArrayName="videoMap"
+                                                    *ngFor="let submenu of rolesForm.get('permissionMap')['controls'][i].get('videoMap')['controls']; let j = index">
+                                                    <!-- *ngFor="let record of list.videoMap" -->
+                                                    <div [formGroupName]="j" class="thumbnaildiv">
+                                                        <input type="checkbox"
+                                                            (change)="onCheckboxChange($event,i,role.value.petName)"
+                                                            class="checkImg" formControlName="checkBox"
+                                                            [value]="submenu.value.checkBox" />
+                                                        <!-- <video controls width="80" height="60">
+                                                            <source
+                                                                src="{{gcpStoragePath + 'ObservationVideo/' + submenu.value.Url}}"
+                                                                type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video> -->
+                                                        <img [src]="submenu.value.thumbnail ? submenu.value.thumbnail : 'assets/images/no-video.png'"
+                                                            class="p-image" (click)="playVideo(submenu.value.Url)">
+                                                        <i class="far fa-play-circle"
+                                                            (click)="playVideo(submenu.value.Url)"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- pagination -->
+            <div class="row" *ngIf="petObservations && petObservations.length > 0 && paginationFlag">
+                <div class="col-6 float-left">
+                    <span class="line-height-30 size-14" *ngIf="filterFlag">{{title ? title : pagination.searchElments +
+                        " Record(s) found out of " + pagination.totalElements}}</span>
+
+                    <span class="line-height-30 size-14" *ngIf="!filterFlag">{{title ? title : pagination.totalElements
+                        + " Record(s) found" }}</span>
+                </div>
+                <div class="col-6">
+                    <div class="float-right" style="text-align: left">
+                        <ngb-pagination class="pagination" size="sm" [collectionSize]="pagination.searchElments"
+                            [(page)]="pagination.page" [maxSize]="5" [rotate]="true"
+                            [pageSize]="pagination.noOfElements" [boundaryLinks]="true" (pageChange)="pageChanged()">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+            <!-- pagination -->
+            <!-- {{petObservations | json}} -->
+            <span *ngIf="this.petObservations.length == 0 && !spinnerFlag">
+                <div class="blue-hdr commentHistory">
+                    <div class="row">
+                        <div class="col text-center">
+                            <span class="line-height-30">No Media found</span>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="clearfix"></div>
+            </span>
+        </div>
+    </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Download Media
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mb-4">
+            <div class="col-12">
+                Are you sure you want to download media for Pet <span class="bold-text" style="color:red">{{
+                    this.petName }}</span> ?
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    No
+                </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="downloadT();d('Cross click')">
+                    Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #archiveContent3 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Observation Video
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-4">
+            <div class="col-12 video-wrapper">
+                <video controls class="p-video videopath" controls autoplay width="100%" style="margin:0 auto;">
+                    <source src="{{playVideoUrl}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    Cancel
+                </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="downloadvideo();">
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #archiveContent4 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Observation Image
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true">&#10006;</span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-4 vertical-scroll">
+            <div class="col-12">
+                <img src="{{playImgUrl}}" alt="pet" class="img-fluid" />
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+                    Cancel
+                </button>&nbsp;&nbsp; 
+                <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3"  (click)="downloadImage();">
+                    Download
+                </button> -->
+            </div>
+        </div>
+    </div>
+</ng-template>

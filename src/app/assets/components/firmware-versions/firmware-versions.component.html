@@ -1,0 +1,122 @@
+<div class="content-box">
+  <div class="content-hdr">
+    <div class="row">
+      <div class="col-6 block-left-center">
+        Manage Firmware
+      </div>
+      <div class="col-6">
+        <div class="float-right">
+          <button *ngIf="RWFlag" class="btn btn-primary" type="button" (click)="addNew()">
+            Add New Firmware Version
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-blk">
+    <datatable *ngIf="showDataTable" [headers]="headers" [hideExport]="true" defaultColumn="" placeholder="Search"
+      [filterTypeArr]="filterTypeArr" dir="DESC" url="/api/assets/getFirmwareVersions" pageName="manageFirmware"
+      (searchAction)="searchAction($event)" (formatter)="formatter($event)" (nodeAction)="getNode($event)">
+    </datatable>
+  </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" *ngIf="AddFlag" id="modal-basic-title">Add New Firmware Version</h5>
+    <h5 class="modal-title" *ngIf="!AddFlag" id="modal-basic-title">Edit Firmware Version</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span class="icon-close" aria-hidden="true"></span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body removeSelectArrow">
+    <form [formGroup]="firmForm">
+      <!-- {{firmForm.value | json}} -->
+      <div class="row mb-3">
+        <div class="col-12 mb-3">
+          <fieldset class="w-fieldset">
+            <legend><label class="label">Asset Type <span class="asterisk">*</span></label></legend>
+            <select class="form-control" formControlName="assetType" (change)="changeDeviceType($event)">
+              <option value="">Select Asset Type</option>
+              <option *ngFor="let asset of assetTypes" [ngValue]="asset.deviceType">
+                {{asset.deviceType}}</option>
+            </select>
+          </fieldset>
+          <validation-message [control]="firmForm.controls.assetType">
+          </validation-message>
+        </div>
+
+        <div class="col-12 mb-3">
+          <fieldset class="w-fieldset" [disabled]="firmForm.value.assetType == ''">
+            <legend><label class="label">Asset Model</label></legend>
+            <select class="form-control" formControlName="assetModel">
+              <option value="">Select Asset Model</option>
+              <option *ngFor="let device of modelList" [ngValue]="device.deviceModel">
+                {{device.deviceModel}}</option>
+            </select>
+          </fieldset>
+          <validation-message [control]="firmForm.controls.model">
+          </validation-message>
+        </div>
+
+        <div class="col-12">
+          <fieldset class="w-fieldset">
+            <legend><label class="label">New Firmware Version <span class="asterisk">*</span></label></legend>
+            <input formControlName="firmwareVersion" type="text" class="form-control textbox w-100" maxlength="" />
+          </fieldset>
+          <validation-message [control]="firmForm.controls.firmwareVersion">
+          </validation-message>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 mb-4">
+          <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+            Cancel
+        </button>
+
+          <button type="button" *ngIf="AddFlag" class="btn btn-primary btn-custom float-right mr-3"
+            (click)="addFirmware()">Submit
+          </button>
+          <button type="button" *ngIf="!AddFlag" class="btn btn-primary btn-custom float-right mr-3"
+            (click)="UpdateFirmware()">Update
+          </button>
+        
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+</ng-template>
+
+<ng-template #deleteContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Delete</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span class="icon-close" aria-hidden="true"></span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-12">
+        Do you want to delete <span class="bold-text" style="color:red">{{selectedName}} </span> ?
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+        </button>
+        <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+          (click)="deleteRecord(selectedItem);">Yes
+        </button>
+      </div>
+    </div>
+
+  </div>
+</ng-template>

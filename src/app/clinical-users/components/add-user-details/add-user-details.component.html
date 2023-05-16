@@ -1,0 +1,134 @@
+<form [formGroup]="addUserForm" (ngSubmit)='onSubmit(addUserForm.value)'>
+    <div class="content-box">
+        <!-- <div class="content-hdr">
+        </div> -->
+        <!-- {{addUserForm.value | json}}
+{{formDataCopy | json}} -->
+        <div class="content-block">
+
+            <div class="row mb-3">
+                <!-- <div class="col-6">
+                    <fieldset class="w-fieldset" [disabled]="editFlag == true">
+                        <legend><label class="label">Username <span class="asterisk">*</span></label></legend>
+                        <input formControlName="userName"  autocomplete="off" type="text" class="form-control textbox w-100" maxlength="" />
+                    </fieldset>
+                    <validation-message [control]="addUserForm.controls.userName"></validation-message>
+                </div> -->
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Full Name <span class="asterisk">*</span></label></legend>
+                        <input formControlName="fullName" autocomplete="off" type="text"
+                            class="form-control textbox w-100" maxlength="" />
+                    </fieldset>
+                    <validation-message [control]="addUserForm.controls.fullName"></validation-message>
+                </div>
+
+                <div class="col-6">
+                    <fieldset class="w-fieldset" [disabled]="editFlag == true">
+                        <legend><label class="label">Email <span class="asterisk">*</span></label></legend>
+                        <input formControlName="email" autocomplete="off" type="text" class="form-control textbox w-100"
+                            maxlength="" />
+                    </fieldset>
+                    <validation-message [control]="addUserForm.controls.email"></validation-message>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend> <label class="label">Role Type <span class="asterisk">*</span></label></legend>
+
+                        <select class="form-control w-100" formControlName="roleType"
+                            (change)="changeRoleType($event,'')">
+                            <option value="">Select</option>
+                            <option *ngFor='let list of RoleTypeArr' [value]="list.roleTypeId">{{list.
+                                roleType}}</option>
+                        </select>
+                    </fieldset>
+                    <validation-message [control]="addUserForm.controls.roleType"></validation-message>
+                </div>
+
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend> <label class="label">Role <span class="asterisk">*</span></label></legend>
+                        <!-- {{addUserForm.value.role | json}} -->
+                        <!-- {{RoleArr | json}} -->
+                        <!-- {{role | json}} -->
+
+                        <multi-set alignment="vertical" type="checkbox" [data]="selectedRoleType ? role : RoleArr"
+                            formControlName="role" matcher="roleName" propertyId="roleId"></multi-set>
+
+                        <!-- <multiselect alignment="vertical" type="checkbox" [data]="selectedRoleType ? role : RoleArr" formControlName="role" matcher="roleName" propertyId="roleId"></multiselect> -->
+
+                        <!-- <multiselect class="full" [data]="selectedRoleType ? role : RoleArr"  name="applicationId" formControlName="role" matcher="roleName" propertyId="roleId"></multiselect> -->
+
+                        <!-- <lib-typeahead [data]="selectedRoleType ? role:RoleArr" matcher="roleName"
+                            (selectedItem)='roleSelected($event)' formControlName="role" class="w-100 mb-0"
+                            placeholder="" class="w-100">
+                        </lib-typeahead> -->
+                    </fieldset>
+                    <validation-message [control]="addUserForm.controls.role"></validation-message>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <!-- {{addUserForm.value.status | json}} -->
+                    <fieldset class="w-fieldset" [disabled]="disabledFlag">
+                        <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+                        <select class="form-control w-100" formControlName="status" (change)="onStatusChange($event)">
+                            <option value="">Select</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </fieldset>
+                    <validation-message [control]="addUserForm.controls.status"></validation-message>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" routerLink="/user/clinical-user">
+                            Cancel
+                        </button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Alert</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Do you want to update user details ? User may lose access to certain functionalities if changed.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+
+                <button type="button" class="btn btn-secondary btn-custom float-right"
+                    (click)="d('Cross click');unChangeValue();">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3" (click)="changeValue();">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

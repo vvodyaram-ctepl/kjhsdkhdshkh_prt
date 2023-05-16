@@ -1,0 +1,657 @@
+<div class="content-box pb-0">
+  <div class="content-hdr">
+    <div>Dashboard </div>
+  </div>
+  <div class="content-blk pb-0">
+    <div class="row totals">
+      <div class="col-6">
+        <div class="sensorsStatus">
+          <div class="row no-gutters totalSensors ml-0 mr-0">
+            <div class="col-3 text-center label flex-center" (click)="resetAsset()">
+              <div class="row">
+                <div class="col-12">
+                  <button class="export-botton min-width-reset white-color" (click)="downloadExport('5')">
+                    <i class="icon-excel size-20"></i>
+                  </button>
+                </div>
+                <div class="col-12">TOTAL ASSETS </div>
+                <div class="col-12 asset-count">{{totalAssets}}</div>
+              </div>
+            </div>
+            <div class="col-9">
+              <div class="row">
+                <div class="col-12 assetNameType">
+                  <!-- scrollbar scrollbar-near-moon thin -->
+                  <div class="wrapper-sensor">
+                    <!-- <div *ngFor="let list of Asset1" class="box-wrap-sensor" (click)="assetClick(list.deviceType)" style="float:left">
+                      <div class="font-weight-bold f22">{{list.deviceCount}}</div>
+                      <div class="f15">{{list.deviceType}}</div>
+                    </div> -->
+                    <ngb-carousel #carousel [showNavigationIndicators]="false"
+                      [showNavigationArrows]="showNavigationArrows" [interval]="false">
+                      <ng-template ngbSlide *ngFor="let item of dataArchive;let i = index" id="{{i}}">
+                        <!-- <div class="study-cnt px-0 archived" *ngFor="let listItem of item">
+                          {{listItem.name}}
+                        </div> -->
+                        <!-- {{item | json}} -->
+                        <div *ngFor="let listItem of item;let i=index" class="box-wrap-sensor"
+                          [class.active]="(listItem.deviceType == selectedRecord)"
+                          (click)="assetClick(listItem.deviceType)" style="float:left">
+                          <div class="font-weight-bold f22">{{listItem.deviceCount}}</div>
+                          <div class="f15">{{listItem.deviceType}}</div>
+                        </div>
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                </div>
+                <div class="col-12 assetModelType">
+                  <div class="wrapper-sensor scrollbar scrollbar-near-moon thin" *ngIf="dataModel.length > 0">
+                    <!-- <div *ngFor="let list of modelUpArr" class="box-wrap-model" style="float:left">
+                      <div class="font-weight-bold f22">{{list.modelCount}}</div>
+                      <div class="f15">{{list.modelName}}</div>
+                    </div> -->
+                    <ngb-carousel #carousel [showNavigationIndicators]="false"
+                      [showNavigationArrows]="showNavigationArrowsM" [interval]="false">
+                      <ng-template ngbSlide *ngFor="let item of dataModel;let i = index" id="{{i}}">
+                        <div *ngFor="let listItem of item" class="box-wrap-model"
+                          [ngClass]="modelUpArr.length > 0 ? 'line-wrap-model' : ''"
+                          (click)="assetClick(listItem.deviceType)" style="float:left">
+                          <div class="font-weight-bold f22">{{listItem.modelCount}}</div>
+                          <div class="f15"><span title={{listItem.modelName}}>{{listItem.modelName}}</span></div>
+                        </div>
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                  <div class="wrapper-sensor" *ngIf="modelUpArr.length == 0">
+                    <div class="box-wrap-model" [ngClass]="modelUpArr.length > 0 ? 'line-wrap-model' : ''" style="float:left;
+                      height: 61px;">
+                      <div class="font-weight-bold f22"></div>
+                      <div class="f15"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <!-- <div class="row-20 ml-0 mr-0">
+            <div [ngClass]="{
+                         'div-33' : Asset1.length == 3,
+                         'div-20' : Asset1.length == 4,
+                         'div-50' : Asset1.length == 2,
+                         'div-100' : Asset1.length == 1,
+                         'div-20' : Asset1.length > 4
+                       }" *ngFor="let list of Asset1">
+              <div class="font-weight-bold f22 text-center">{{list.deviceCount}}</div>
+              <div class="f15 text-center">{{list.deviceType}}</div>
+            </div>
+
+          </div> -->
+
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="workingStatus">
+          <div class="row activeSensors ml-0 mr-0">
+            <div class="col-12 text-center label">TOTAL ASSETS BY STATUS
+              <span class="asset-count ml-2" style="position: relative; top: 1.75px;">{{totalAssetsByStatus}}</span>
+              <span class="float-right align-icons">
+                <button class="export-botton min-width-reset white-color" (click)="downloadExport('6')">
+                  <i class="icon-excel size-20"></i>
+                </button>&nbsp;&nbsp;
+                <i class="icon-filter pointer" [ngbPopover]="popContent5" #popOver5="ngbPopover"
+                  placement="bottom-right" [autoClose]="false" triggers="manual"
+                  (click)="popOver5.open();popOver1.close();popOver2.close();popOver3.close();popOver4.close();"></i>
+              </span>
+            </div>
+
+            <div class="col-md-3 col-6 countItems bold text-right"></div>
+          </div>
+          <div class="row-20 ml-0 mr-0">
+            <!-- <div class="col-1"></div> -->
+            <div class="div-16" *ngFor="let list of Asset2">
+              <div class="font-weight-bold f22 text-center">{{list.deviceCount}}</div>
+              <div class="f15 text-center">{{list.status}}</div>
+            </div>
+            <div class="text-center col mt-3 displayMsg" *ngIf="totalAssetsByStatus == 0" style="text-transform: none;">
+              No Records Found</div>
+            <!-- <div class="col-1"></div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 mb-3">
+        <div class="dataBox">
+          <div class="row filterBox">
+            <div class="col-6 font-weight-bold"><i class="icon-card"></i>
+              <div class="device-title">
+                <!-- {{deviceChartDataText ? deviceChartDataText :'Assets'}} -->
+                {{deviceChartDataText}} by Study
+              </div>
+            </div>
+            <div class="col-6 text-right">
+              <button class="export-botton min-width-reset" (click)="downloadExport('1')">
+                <i class="icon-excel"></i>
+              </button>&nbsp;&nbsp;
+
+              <i class="icon-filter pointer" [ngbPopover]="popContent1" #popOver1="ngbPopover" placement="bottom-right"
+                [autoClose]="false" triggers="manual"
+                (click)="popOver1.open();popOver2.close();popOver3.close();popOver4.close();popOver5.close();"></i>
+            </div>
+          </div>
+          <hr class="line" />
+          <!-- <canvas baseChart *ngIf="deviceChartData && deviceChartLabels" [data]="deviceChartData"
+            [labels]="deviceChartLabels" height="125" [options]="options"
+            [chartType]="deviceChartType" style="margin-top:20px">
+          </canvas> -->
+          <!-- {{barChartDataa['data'] | json}} -->
+          <!-- <p *ngIf="!barChartDataa || !barChartDataa.length" class="text-center opaque-show">No records found</p> -->
+          <div class="scrollbar scrollbar-near-moon thin"
+            *ngIf="canvasDis && barChartDataa && barChartLabelss && barChartOptionss && barChartLegendd && barChartTypee && devicesBystudy.length > 0"
+            style="overflow-y:auto;cursor: pointer;">
+            <div class="chartWrapper" style="height:250px">
+              <div class="chartAreaWrapper" style="min-width: 100%;" [ngStyle]="{'width': maxXaxes + '%'}">
+                <!-- {{ (1 * barChartDataa.length) }} -->
+                <!-- {{barChartDataa[0].data.length}} -->
+                <!-- * (barChartDataa.data.length) -->
+                <!-- 241 -->
+                <!-- [ngClass]="{
+            'ht-200' : devicesBystudy.length == 1,
+            'ht-300' : devicesBystudy.length == 2,
+            'ht-400' : devicesBystudy.length > 2
+          }" -->
+                <!-- (devicesBystudy.length * 65) + 'px' -->
+
+                <canvas baseChart
+                  *ngIf="canvasDis && barChartDataa && barChartLabelss && barChartOptionss && barChartLegendd && barChartTypee && devicesBystudy.length > 0"
+                  [ngStyle]="devicesBystudy.length > 3 ? { 'height': (devicesBystudy.length * 65) + 'px'}: { 'height': (devicesBystudy.length * 73 + 177) + 'px'}"
+                  style="min-height: 150px;" [datasets]="barChartDataa" [labels]="barChartLabelss"
+                  [options]="barChartOptionss" [legend]="barChartLegendd" [chartType]="barChartTypee"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center"
+            *ngIf="!barChartDataa || barChartDataa.length == 0 || devicesBystudy.length == 0">
+            No Records Found
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="dataBox">
+          <div class="row filterBox">
+            <div class="col-7 font-weight-bold">
+              <i class="icon-card"></i>
+              <div class="device-title">Customer Support Tickets by <span *ngIf="agentName">Agent &nbsp;<span
+                    style="color:#fb6b71">({{agentName}})</span></span> <span *ngIf="!agentName">Study</span></div>
+            </div>
+            <div class="col-5 text-right">
+              <button class="export-botton min-width-reset" (click)="downloadExport('2')">
+                <i class="icon-excel"></i>
+              </button>&nbsp;&nbsp;
+              <i class="icon-filter pointer" [ngbPopover]="popContent2" #popOver2="ngbPopover" placement="bottom-right"
+                [autoClose]="false" triggers="manual"
+                (click)="popOver2.open();popOver1.close();popOver3.close();popOver4.close();popOver5.close();"></i>
+            </div>
+          </div>
+          <hr class="line" />
+          <table class="table" *ngIf="csStudy?.length > 0">
+            <thead>
+              <tr>
+                <th scope="col" width="20%">STUDY</th>
+                <th scope="col" width="14%"># OF TKTS</th>
+                <th scope="col" width="14%">% OF TKTS</th>
+                <th scope="col" width="9%">OPEN</th>
+                <th scope="col" width="16%">IN-PROGRESS</th>
+                <th scope="col" width="11%">CLOSED&nbsp;&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody class="scrollbar scrollbar-near-moon thin" >
+              <tr *ngFor="let list of csStudy">
+                <td scope="row" style="text-align:left" width="20%">{{list.studyName}}</td>
+                <td width="16.66%">{{list.studyCount}}</td>
+                <td width="16.66%">{{list.studyPercentage}}</td>
+                <td width="9%">{{list.openCount}}</td>
+                <td width="16%">{{list.inProgressCount}}</td>
+                <td width="11%">{{list.closedCount}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="text-align:center" *ngIf="!csStudy || csStudy?.length == 0">
+            No Records Found
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="dataBox">
+          <div class="row filterBox">
+            <div class="col-6 font-weight-bold">
+              <i class="icon-card"></i>
+              <div class="device-title">Asset Issues</div>
+            </div>
+            <div class="col-6 text-right">
+              <button class="export-botton min-width-reset" (click)="downloadExport('3')">
+                <i class="icon-excel"></i>
+              </button>&nbsp;&nbsp;
+              <i class="icon-filter pointer" [ngbPopover]="popContent" #popOver3="ngbPopover" placement="bottom-right"
+                [autoClose]="false" triggers="manual"
+                (click)="popOver3.open();popOver1.close();popOver2.close();popOver4.close();popOver5.close();"></i>
+            </div>
+          </div>
+          <hr class="line" />
+          <!-- {{asetIsues.length}} -->
+          <!-- <div class="mt-2" class="assets-totl">Total Asset Issues {{this.totalCount}}</div> -->
+          <canvas
+            *ngIf="canvasDis3 && asetIsues.length > 0 && totalCount > 0 && issuesChartData && issuesChartLabels && options && issuesChartType"
+            baseChart [data]="issuesChartData" [plugins]="doughnutChartPlugins" [labels]="issuesChartLabels"
+            height="150" [options]="Issueoptions" [chartType]="issuesChartType" style="margin-top:40px">
+          </canvas>
+          <div style="text-align:center" *ngIf="canvasDis3 && (asetIsues.length == 0 || totalCount == 0)">
+            No Records Found
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="dataBox">
+          <div class="row filterBox">
+            <div class="col-6 font-weight-bold">
+              <i class="icon-card"></i>
+              <div class="device-title">Asset Issue by Study</div>
+            </div>
+            <div class="col-6 text-right">
+              <button class="export-botton min-width-reset" (click)="downloadExport('4')">
+                <i class="icon-excel"></i>
+              </button>&nbsp;&nbsp;
+              <i class="icon-filter pointer" [ngbPopover]="popContent4" #popOver4="ngbPopover" placement="bottom-right"
+                [autoClose]="false" triggers="manual"
+                (click)="popOver4.open();popOver1.close();popOver2.close();popOver3.close();popOver5.close();"></i>
+            </div>
+          </div>
+          <hr class="line" />
+          <!-- <canvas baseChart *ngIf="barChartData" [datasets]="barChartData" [labels]="barChartLabels"
+            [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+            [chartType]="barChartType">
+          </canvas> -->
+          <div class="scrollbar scrollbar-near-moon thin"
+            *ngIf="canvasDis4 && barChartData4 && barChartLabels4 && devicesMalfunc.length > 0 && barChartOptions4 && barChartPlugins4 && barChartLegend4 && barChartType4"
+            style="overflow:auto;cursor: pointer;">
+            <!--"style="width:700px" -->
+            <!-- [ngStyle]= "{'width': (devicesMalfunc.length * 65) + 'px','height':'400px'}" -->
+            <!-- <div > -->
+            <!-- height="300" width="1200" -->
+            <!-- [ngStyle]= "{'width': (devicesMalfunc.length * 200) + 'px','height':'400px'}" -->
+
+            <div
+            [ngStyle]="barChartLabels4.length == 1 ? { 'width': 'auto'} :(barChartLabels4.length > 4 ? { 'width': (barChartLabels4.length * 120) + 'px'}: { 'width': (barChartLabels4.length * 240 ) + 'px'})">
+              <canvas baseChart style="min-width: 120px;height: 309px;"
+                [ngStyle]="barChartLabels4.length == 1 ? { 'width': (barChartLabels4.length * 488) + 'px'} :(barChartLabels4.length > 4 ? { 'width': (barChartLabels4.length * 120) + 'px'}: { 'width': (barChartLabels4.length * 240 ) + 'px'})"
+                *ngIf="canvasDis4 && barChartData4 && barChartLabels4 && devicesMalfunc.length > 0 && barChartOptions4 && barChartPlugins4 && barChartLegend4 && barChartType4"
+                [datasets]="barChartData4" [labels]="barChartLabels4" [options]="barChartOptions4"
+                [plugins]="barChartPlugins4" [legend]="barChartLegend4" [chartType]="barChartType4">
+              </canvas>
+            </div>
+          </div>
+          <div style="text-align:center" *ngIf="canvasDis4 && devicesMalfunc.length == 0">
+            No Records Found
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #popContent1>
+  <div class="float-right pointer" (click)="popOver1.close()">
+    <span class="icon-close" aria-hidden="true"></span>
+  </div>
+  <div class="popover-outer">
+    <!-- {{customerFilter1.value | json}} -->
+    <form [formGroup]="customerFilter1" class="bg-grey" (click)="$event.stopPropagation();"
+      (keydown.tab)="$event.stopPropagation()">
+      <div class="row text-center">
+        <div class="col-6">
+          <!-- <h4 class="m-auto">Filters</h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters1()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Apply Filters
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary filter-button btn-size-6" (click)="clearAllFilters1()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <div class="inputFilters">
+        <div class="pt-2">
+          <lib-typeahead [data]="deviceTypeArr" placeholder="Asset Type" matcher="name" formControlName="assetType"
+            (onClear)='clearModel()' (selectedItem)="changeDeviceType($event)" class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+        <div class="pt-2 border-top">
+          <lib-typeahead [data]="deviceModelArr" placeholder="Asset Model" matcher="name" formControlName="model"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+
+        <div class="pt-2 border-top">
+          <lib-typeahead [data]="studyList" placeholder="Study" matcher="studyName" formControlName="study"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<!-- content 1 ends -->
+<!-- content 2 starts  -->
+<ng-template #popContent2>
+  <div class="float-right pointer" (click)="popOver2.close()">
+    <span class="icon-close" aria-hidden="true"></span>
+  </div>
+  <div class="popover-outer">
+    <!-- {{customerFilter1.value | json}} -->
+    <form [formGroup]="customerFilter2" class="bg-grey" (click)="$event.stopPropagation();"
+      (keydown.tab)="$event.stopPropagation()">
+      <div class="row text-center">
+        <div class="col-6">
+          <!-- <h4 class="m-auto">Filters</h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters2()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Apply Filters
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary filter-button btn-size-6" (click)="clearAllFilters2()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <div class="inputFilters">
+        <!-- <div class="row pt-2">
+          <div class="col-12"> -->
+        <div class="pt-2">
+          <lib-typeahead [data]="assignedToList" placeholder="Agent" matcher="userName" formControlName="agent"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+        <!-- </div>
+          </div> -->
+
+        <div class="pt-2">
+          <label>Date Range</label>
+          <div class="row">
+            <div class="col-6">
+              <div class="input-group">
+                <datepicker class="w-100" formControlName="startDate" [maxDate]="customerFilter2.value.endDate"
+                  format="MM-DD-YYYY"></datepicker>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-group">
+                <datepicker class="w-100" formControlName="endDate" [minDate]="customerFilter2.value.startDate"
+                  format="MM-DD-YYYY"></datepicker>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<!-- content 2 ends -->
+<ng-template #popContent>
+  <div class="float-right pointer" (click)="popOver3.close()">
+    <span class="icon-close" aria-hidden="true"></span>
+  </div>
+  <div class="popover-outer">
+    <form [formGroup]="customerFilter" class="bg-grey" (click)="$event.stopPropagation();"
+      (keydown.tab)="$event.stopPropagation()">
+      <div class="row text-center">
+        <div class="col-6">
+          <!-- <h4 class="m-auto">Filters</h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Apply Filters
+          </button>
+        </div>
+        <div class="col-6">
+          <!-- <h4 class="m-auto cursor-pointer" (click)="clearAllFilters()">Reset
+          <i class="fa fa-trash-alt pl-2"></i> 
+        </h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="clearAllFilters()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Reset
+          </button>
+        </div>
+        <!-- <div class="col-3 cursor-pointer" (click)="trigger.closeMenu()">
+        <h4 class="m-auto">Close</h4>
+      </div> -->
+      </div>
+
+      <div class="inputFilters">
+        <div class="pt-2">
+          <lib-typeahead [data]="deviceTypeArr" placeholder="Asset Type" matcher="name" formControlName="assetType"
+            class="w-100 mb-0" class="w-100" (onClear)='clearModel2()' (selectedItem)="changeDeviceType2($event)">
+          </lib-typeahead>
+        </div>
+
+        <div class="pt-2 border-top">
+          <lib-typeahead [data]="deviceModelArr2" placeholder="Asset Model" matcher="name" formControlName="model2"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+
+        <div class="pt-2 border-top">
+          <lib-typeahead [data]="studyList" placeholder="Study" matcher="studyName" formControlName="study"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+
+        </div>
+
+        <!-- <div class="pt-2 border-top">
+          <select id="status" class="form-control" formControlName="status">
+            <option value=''>Select Status</option>
+            <option value=1>Active</option>
+            <option value=0>Inactive</option>
+          </select>
+        </div> -->
+        <div class="pt-2 border-top">
+          <label>Date Range</label>
+          <div class="row">
+            <div class="col-6">
+              <div class="input-group">
+                <datepicker class="w-100" formControlName="startDate" [maxDate]="customerFilter.value.endDate"
+                  format="MM-DD-YYYY"></datepicker>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-group">
+                <datepicker class="w-100" formControlName="endDate" [minDate]="customerFilter.value.startDate"
+                  format="MM-DD-YYYY"></datepicker>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- <div class="text-center">
+      <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters()">
+        <i class="fa fa-check m-1"></i>
+        Apply Filters
+      </button>
+    </div> -->
+    </form>
+  </div>
+</ng-template>
+<!-- content 4 starts here -->
+<ng-template #popContent4>
+  <div class="float-right pointer" (click)="popOver4.close()">
+    <span class="icon-close" aria-hidden="true"></span>
+  </div>
+  <div class="popover-outer">
+    <form [formGroup]="customerFilter4" class="bg-grey" (click)="$event.stopPropagation();"
+      (keydown.tab)="$event.stopPropagation()">
+      <div class="row text-center">
+        <div class="col-6">
+          <!-- <h4 class="m-auto">Filters</h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters4()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Apply Filters
+          </button>
+        </div>
+        <div class="col-6">
+          <!-- <h4 class="m-auto cursor-pointer" (click)="clearAllFilters()">Reset
+          <i class="fa fa-trash-alt pl-2"></i> 
+        </h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="clearAllFilters4()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Reset
+          </button>
+        </div>
+        <!-- <div class="col-3 cursor-pointer" (click)="trigger.closeMenu()">
+        <h4 class="m-auto">Close</h4>
+      </div> -->
+      </div>
+
+      <div class="inputFilters">
+        <div class="pt-2">
+          <lib-typeahead [data]="deviceTypeArr" placeholder="Asset Type" matcher="name" formControlName="assetTypeMain"
+            class="w-100 mb-0" class="w-100" (onClear)='clearModel2()' (selectedItem)="changeDeviceType2($event)">
+          </lib-typeahead>
+        </div>
+
+        <div class="pt-2 border-top">
+          <lib-typeahead [data]="deviceModelArr2" placeholder="Asset Model" matcher="name" formControlName="model2"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+
+        <div class="pt-2">
+          <lib-typeahead [data]="issueList" placeholder="Asset Issue" matcher="issueName" formControlName="assetType"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+
+        <div class="pt-2 border-top">
+          <lib-typeahead [data]="studyList" placeholder="Study" matcher="studyName" formControlName="study"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+
+        <!-- <div class="pt-2 border-top">
+          <select id="status" class="form-control" formControlName="status">
+            <option value=''>Select Status</option>
+            <option value=1>Active</option>
+            <option value=0>Inactive</option>
+          </select>
+        </div> -->
+        <div class="pt-2 border-top">
+          <label>Date Range</label>
+          <div class="row">
+            <div class="col-6">
+              <div class="input-group">
+                <datepicker class="w-100" formControlName="startDate" [maxDate]="customerFilter4.value.endDate"
+                  format="MM-DD-YYYY"></datepicker>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-group">
+                <datepicker class="w-100" formControlName="endDate" [minDate]="customerFilter4.value.startDate"
+                  format="MM-DD-YYYY"></datepicker>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- <div class="text-center">
+      <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters()">
+        <i class="fa fa-check m-1"></i>
+        Apply Filters
+      </button>
+    </div> -->
+    </form>
+  </div>
+</ng-template>
+<!-- top widget 2 starts here -->
+<ng-template #popContent5>
+  <div class="float-right pointer" (click)="popOver5.close()">
+    <span class="icon-close" aria-hidden="true"></span>
+  </div>
+  <div class="popover-outer">
+    <form [formGroup]="customerFilter5" class="bg-grey" (click)="$event.stopPropagation();"
+      (keydown.tab)="$event.stopPropagation()">
+      <div class="row text-center">
+        <div class="col-6">
+          <!-- <h4 class="m-auto">Filters</h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters5()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Apply Filters
+          </button>
+        </div>
+        <div class="col-6">
+          <!-- <h4 class="m-auto cursor-pointer" (click)="clearAllFilters()">Reset
+          <i class="fa fa-trash-alt pl-2"></i> 
+        </h4> -->
+          <button class="btn btn-primary filter-button btn-size-6" (click)="clearAllFilters5()">
+            <!-- <i class="fa fa-check m-1"></i> -->
+            Reset
+          </button>
+        </div>
+        <!-- <div class="col-3 cursor-pointer" (click)="trigger.closeMenu()">
+        <h4 class="m-auto">Close</h4>
+      </div> -->
+      </div>
+
+      <div class="inputFilters">
+        <div class="pt-2">
+          <select id="status" class="form-control" formControlName="location">
+            <option value=''>Select Location</option>
+            <option *ngFor='let list of sensorLocationsArr' [value]="list.storageLocationId">{{list.
+              storageLocationName}}</option>
+          </select>
+        </div>
+
+        <div class="pt-2">
+          <lib-typeahead [data]="deviceTypeArr" placeholder="Asset Type" matcher="name" formControlName="assetType"
+            (selectedItem)="changeDeviceType3($event)" (onClear)='clearModel3()' class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+
+        <div class="pt-2 border-top">
+          <lib-typeahead [data]="deviceModelArr3" placeholder="Asset Model" matcher="name" formControlName="model"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+        </div>
+
+        <!-- <div class="pt-2 border-top">
+          <lib-typeahead [data]="studyList" placeholder="Study" matcher="studyName" formControlName="study"
+            class="w-100 mb-0" class="w-100">
+          </lib-typeahead>
+
+        </div> -->
+
+      </div>
+
+      <!-- <div class="text-center">
+      <button class="btn btn-primary filter-button btn-size-6" (click)="applyFilters()">
+        <i class="fa fa-check m-1"></i>
+        Apply Filters
+      </button>
+    </div> -->
+    </form>
+  </div>
+</ng-template>

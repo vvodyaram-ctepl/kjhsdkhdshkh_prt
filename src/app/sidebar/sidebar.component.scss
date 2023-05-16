@@ -1,0 +1,108 @@
+@media (min-width: 768px) {
+    .navbar-brand {
+        padding: 20px !important;
+        display: inline-block;
+         
+        .nav-link.sidebartoggler{
+                top: 0;
+                position: absolute;
+                margin-top: -42px;
+                z-index: 999999;
+                color:#37B57C;
+                left: 0;
+                padding-left: 10px;
+            }
+        
+    }
+
+    .miniText {
+        line-height: 1.2;
+        position: relative;
+        text-align: center;
+        padding-top: 30px;
+        small {
+            font-size: 13px;
+            white-space: normal;
+            color: black;
+        }
+        .icon-right-arrow:before{
+            color: #000;
+            font-size: 8px;
+            font-weight: 600;
+            position: absolute;
+            margin-top: -20px;
+            margin-left: -15px;
+            left: 100%;
+        }
+    }
+    
+}
+.submenu-item {
+    li {
+    a {
+        padding: 0;
+        position: relative;
+        font-size: 0.9rem;
+        .hide-menu{
+            padding-left:35px !important;
+        }
+        div{
+            background:transparent linear-gradient(162deg, #A1EFFD 0%, #CFFCEE 100%) 0% 0% no-repeat padding-box;
+            border-radius:4px;
+            margin-bottom:1px;
+                .menu-icon {
+                    color:#4B4B5A;
+                    background: none;
+                }
+            &:hover{
+                .menu-icon{
+                    color:#FFFFFF;
+                }
+                background: transparent linear-gradient(164deg, #0FD6A8 0%, #2EC5E0 100%) 0% 0% no-repeat padding-box;
+            }
+        }
+    }
+    }
+}
+.submenu-item{
+ .sidebar-item > .sidebar-link.active{
+        div{
+            .menu-icon{
+                color:#000000;
+            }
+            background: transparent linear-gradient(162deg, #FF9A9E 0%, #FAD0C4 100%) 0% 0% no-repeat padding-box;
+            &:hover{
+                .menu-icon{
+                    color:#000000;
+                }
+                background: transparent linear-gradient(162deg, #FF9A9E 0%, #FAD0C4 100%) 0% 0% no-repeat padding-box;
+            }
+        }
+        .hide-menu{
+            color:#000000;
+            font: normal normal 600 15px/16px Titillium Web;
+        }
+    
+}
+}
+.v-middle {
+    vertical-align: middle;
+}
+
+.sidebar-link.active{
+    .miniText {
+        .menu-icon{
+            color:#FFF !important;
+        }
+        small{
+            color:#FFF !important;
+        }
+    }
+}
+
+@media(min-width: 768px){
+    .sidebar-link{
+        padding-left:0px !important;
+    }
+}
+        

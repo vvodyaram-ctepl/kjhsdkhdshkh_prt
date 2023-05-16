@@ -1,0 +1,124 @@
+<form [formGroup]="addClinicForm">
+    <div class="content-box">
+        <!-- <div class="content-hdr">
+    </div> -->
+   
+        <div class="content-block">
+            <div formArrayName="arr" *ngFor="
+            let a of addClinicForm.get('arr')['controls'];
+            let i = index;
+            let last = last
+          ">
+            <div class="row mb-3" [formGroupName]="i">
+                <div class="col-3">
+                    <!-- {{ addClinicForm.value.arr[i].notificationName | json}} -->
+                    <!-- [disabled]="addQuestionnaireForm.value.arr[i].disabled" -->
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Push Notification Name</label></legend>
+                        <!-- <input formControlName="notificationName" type="text" class="form-control textbox w-100"
+                            maxLength="100" /> -->
+
+                            <!-- (selectedItem)='populate($event,i)'
+                            (click)="getUniqQuesList(i)" (onClear)="getUniqQuesList(i);onClear(i)"
+
+                            [data]="addClinicForm.value.arr[i].pushList" -->
+
+                           
+                            <lib-typeahead [data]="addClinicForm.value.arr[i].pushList" matcher="notificationName"
+                            formControlName="notificationName" (selectedItem)='populate($event,i)' (click)="getUniqPushList(i)" (onClear)="getUniqPushList(i);onClear(i)"
+                             class="w-100 mb-0" placeholder="" class="w-100">
+                        </lib-typeahead>
+
+                    </fieldset>
+                    <!-- addClinicForm.get('arr').controls[i].controls.notificationName -->
+                    <validation-message [control]="addClinicForm.get('arr').controls[i].controls.notificationName"></validation-message>
+                </div>
+                <div class="col-2">
+                    <!--  -->
+                    <fieldset class="w-fieldset" >
+                        <legend><label class="label">Frequency <span *ngIf="addClinicForm.value.arr[i].notificationName.notificationName"
+                            class="asterisk">*</span></label>
+                        </legend>
+                        <div class="dropdown-container">
+                            <!-- style="width:24%;float:left" -->
+                            <select class="select-cstom-control form-control"
+                                formControlName="frequency" (change)="fSelected(i)">
+                                <option value="">Select</option>
+                                <option value="Only Once">Only Once</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                            </select>
+                            <!-- style="width:76%" -->
+                            <!-- <input type="text" formControlName="pinv" class="form-control textbox" maxLength="100" /> -->
+                        </div>
+                    </fieldset>
+                    <validation-message [control]="addClinicForm.get('arr').controls[i].controls.frequency"></validation-message>
+
+                </div>
+                <div class="col-2">
+                    <fieldset class="w-fieldset" >
+                        <legend><label class="label">Start Date <span *ngIf="addClinicForm.value.arr[i].notificationName.notificationName"
+                                    class="asterisk">*</span></label></legend>
+                        <datepicker class="w-100" formControlName="startDate" (select)="startdateSelect()"  [minDate]="studyStartDate" [maxDate]="studyEndDate"
+                            format="MM-DD-YYYY" [disabled]="displayURLField"></datepicker>
+                    </fieldset>
+                    <validation-message [control]="addClinicForm.get('arr').controls[i].controls.startDate"></validation-message>
+                </div>
+                <div class="col-2">
+                    <fieldset class="w-fieldset" >
+                        <legend>
+                            <label class="label">End Date <span *ngIf="addClinicForm.value.arr[i].notificationName.notificationName"
+                                class="asterisk">*</span></label>
+                        </legend>
+                        <datepicker class="w-100" formControlName="endDate" [minDate]="addClinicForm.value.arr[i].startDate" [maxDate]="addClinicForm.value.arr[i].frequency == 'Only Once' ? addClinicForm.value.arr[i].startDate : studyEndDate"
+                            format="MM-DD-YYYY" [disabled]="displayURLField"></datepicker>
+                    </fieldset>
+                    <validation-message [control]="addClinicForm.get('arr').controls[i].controls.endDate"></validation-message>
+                </div>
+                <div class="col-2">
+                    <!-- {{studyStartDate | json}} -->
+                    <fieldset class="w-fieldset" >
+                        <!-- {{this.addClinicForm.value | json}} -->
+                        <legend><label class="label">Time <span *ngIf="addClinicForm.value.arr[i].notificationName.notificationName"
+                            class="asterisk">*</span></label></legend>
+                            <!-- [meridian]="meridian" -->
+                            <ngb-timepicker formControlName="time"></ngb-timepicker>
+        <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
+            Meridian - {{meridian ? "ON" : "OFF"}}
+        </button> -->
+        </fieldset>
+        <validation-message [control]="addClinicForm.get('arr').controls[i].controls.time"></validation-message>
+                </div>
+
+                <div class="col-1 center-align">
+                    <div class="card icon-card-list red-bg mr-2 mt-3 pointer-cursor" title="Remove" *ngIf="addClinicForm.value.arr.length > 1" (click)="removeItem(i)"
+                    >
+                        <span class=" pointer-cursor size-17" title="Remove">-</span>
+                    </div>
+
+                    <div class="card icon-card-list blue-bg mt-3" title="Add" *ngIf="last">
+                        <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                            (click)="addItem()"></span>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button" (click)="back()">
+                            Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button"
+                            (click)="next()">
+                            <span>Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

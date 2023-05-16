@@ -1,0 +1,31 @@
+app-view-notes {
+    .charCount {
+        font-size: 14px;
+    line-height: 2;
+    color: #4b4b5a;
+    word-break: break-word;
+    }
+.notes p {
+    margin-bottom: 0px;
+}
+textarea.form-control {
+    height: 125px;
+}
+// .cke_top.cke_reset_all {
+//     height: 20px !important;
+// }
+.custom-table.viewtable tbody tr td{
+    min-width:150px;
+}
+// .cke_1 .cke_path_item {
+//     // color: rgb(93, 100, 102);
+//     display: none;
+// }
+// .cke_26.cke_bottom {
+//     display: none;
+// }
+// .cke_26 .cke_bottom {
+//     display: none;
+// }
+// #cke_bottom_detail,.cke_bottom{display:none}
+}

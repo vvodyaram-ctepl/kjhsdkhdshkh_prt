@@ -1,0 +1,254 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col block-left-center">
+                <div *ngIf="editProd">Edit Image Score</div>
+                <div *ngIf="!editProd">Add New Image Score</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-blk">
+        <div class="content-block">
+            <!-- {{imgForm.value | json}} -->
+
+            <form [formGroup]="imgForm" novalidate>
+                <div class="row">
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset" [disabled]="publishFlag">
+                            <legend> <label class="label">Image Scale Name <span class="asterisk">*</span></label>
+                            </legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="imgScaleName">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="imgForm.controls.imgScaleName">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset" [disabled]="publishFlag">
+                            <legend> <label class="label">Classification <span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control w-100" formControlName="classification"
+                                (change)="classChange($event)">
+                                <!-- <option value="">Select</option> -->
+                                <option value="1">Scale</option>
+                                <option value="2">Measurement</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="imgForm.controls.classification">
+                        </validation-message>
+                    </div>
+
+
+                    <!-- {{imageScoringTypeFilter | json}}
+                    {{imageScoringTypes | json}} -->
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset" [disabled]="publishFlag">
+                            <legend><label class="label w-100">Scoring Type <span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control w-100" formControlName="scoreType">
+                                <option value="">Select</option>
+                                <option *ngFor="let img of imageScoringTypeFilter" [value]="img.imageScoringTypeId">
+                                    {{img.imageScoringType}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="imgForm.controls.scoreType">
+                        </validation-message>
+                    </div>
+
+
+
+                    <!-- <div class="col-2 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">No. of Scales <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="noOfScales">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="imgForm.controls.noOfScales">
+                        </validation-message>
+                    </div> -->
+
+                    <!-- <div class="col-2 scoring-btn position-relative">
+                        <button class="btn btn-primary" style="position: absolute;
+                        top: 20%;" type="button" (click)="addScore()">Add Scoring Images</button>
+                    </div> -->
+
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset" [disabled]="publishFlag">
+                            <legend><label class="label w-100">Species <span class="asterisk">*</span></label></legend>
+                            <select class="form-control w-100" formControlName="species">
+                                <option value="null">Both</option>
+                                <option *ngFor='let list of speciesArr' [value]="list.speciesId">{{list.speciesName}}
+                                </option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="imgForm.controls.species">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+                            <select class="form-control w-100" formControlName="status">
+                                <option value="">Select</option>
+
+                                <option *ngFor="let status of StatusArr" [value]="status.id">{{status.name}}</option>
+
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="imgForm.controls.status">
+                        </validation-message>
+                    </div>
+                </div>
+
+                <div formArrayName="permissionMap"
+                    *ngFor="let role of imgForm.get('permissionMap')['controls']; let i = index;let last=last">
+                    <div class="row mb-3" [formGroupName]="i">
+
+                        <!-- {{role.value.petImageFileName | json}}
+                    {{role.value.petImage | json}}
+                    {{role.value | json}} -->
+                        <!-- {{role.value | json}} -->
+                        <!-- <div class="col-1" *ngIf="editProd && role.value.petImageFileName">
+                        <img class="img-icon" src="{{role.value.petImageFileName}}" 
+                        alt="imageScore" width="65" height="65" />
+                    </div> -->
+
+                        <div class="col-3">
+                            <fieldset class="w-fieldset" [disabled]="publishFlag">
+                                <legend><label class="label">
+                                        <span *ngIf="imgForm.value.classification == 2">Image (Optional)</span>
+                                        <span *ngIf="imgForm.value.classification == 1">Image <span
+                                                class="asterisk">*</span></span>
+                                    </label></legend>
+                                <input type="file" class="form-control" id="petPhoto" title="" maxlength="150"
+                                    (change)="selectFileResult($event,i)">
+                            </fieldset>
+                            <!-- <span>
+                            {{petInfoForm.value.petImageFileName}}
+                        </span> -->
+                            <!-- {{petInfoForm.value.petImageFileName}} -->
+                            <a href="javascript:void(0)" class="filedec"
+                                title="{{role.value.petImageFileName}}">{{role.value.petImageFileName}}</a>
+
+                            <validation-message [control]="imgForm.get('permissionMap').controls[i].controls.petImage">
+                            </validation-message>
+                        </div>
+
+                        <div class="col-2">
+                            <fieldset class="w-fieldset" [disabled]="publishFlag">
+                                <legend><label class="label">Label <span class="asterisk">*</span></label></legend>
+                                <input formControlName="labelName" type="text" class="form-control textbox w-100"
+                                    maxlength="" />
+                            </fieldset>
+                            <validation-message [control]="imgForm.get('permissionMap').controls[i].controls.labelName">
+                            </validation-message>
+                        </div>
+
+
+                        <div class="col-2" *ngIf="imgForm.value.classification == 2">
+                            <fieldset class="w-fieldset" [disabled]="publishFlag">
+                                <legend><label class="label w-100">UOM <span class="asterisk">*</span></label></legend>
+                                <select class="form-control w-100" formControlName="unitsOfMeas">
+                                    <option value="">Select</option>
+                                    <option value="1">CM</option>
+                                    <option value="2">METER</option>
+                                    <option value="3">KGS</option>
+                                    <option value="4">LBS</option>
+                                </select>
+                            </fieldset>
+                            <validation-message [messageToAppend]=""
+                                [control]="imgForm.get('permissionMap').controls[i].controls.unitsOfMeas">
+                            </validation-message>
+                        </div>
+
+
+                        <div class="col-2" *ngIf="imgForm.value.classification == 1">
+                            <fieldset class="w-fieldset" [disabled]="publishFlag">
+                                <!-- disabled="true"  -->
+                                <legend><label class="label">Score <span class="asterisk">*</span></label></legend>
+                                <input formControlName="scoreName" type="text" class="form-control textbox w-100"
+                                    maxlength="" />
+                            </fieldset>
+                            <validation-message [control]="imgForm.get('permissionMap').controls[i].controls.scoreName">
+                            </validation-message>
+                        </div>
+
+                        <div class="col-4">
+                            <fieldset class="w-fieldset">
+                                <legend><label class="label">Description <span class="asterisk">*</span></label>
+                                </legend>
+                                <!-- <input formControlName="imgDesc" type="text" class="form-control textbox w-100" maxLength="500" /> -->
+                                <textarea formControlName="imgDesc" rows="1" class="form-control textbox w-100"
+                                    maxLength="500"></textarea>
+                            </fieldset>
+                            <!-- <app-textarea formControlName="imgDesc" [maxLengthT]="500"></app-textarea> -->
+
+                            <validation-message [control]="imgForm.get('permissionMap').controls[i].controls.imgDesc">
+                            </validation-message>
+                        </div>
+
+
+                        <div class="col-1 my-auto" *ngIf="!publishFlag">
+                            <div class="card icon-card-list red-bg mr-2" title="Remove"
+                                *ngIf="imgForm.value.permissionMap.length > 1">
+                                <span class="pointer-cursor size-17" title="Remove" (click)="removeItem(i)">-</span>
+                            </div>
+                            <div class="card icon-card-list blue-bg" title="Add" *ngIf="last">
+                                <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                                    (click)="addScore()"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <!-- [disabled]="disableSubmit" -->
+                            <button class="btn btn-secondary" type="button"
+                                (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="submit()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Remove</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Are you sure you want to remove this record?
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="UpdateStudyRecord()">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>

@@ -1,0 +1,142 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col block-left-center">
+                <div *ngIf="editProd">Edit Push Notification</div>
+                <div *ngIf="!editProd">Add New Push Notification</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-blk">
+        <div class="content-block">
+            <form [formGroup]="pushForm" novalidate>
+                <div class="row ">
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Push Notification Name <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="notificationName">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="pushForm.controls.notificationName">
+                        </validation-message>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <!-- <fieldset class="w-fieldset">
+                            <legend> <label class="label">Description</label></legend>
+                            <textarea class="form-control textbox w-100" maxLength="500"
+                                formControlName="notificationMessage"></textarea>
+                        </fieldset> -->
+                        <app-textarea formControlName="notificationMessage" [maxLengthT]="500"></app-textarea>
+                        
+                    </div>
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Start Date <span class="asterisk">*</span></label></legend>
+                            <!-- <textarea class="form-control textbox w-100" maxLength="500"
+                                formControlName="startDate"></textarea> -->
+                                <!-- [minDate]="startDate" -->
+                                <datepicker class="w-100" formControlName="startDate" format="MM-DD-YYYY">
+                                </datepicker>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="pushForm.controls.startDate">
+                        </validation-message>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">End Date <span class="asterisk">*</span></label></legend>
+                                <datepicker class="w-100" formControlName="endDate" [minDate]="pushForm.value.startDate" format="MM-DD-YYYY">
+                                </datepicker>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="pushForm.controls.endDate">
+                        </validation-message>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+                            <select class="form-control w-100" formControlName="status">
+                                <option value="">Select</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="pushForm.controls.status">
+                        </validation-message>
+                    </div>
+                </div>
+                <div class="row" *ngIf="editProd">
+                    <div class="col">
+                        <div class="study-table" *ngIf="studyNames && studyNames.length">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Study Name</th>
+                                        <th>Associated Date</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let study of studyNames; let i = index" [attr.data-index]="i">
+                                        <td>{{study.studyName}}</td>
+                                        <td>{{study.associatedDate}}</td>
+                                        <td>
+                                            <div class="card icon-card-list red-bg mb-2 pointer" title="Remove"
+                                                (click)="deleteRecord(study.id,id)">
+                                                <span class="size-14" title="Remove">-</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="table-body" *ngIf="studyNames?.length == 0">
+                                    <tr>
+                                        <td>No Records Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" type="button"
+                                (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="updatePlans()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Remove</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Are you sure you want to remove this record?
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="UpdateStudyRecord()">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>

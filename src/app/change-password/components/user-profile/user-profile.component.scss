@@ -1,0 +1,27 @@
+app-user-profile{
+.labelfield{
+    .w-fieldset{
+      // border: 0;
+      // padding: 0 0;
+      legend{
+        font-size: 14px;
+      }
+      .form-control:disabled, 
+      .form-control[readonly]{
+        background-color: #FFF!important;
+        background: none !important;
+        padding: 0 10px;
+        font-weight: bold;
+      }
+    }
+  }
+  .btn-pink{
+    border-radius: 6px !important;
+  }
+  .labelfield {
+    font-weight: bold;
+  }
+  fieldset.w-fieldset .form-control {
+    border:1px !important
+  }
+}

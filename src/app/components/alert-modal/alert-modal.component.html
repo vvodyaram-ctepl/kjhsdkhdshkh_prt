@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Alert</h5>
+    <button type="button" class="close" aria-label="Close">
+        <div class="close-wrapper">
+            <span aria-hidden="true" (click)="no()" class="icon-close"></span>
+        </div>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row mb-4">
+        <div class="col-12">
+            {{ message }} <b *ngIf="options?.activityName" [ngStyle]="{ 'color': options?.activityColor }">{{options.activityName}}</b> <span *ngIf="options?.extraMessage">{{options.extraMessage}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4 text-center">
+            <button type="button" class="btn btn-primary btn-custom mr-3" (click)="yes()">Yes
+            </button>
+            <button type="button" class="btn btn-secondary btn-custom" (click)="no()">No
+            </button>
+        </div>
+    </div>
+
+</div>

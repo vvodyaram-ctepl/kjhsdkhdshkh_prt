@@ -1,0 +1,131 @@
+<form [formGroup]="addClinicForm">
+    <div class="content-box">
+        <!-- <div class="content-hdr">
+    </div> -->
+        <div class="content-block">
+            <div class="row mb-3">
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Study <span class="asterisk">*</span></label></legend>
+                        <input formControlName="clinicName" type="text" class="form-control textbox w-100"
+                            maxLength="100" />
+                    </fieldset>
+                    <validation-message [control]="addClinicForm.controls.clinicName"></validation-message>
+                </div>
+                <div class="col-6">
+                    <fieldset class="w-fieldset">
+                        <legend><label class="label">Principal Investigator</label>
+                        </legend>
+                        <div class="dropdown-container">
+                            <!-- <select style="width:24%;float:left" class="select-cstom-control form-control"
+                                formControlName="phoneNumberCode">
+                                <option value="">US(+1)</option>
+                                <option value="1">UK(+44)</option>
+                            </select> -->
+                            <!-- style="width:76%" -->
+                            <input type="text" formControlName="pinv" class="form-control textbox" maxLength="100" />
+                        </div>
+                    </fieldset>
+
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <!-- <fieldset class="w-fieldset">
+                        <legend><label class="label">Description</label></legend>
+                        <textarea class="form-control textbox w-100" formControlName="description"
+                            maxLength="1000"></textarea>
+                    </fieldset> -->
+                    <app-textarea formControlName="description" [maxLengthT]="1000"></app-textarea>
+                    <validation-message [control]="addClinicForm.controls.description"></validation-message>
+                </div>
+                <div class="col-1">
+                    <fieldset [disabled]="editFlag && addClinicForm.value.disable">
+                        <label class="label w-100">Notification</label>
+                        <input type="checkbox" class="checkbox-width-20" formControlName="isNotificationEnable" />
+                    </fieldset>
+                </div>
+                <div class="col-1">
+                    <fieldset [disabled]="editFlag && addClinicForm.value.externalDisable">
+                        <label class="label w-100">External</label>
+                        <input type="checkbox" class="checkbox-width-20" (change)="checkIsExternal()"
+                            formControlName="isExternalFlag" />
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <fieldset class="w-fieldset" [disabled]="editFlag && addClinicForm.value.externalDisable">
+                        <legend><label class="label">Prelude API URL
+                                <!-- <span class="asterisk" *ngIf="displayURLField">*</span> -->
+                            </label></legend>
+                        <input formControlName="externalLink" type="text" class="form-control textbox w-100" />
+                    </fieldset>
+                    <p class="mb-0" *ngIf="!editFlag">Note: Prelude URL is mandatory if the Study is Prelude Study</p>
+                    <validation-message [control]="addClinicForm.controls.externalLink"></validation-message>
+                </div>
+                <div class="col-3">
+                    <fieldset class="w-fieldset" [disabled]="editFlag && addClinicForm.value.disable">
+                        <legend><label class="label">Start Date <span *ngIf="!displayURLField"
+                                    class="asterisk">*</span></label></legend>
+                        <datepicker class="w-100" formControlName="start_date" (select)="startdateSelect()"
+                            format="MM-DD-YYYY" [disabled]="displayURLField"></datepicker>
+                    </fieldset>
+                    <validation-message [control]="addClinicForm.controls.start_date"></validation-message>
+                </div>
+                <div class="col-3">
+                    <fieldset class="w-fieldset" [disabled]="editFlag && addClinicForm.value.disable">
+                        <legend>
+                            <label class="label">End Date <span *ngIf="!displayURLField"
+                                    class="asterisk">*</span></label>
+                        </legend>
+                        <datepicker class="w-100" formControlName="end_date" [minDate]="addClinicForm.value.start_date"
+                            format="MM-DD-YYYY" [disabled]="displayURLField"></datepicker>
+                    </fieldset>
+                    <validation-message [control]="addClinicForm.controls.end_date"></validation-message>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- <div class="col-6">
+                            <fieldset class="w-fieldset">
+                       <legend> <label class="label">Partnership Id</label></legend>
+                        <input type="text" class="form-control textbox w-100"  formControlName="partnership_id">
+                            </fieldset>
+                    </div> -->
+                <!-- {{addClinicForm.value | json}} -->
+                <div class="col-6">
+                    <fieldset class="w-fieldset" [disabled]="editFlag && addClinicForm.value.disable">
+                        <legend><label class="label w-100">Status <span class="asterisk">*</span></label></legend>
+                        <select class="form-control w-100" formControlName="status" (change)="statusChange()">
+                            <option value="">Select</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </fieldset>
+                    <validation-message [control]="addClinicForm.controls.status"></validation-message>
+                </div>
+
+            </div>
+
+            <!-- <div class="row mb-3">
+                <div class="col-3">
+                    <button type="button">Send Email to Legal Team</button>
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                    <div class="float-right">
+                        <button class="btn btn-secondary" type="button"
+                            (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

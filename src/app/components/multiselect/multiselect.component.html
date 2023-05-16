@@ -1,0 +1,15 @@
+<!-- [ngClass]="{'disabled':disabled}" -->
+<angular2-multiselect *ngIf="data" [data]="data" [(ngModel)]="ngModel" name="fieldName" ngDefaultControl
+  [settings]="dropdownSettings" (onSelect)="itemSelect($event)" (onDeSelect)="itemDeSelect($event)" (onSelectAll)="selectAll($event)"
+  (onDeSelectAll)="deSelectAll($event)" (click)="onBlur()">
+  <c-item>
+    <ng-template let-item="item">
+      <label class="valueLabel">{{item[matcher]}}</label>
+    </ng-template>
+  </c-item>
+  <c-badge>
+    <ng-template let-item="item">
+      <label style="margin: 0px;">{{item[matcher]}}</label>
+    </ng-template>
+  </c-badge>
+</angular2-multiselect>

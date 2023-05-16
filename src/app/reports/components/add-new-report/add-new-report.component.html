@@ -1,0 +1,79 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col block-left-center">
+                <div *ngIf="editReport">Edit Report</div>
+                <div *ngIf="!editReport">Add New Report</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-blk">
+        <div class="content-block">
+            <form [formGroup]="reportsForm" novalidate>
+                <div class="row ">
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Report Group <span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control w-100" formControlName="reportGroupId">
+                                <option value="">Select</option>
+                                <option *ngFor='let list of reportGroups' [value]="list.reportGroupId">{{list.
+                                    reportName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="reportsForm.controls.reportGroupId">
+                        </validation-message>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Report Name <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="reportName">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="reportsForm.controls.reportName">
+                        </validation-message>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Report URL <span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="reportUrl">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="reportsForm.controls.reportUrl">
+                        </validation-message>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" type="button"
+                                (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary btn-pink" type="button" (click)="testURL()"
+                                *ngIf="reportsForm.value.reportUrl">Test URL</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="submitReport()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #testUrl let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            {{reportsForm.value.reportName}}
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click'); reportUrl = ''">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <ngx-spinner bdColor="rgba(0,0,0,.6)" class="mySpinner" *ngIf="loader">
+            <img src='assets/images/loader.gif' />
+        </ngx-spinner>
+        <iframe width="100%" height="400px" [src]="reportUrl" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+</ng-template>

@@ -1,0 +1,908 @@
+<span *ngIf="isReport">
+    <!-- <div class="row" style="text-align:right">
+        <div class="col-12 text-right">
+            <span class="relative inline-blk cursor" *ngIf="!hidePdf" (click)="generatePDF('download')">
+                <img src="./assets/images/pdf.svg" alt="PDF" width="15" />
+            </span>&nbsp;
+            <span class="relative inline-blk cursor" *ngIf="!hideExcel" (click)="exportAsXLSX()">
+                <img src="./assets/images/excel.svg" alt="Excel" width="15" />
+            </span>
+        </div>
+    </div> -->
+    <div class="row file-type-dl" style="text-align:right;margin-bottom: 12px;">
+        <div class="col-12 text-right">
+            <button class="relative btn btn-primary btn-pink" *ngIf="!hidePdf" (click)="generatePDF('download')">
+                <span>Export to PDF</span> <i class="icon-pdf-file"></i>
+            </button>&nbsp;
+            <button class="relative btn btn-primary " *ngIf="!hideExcel" (click)="exportAsXLSX()">
+                <span>Export to Excel</span> <i class="icon-excel"></i>
+            </button>
+        </div>
+    </div>
+</span>
+<div class="row" *ngIf="!searchFilter">
+    <div *ngIf="filterType != 'dateType' && filterType != 'questionnaireDate' && filterType != 'assignedTo' && filterType != 'Plan'"
+        [ngClass]="filterDropdown ? 'col search-wrapper-col' : 'col search-wrapper-col'">
+        <div class="search-wrapper">
+            <!-- autocomplete="off" -->
+            <input type="text" [placeholder]="placeholder ? placeholder : ''" [(ngModel)]="query" id="listSearch"
+                class="search-box" (keydown.enter)="changedInput($event)">
+            <div class="icon-circle" (click)="searchText(query)" style="cursor:pointer;">
+                <i class="icon-search"></i>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="filterType == 'dateType' || filterType == 'questionnaireDate' || filterType == 'assignedTo' || filterType == 'Plan'"
+        [ngClass]="filterDropdown ? 'col-3' : 'col-6'">
+        <div class="search-wrapper">
+            <!-- autocomplete="off" -->
+            <input type="text" [placeholder]="placeholder ? placeholder : ''" [(ngModel)]="query" id="listSearch"
+                class="search-box" (keydown.enter)="changedInput($event)">
+            <div class="icon-circle" (click)="searchText(query)" style="cursor:pointer;">
+                <i class="icon-search"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-2" [ngClass]="(filterType == 'preludeStudy')" *ngIf="pageName == 'preludeReport'">
+        <select class="filter-select" [(ngModel)]="preludeStudyId">
+            <!-- <option value="" disabled="true">Select Study</option> -->
+            <option *ngFor='let list of preludeStudyArr' [value]="list.studyId">{{list.studyName}}</option>
+        </select>
+    </div>
+    <div class="col-2" [ngClass]="(filterType == 'preludeCategory')" *ngIf="pageName == 'preludeReport'">
+        <select class="filter-select" [(ngModel)]="preludeCategory">
+            <option value="" disabled="true">Select Category</option>
+            <option *ngFor='let list of preludeCategoryArr' [value]="list.extractFileCategory" selected>
+                {{list.extractFileCategory}}</option>
+        </select>
+    </div>
+    <div class="col-2" *ngIf="pageName == 'petEatingPage'">
+        <select class="filter-select" [(ngModel)]="eatingFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Scale </option>
+            <option *ngFor='let list of eatingArr' [value]="list.enthusiasmScaleId">{{list.
+                enthusiasmScaleValue}}</option>
+        </select>
+    </div>
+
+    <div class="col-3" *ngIf="pageName == 'petImgScoring'">
+        <select class="filter-select" [(ngModel)]="scoreTypeFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Scoring Type </option>
+            <option *ngFor='let list of scoreArr' [value]="list.imageScoringTypeId">{{list.
+                imageScoringType}}</option>
+        </select>
+    </div>
+    <!-- <div class="col-2" *ngIf="pageName == 'petEatingPage'">
+        <select class="filter-select" [(ngModel)]="feedingFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Feeding </option>
+            <option *ngFor='let list of feedingArr' [value]="list.feedingTimeId">{{list.
+                feedingTime}}</option>
+        </select>
+    </div> -->
+    <div class="col-3 mb-15" [ngClass]="(filterType == 'Menu')" *ngIf="pageName == 'Favorite'">
+        <!-- <select class="filter-select" [(ngModel)]="moduleFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Module</option>
+            <option *ngFor='let list of moduleArr' [value]="list.menuId">{{list.menuName}}</option>
+        </select> -->
+        <multi-typeahead [data]="moduleArr" placeholder="Module" [(ngModel)]="moduleFilter" matcher="menuName"
+            display="menuName"></multi-typeahead>
+    </div>
+    <div class="col-2" [ngClass]="(filterType == 'materialType')" *ngIf="pageName == 'supportMaterials'">
+        <select class="filter-select" [(ngModel)]="materialType" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Material Type</option>
+            <option *ngFor='let list of materialTypeList' [value]="list.materialTypeId">{{list.materialTypeName}}
+            </option>
+        </select>
+    </div>
+
+    <!-- <div class="relative"
+        *ngIf="filterDropdown && filterType != 'dateType' && filterType != 'questionnaireDate' && filterType != 'assignedTo' && filterType != 'Plan' && ((pageName && pageName) != 'preludeReport')"
+        [ngClass]="FilterFlag ?'col-2' : 'col-4'">
+        <div class="filter-icon">
+            <select class="filter-select" (change)="changeField($event)" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="filterType">
+                <option value="">Filter By</option>
+                <option *ngFor='let list of filterTypeArr' [value]="list.id">{{list.name}}</option>
+            </select>
+        </div>
+    </div> -->
+    <!-- <div class="relative"
+        *ngIf="filterDropdown && (filterType == 'dateType' || filterType == 'questionnaireDate' || filterType == 'assignedTo' ||  filterType == 'Plan')"
+        [ngClass]="FilterFlag ?'col-3' : 'col-4'">
+        <div class="filter-icon">
+            <select class="filter-select" (change)="changeField($event)" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="filterType">
+                <option value="">Filter By</option>
+                <option *ngFor='let list of filterTypeArr' [value]="list.id">{{list.name}}</option>
+            </select>
+        </div>
+    </div> -->
+    <!--
+    <div [ngClass]="(filterType == 'assignedTo' ||  filterType == 'Plan') ? 'col-4' : 'col-2'"
+        *ngIf="FilterFlag && filterType != 'dateType' && filterType != 'questionnaireDate'">
+         <div class="filter-icon" *ngIf="filterdrop == true">
+            <select class="filter-select" [(ngModel)]="filterValue" [ngModelOptions]="{standalone: true}">
+                <option value="" disabled="true">Filter Value</option>
+                <ng-container *ngIf="filterType == 'Status'">
+                    <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'questionnaireStatus' || filterType == 'pointTrackingStatus'">
+                    <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'notificationStatus'">
+                    <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'petStatus'">
+                    <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'trackerStatus'">
+                    <option *ngFor='let list of filterValArr' [value]="list.id">{{list.name}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'assetStatus'">
+                    <option *ngFor='let list of filterValArr' [value]="list.deviceStatusId">{{list.statusName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'supportStatus'">
+                    <option *ngFor='let list of filterValArr' [value]="list.statusId">{{list.statusName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'Role'">
+                    <option *ngFor='let list of filterValArr' [value]="list.roleId">{{list.
+                        roleName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'RoleType'">
+                    <option *ngFor='let list of filterValArr' [value]="list.roleTypeId">{{list.
+                        roleType}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'trackerActivity'">
+                    <option *ngFor='let list of filterValArr' [value]="list.activityId">{{list.
+                        activityName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'phoneModel'">
+                    <option *ngFor='let list of filterValArr' [value]="list.phoneModel">{{list.
+                        phoneModel}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'ticketPriority'">
+                    <option *ngFor='let list of filterValArr' [value]="list.priorityId">{{list.
+                        priorityName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'location'">
+                    <option *ngFor='let list of filterValArr' [value]="list.storageLocationId">{{list.
+                        storageLocationName}}</option>
+                </ng-container>
+
+                <ng-container *ngIf="filterType == 'behavior'">
+                    <option *ngFor='let list of filterValArr' [value]="list.metricId">{{list.
+                        metricName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'feedbackPage'">
+                    <option *ngFor='let list of filterValArr' [value]="list.pageName">{{list.
+                        pageName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'category'">
+                    <option *ngFor='let list of filterValArr' [value]="list.categoryName">{{list.
+                        categoryName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'petName'">
+                    <option *ngFor='let list of filterValArr' [value]="list.petId">{{list.
+                        petName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'petParentName'">
+                    <option *ngFor='let list of filterValArr' [value]="list.petParentId">{{list.
+                        petParentName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'deviceType'">
+                    <option *ngFor='let list of filterValArr' [value]="list">{{list}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'Model'">
+                    <option *ngFor='let list of filterValArr' [value]="list">{{list}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'Menu'">
+                    <option *ngFor='let list of filterValArr' [value]="list.menuId">{{list.menuName
+                        }}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'Action'">
+                    <option *ngFor='let list of filterValArr' [value]="list">{{list}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'reportGroup'">
+                    <option *ngFor='let list of filterValArr' [value]="list.reportGroupId">{{list.reportName}}</option>
+                </ng-container>
+                <ng-container *ngIf="filterType == 'campaign'">
+                    <option *ngFor='let list of filterValArr' [value]="list.pointTrackerId">{{list.trackerName}}</option>
+                </ng-container>
+            </select>
+        </div> 
+
+        <input
+            *ngIf="filterdrop == false && (filterType != 'assignedTo' && filterType != 'Study' && filterType != 'Plan')"
+            type="text" class="search-box small-padding" [(ngModel)]="filterValue">
+
+        <lib-typeahead *ngIf="filterdrop == false && filterType == 'assignedTo'" [data]="filterValArr"
+            matcher="userName" [(ngModel)]="filterValue" class="w-100 mb-0" placeholder="Filter Value" class="w-100">
+        </lib-typeahead>
+
+        <lib-typeahead *ngIf="filterdrop == false && filterType == 'Study'" [data]="filterValArr" matcher="studyName"
+            [(ngModel)]="filterValue" class="w-100 mb-0" placeholder="Filter Value" class="w-100">
+        </lib-typeahead>
+
+        <lib-typeahead *ngIf="filterdrop == false && filterType == 'Plan'" [data]="filterValArr" matcher="planName"
+            [(ngModel)]="filterValue" class="w-100 mb-0" placeholder="Filter Value" class="w-100">
+        </lib-typeahead>
+    </div>
+-->
+
+    <div class="col-2" *ngIf="pageName == 'petEatingPage' || pageName == 'petImgScoring'">
+        <datepicker class="w-100" [(ngModel)]="startDate" placeholder="From Date" (select)="startdateSelect()"
+            format="MM-DD-YYYY"></datepicker>
+    </div>
+    <div class="col-2" *ngIf="pageName == 'petEatingPage' || pageName == 'petImgScoring'">
+        <datepicker class="w-100" [(ngModel)]="endDate" [minDate]="startDate" placeholder="To Date" format="MM-DD-YYYY">
+        </datepicker>
+    </div>
+    <!-- petImgScoring -->
+
+    <div *ngIf="!searchFilter" [ngClass]="{'col-2': pageName != 'petEatingPage' || pageName != 'petImgScoring',
+    'col-3': pageName == 'petEatingPage' || pageName == 'petImgScoring'}">
+        <div class="button-wrapper">
+            <button class="btn btn-primary mr-2" type="button" (click)="searchText(query)">
+                search
+            </button>
+            <button class="btn btn-primary btn-pink" type="button" (click)="reset()">
+                reset
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2"
+        *ngIf="pageName == 'plans' || pageName == 'study' || pageName == 'petParent' || pageName == 'rolePage'  || pageName == 'userPage' || pageName == 'pushPage' || reportInfo == 'studyBasedReport' || pageName =='manageReport'">
+        <select class="filter-select" [(ngModel)]="statusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Status</option>
+            <option *ngFor='let list of statusArr' [value]="list.id">{{list.name}}</option>
+        </select>
+        <!-- <multiset alignment="vertical" type="checkbox" [data]="statusArr" [(ngModel)]="statusFilter" ngDefaultControl matcher="name"
+        propertyId="id"></multiset> -->
+        <!-- {{statusFilter | json}} -->
+        <!-- <data-multiselect alignment="vertical" type="checkbox" [data]="statusArr" [(ngModel)]="statusFilter" ngDefaultControl matcher="name"
+        propertyId="id"></data-multiselect>  -->
+
+
+    </div>
+
+    <div class="col-2" *ngIf="pageName == 'ImgScoring'">
+        <select class="filter-select" [(ngModel)]="classificationFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Classification </option>
+            <option value="1">Scale</option>
+            <option value="2">Measurement</option>
+        </select>
+    </div>
+
+    <div class="col-3" *ngIf="pageName == 'ImgScoring'">
+        <!-- <select class="filter-select" [(ngModel)]="scoreTypeFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Scoring Type </option>
+            <option *ngFor='let list of scoreArr' [value]="list.imageScoringTypeId">{{list.
+                imageScoringType}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="scoreArr" [(ngModel)]="scoreTypeFilter"
+            ngDefaultControl matcher="imageScoringType" primaryKey="imageScoringTypeId"
+            dropdownSettingsText="Scoring Type"></data-multiselect>
+    </div>
+
+    <div class="col-3" *ngIf="pageName == 'shipmentPage'">
+        <!-- <select class="filter-select" [(ngModel)]="shipmentCompanyFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Shipment Company </option>
+
+                <option *ngFor="let ship of shipmentCompaniesArr" [ngValue]="ship.shipmentCompanyId">
+                    {{ship.shipmentCompanyName}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="shipmentCompaniesArr"
+            [(ngModel)]="shipmentCompanyFilter" ngDefaultControl matcher="shipmentCompanyName"
+            primaryKey="shipmentCompanyId" dropdownSettingsText="Shipment Company"></data-multiselect>
+    </div>
+
+
+
+    <div class="col-2" *ngIf="pageName == 'pointTracking'">
+        <!-- <select class="filter-select" [(ngModel)]="trackingStatusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Status</option>
+            <option *ngFor='let list of pointTrackingArr' [value]="list.id">{{list.name}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="pointTrackingArr"
+            [(ngModel)]="trackingStatusFilter" ngDefaultControl matcher="name" primaryKey="id"
+            dropdownSettingsText="Status"></data-multiselect>
+    </div>
+
+    <div class="col-2" *ngIf="pageName == 'studyNotification'">
+        <select class="filter-select" [(ngModel)]="notificationStatusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Status</option>
+            <option *ngFor='let list of notificationStatusArr' [value]="list.id">{{list.name}}</option>
+        </select>
+    </div>
+
+    <div class="col-3"
+        *ngIf="pageName == 'manageFirmware' || pageName == 'updateFirmware' || pageName == 'manageAsset' || reportInfo == 'assetDetailsReport' || reportInfo == 'assetTrackingReport' || reportInfo == 'assetHistoryReport' || reportInfo == 'assetInventoryReport' ||  reportInfo == 'assetMalfunctionReport' || reportInfo == 'studyBasedReport'">
+        <!-- <select class="filter-select" [(ngModel)]="deviceTypeFilter" [ngModelOptions]="{standalone: true}">
+                <option disabled="true" value="" selected>Asset Type</option>
+                <option *ngFor='let list of deviceTypeArr' [value]="list">{{list}}</option>
+            </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="deviceTypeArr" [(ngModel)]="deviceTypeFilter"
+            ngDefaultControl matcher="typeId" primaryKey="typeId" labelName="Asset Type"
+            (onSelect)="onAssetTypeSelected($event)" (onDeSelect)="onAssetTypeSelected($event)"
+            (onDeSelectAll)="onAssetTypeSelected($event)" dropdownSettingsText="Asset Type"></data-multiselect>
+
+    </div>
+    <div class="col-3"
+        *ngIf="pageName == 'manageFirmware' || pageName == 'updateFirmware' || reportInfo == 'assetDetailsReport' || reportInfo == 'assetTrackingReport' || reportInfo == 'assetHistoryReport' || reportInfo == 'assetInventoryReport' || reportInfo == 'studyBasedReport'">
+        <!-- <select class="filter-select" [(ngModel)]="modelFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Asset Model</option>
+            <option *ngFor='let list of deviceModelArr' [value]="list">{{list}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="deviceModelArr" [(ngModel)]="modelFilter"
+            ngDefaultControl matcher="modelId" primaryKey="modelId" labelName="Asset Model"
+            dropdownSettingsText="Asset Model"></data-multiselect>
+    </div>
+    <div class="col-3" *ngIf="pageName == 'updateFirmware'">
+        <!-- <select class="filter-select" [(ngModel)]="locationFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Location</option>
+            <option *ngFor='let list of sensorLocationsArr' [value]="list.storageLocationId">{{list.
+                storageLocationName}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="sensorLocationsArr" [(ngModel)]="locationFilter"
+            ngDefaultControl matcher="storageLocationName" primaryKey="storageLocationId" labelName="Location"
+            dropdownSettingsText="Location">
+        </data-multiselect>
+
+    </div>
+    <div class="col-2"
+        *ngIf="pageName == 'manageAsset' || reportInfo == 'assetDetailsReport' || reportInfo == 'assetTrackingReport' || reportInfo == 'studyBasedReport'">
+        <!-- <select class="filter-select" [(ngModel)]="assetStatusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Asset Status</option>
+            <option *ngFor='let list of assetStatusArr' [value]="list.deviceStatusId">{{list.statusName}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="assetStatusArr" [(ngModel)]="assetStatusFilter"
+            ngDefaultControl matcher="statusName" primaryKey="deviceStatusId" labelName="Asset Status"
+            dropdownSettingsText="Status">
+        </data-multiselect>
+    </div>
+    <div class="col-2" *ngIf="pageName == 'petPage'">
+        <!-- <select class="filter-select" [(ngModel)]="petStatusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Status</option>
+            <option *ngFor='let list of petStatusArr' [value]="list.id">{{list.name}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="petStatusArr" [(ngModel)]="petStatusFilter"
+            ngDefaultControl matcher="name" primaryKey="id" dropdownSettingsText="Status"></data-multiselect>
+    </div>
+
+    <div class="col-3 mb-15" *ngIf="pageName == 'mobileAppFeedback'">
+        <!-- <select class="filter-select" [(ngModel)]="phoneModelFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Phone Model</option>
+            <option *ngFor='let list of phoneModelArr' [value]="list.phoneModel">{{list.phoneModel}}</option>
+        </select> -->
+        <multi-typeahead [data]="phoneModelArr" placeholder="Phone Model" [(ngModel)]="phoneModelFilter"
+            matcher="phoneModel" display="phoneModel"></multi-typeahead>
+    </div>
+    <div class="col-3 mb-15" *ngIf="pageName == 'mobileAppFeedback'">
+        <!-- <select class="filter-select" [(ngModel)]="pageNameFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Page Name</option>
+            <option *ngFor='let list of feedbackPageArr' [value]="list.pageName">{{list.pageName}}</option>
+        </select> -->
+        <multi-typeahead [data]="feedbackPageArr" placeholder="Page Name" [(ngModel)]="pageNameFilter"
+            matcher="pageName" display="pageName"></multi-typeahead>
+    </div>
+    <div class="col-2" *ngIf="pageName == 'timerPage'">
+        <!-- <select class="filter-select" [(ngModel)]="categoryFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Category</option>
+            <option *ngFor='let list of categoryArr' [value]="list.categoryName">{{list.
+                categoryName}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="categoryArr" [(ngModel)]="categoryFilter"
+            ngDefaultControl matcher="categoryName" primaryKey="categoryName" dropdownSettingsText="Category">
+        </data-multiselect>
+    </div>
+    <div class="col-2" *ngIf="pageName == 'rolePage'">
+        <!-- <select class="filter-select" [(ngModel)]="roleFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Role Type</option>
+            <option *ngFor='let list of RoleTypeArr' [value]="list.roleTypeId">{{list.
+                roleType}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="RoleTypeArr" [(ngModel)]="roleFilter"
+            ngDefaultControl matcher="roleType" primaryKey="roleTypeId" dropdownSettingsText="Role Type">
+        </data-multiselect>
+    </div>
+    <div class="col-3 mb-15" *ngIf="pageName == 'userPage'">
+        <!-- <select class="filter-select" [(ngModel)]="userFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Role </option>
+            <option *ngFor='let list of RoleArr' [value]="list.roleId">{{list.
+                roleName}}</option>
+        </select> -->
+        <multi-typeahead [data]="RoleArr" placeholder="Role" [(ngModel)]="userFilter" matcher="roleName"
+            display="roleName"></multi-typeahead>
+    </div>
+
+    <div class="col-2" *ngIf="pageName == 'customerSupport' || reportInfo == 'customerSupportReport'">
+        <!-- <select class="filter-select" [(ngModel)]="ticketPriorityFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Priority</option>
+            <option *ngFor='let list of ticketPrioritiesArr' [value]="list.priorityId">{{list.
+                priorityName}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="ticketPrioritiesArr"
+            [(ngModel)]="ticketPriorityFilter" ngDefaultControl matcher="priorityName" primaryKey="priorityId"
+            dropdownSettingsText="Priority">
+        </data-multiselect>
+
+    </div>
+    <div class="col-2" *ngIf="pageName == 'customerSupport' || reportInfo == 'customerSupportReport'">
+        <!-- <select class="filter-select" [(ngModel)]="customerStatusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Status</option>
+            <option *ngFor='let list of supportStatusArr' [value]="list.statusId">{{list.statusName}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="supportStatusArr"
+            [(ngModel)]="customerStatusFilter" ngDefaultControl matcher="statusName" primaryKey="statusId"
+            dropdownSettingsText="Status">
+        </data-multiselect>
+    </div>
+    <div class="col-2" *ngIf="pageName =='Audit'">
+        <!-- <select class="filter-select" [(ngModel)]="moduleFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Module</option>
+            <option *ngFor='let list of moduleArr' [value]="list.menuId">{{list.menuName}}</option>
+        </select> -->
+        <multi-typeahead [data]="moduleArr" placeholder="Module" [(ngModel)]="moduleFilter" matcher="menuName"
+            display="menuName"></multi-typeahead>
+
+    </div>
+    <div class="col-2" *ngIf="pageName =='Audit'">
+        <!-- <select class="filter-select" [(ngModel)]="actionFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Action</option>
+            <option *ngFor='let list of actionArr' [value]="list">{{list}}</option>
+        </select> -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="actionArr" [(ngModel)]="actionFilter"
+            ngDefaultControl matcher="id" primaryKey="id" dropdownSettingsText="Action"></data-multiselect>
+    </div>
+
+    <div class="col-3" *ngIf="pageName =='questionnaire' || pageName =='questionnaireResponse'">
+        <!-- {{questionnaireTypeFilter | json}} -->
+        <select class="filter-select" [(ngModel)]="questionnaireTypeFilter" [ngModelOptions]="{standalone: true}"
+            (change)="changeQuesType($event)">
+            <option value="" selected>Questionnaire Type</option>
+            <option *ngFor='let list of questionnaireTypesArr' [value]="list.questionnaireTypeId">
+                {{list.questionnaireType}}</option>
+        </select>
+        <!-- <data-multiselect alignment="vertical" type="checkbox" [data]="questionnaireTypesArr" [(ngModel)]="questionnaireTypeFilter" ngDefaultControl matcher="questionnaireType"
+        primaryKey="questionnaireTypeId"></data-multiselect>  -->
+    </div>
+    <div class="col-2" *ngIf="pageName =='questionnaire' || pageName =='ImgScoring'">
+        <!-- <select class="filter-select" [(ngModel)]="questionareStatusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Status</option>
+            <option *ngFor='let list of questionnaireArr' [value]="list.id">{{list.name}}</option>
+        </select> -->
+        <!-- [labelName]="Status" -->
+        <data-multiselect alignment="vertical" type="checkbox" [data]="questionnaireArr"
+            [(ngModel)]="questionareStatusFilter" ngDefaultControl matcher="name" primaryKey="id"
+            dropdownSettingsText="Status"></data-multiselect>
+    </div>
+    <!--trackerStatus-->
+    <div class="col-2" *ngIf="reportInfo == 'pointTrackerReport' || pageName == 'campaignActivities'">
+        <select class="filter-select" [(ngModel)]="trackerStatusFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Status</option>
+            <option *ngFor='let list of reportTrackerArr' [value]="list.id">{{list.name}}</option>
+        </select>
+    </div>
+    <div class="col-2" *ngIf="reportInfo == 'pointTrackerReport' || pageName == 'campaignActivities'">
+        <select class="filter-select" [(ngModel)]="behaviorFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Behavior</option>
+            <option *ngFor='let list of behaviorArr' [value]="list.metricId">{{list.
+                metricName}}</option>
+        </select>
+    </div>
+    <div class="col-2" *ngIf="pageName =='manageReport'">
+        <select class="filter-select" [(ngModel)]="reportGroupFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Report Group</option>
+            <option *ngFor='let list of reportGroupsArr' [value]="list.reportGroupId">{{list.reportName}}</option>
+        </select>
+    </div>
+    <div class="col-2" *ngIf="pageName == 'campaignActivities'">
+        <select class="filter-select" [(ngModel)]="activityGroupFilter" [ngModelOptions]="{standalone: true}">
+            <option disabled="true" value="" selected>Activity</option>
+            <option *ngFor='let list of trackerActivityArr' [value]="list.activityId">{{list.
+                activityName}}</option>
+        </select>
+    </div>
+    <!--fid = Study-->
+    <div class="col-3 mb-15"
+        *ngIf="pageName == 'plans' || pageName == 'manageAsset' || pageName == 'petPage'|| pageName =='pointTracking' || pageName == 'questionnaireResponse' || reportInfo == 'assetMalfunctionReport' || reportInfo == 'studyBasedReport' || reportInfo == 'pointTrackerReport' || reportInfo == 'customerSupportReport'">
+        <!-- <lib-typeahead [data]="studyList" matcher="studyName"
+            [(ngModel)]="studyTypeFilter" class="w-100 mb-0" placeholder="Study" class="w-100">
+        </lib-typeahead> -->
+        <!-- questionnaireTypeFilter -->
+        <!--  -->
+        <!-- {{questionnaireTypeFilter | json}} -->
+        <multi-typeahead [disabled]="questionnaireTypeFilter == '2' && pageName == 'questionnaireResponse'"
+            [data]="studyList" placeholder="Study" [(ngModel)]="studyTypeFilter" matcher="studyName"
+            display="studyName"></multi-typeahead>
+    </div>
+    <!--fid = Plan-->
+    <div class="col-4" *ngIf="pageName == 'study'">
+        <!-- <lib-typeahead [data]="planArr" matcher="planName"
+        [(ngModel)]="planTypeFilter" class="w-100 mb-0" placeholder="Plan" class="w-100">
+        </lib-typeahead> -->
+        <multi-typeahead [data]="planArr" placeholder="Plan" [(ngModel)]="planTypeFilter" matcher="planName"
+            display="planName"></multi-typeahead>
+    </div>
+    <!--fid = assignedTo-->
+    <div class="col-2" *ngIf="pageName == 'customerSupport' || reportInfo == 'customerSupportReport'">
+        <!-- <lib-typeahead [data]="assignedToListArr"
+            matcher="userName" [(ngModel)]="assignToFilter" class="w-100 mb-0" placeholder="Assigned To" class="w-100">
+        </lib-typeahead> -->
+        <multi-typeahead [data]="assignedToListArr" placeholder="Assigned To" [(ngModel)]="assignToFilter"
+            matcher="userName" display="userName"></multi-typeahead>
+    </div>
+    <div class="col-2"
+        *ngIf="pageName == 'pushPage' || pageName == 'pointTracking' || pageName == 'mobileAppFeedback' || pageName == 'timerPage' || pageName =='customerSupport' || pageName =='Audit' || pageName =='questionnaire' || pageName == 'questionnaireResponse' || reportInfo == 'pointTrackerReport' || reportInfo == 'customerSupportReport' || pageName == 'campaignActivities'">
+        <datepicker class="w-100" [(ngModel)]="startDate" placeholder="From Date" (select)="startdateSelect()"
+            format="MM-DD-YYYY"></datepicker>
+    </div>
+    <div class="col-2"
+        *ngIf="pageName == 'pushPage' || pageName == 'pointTracking' || pageName == 'mobileAppFeedback' || pageName == 'timerPage' || pageName == 'customerSupport' || pageName =='Audit' || pageName =='questionnaire' || pageName == 'questionnaireResponse' || reportInfo == 'pointTrackerReport' || reportInfo == 'customerSupportReport' || pageName == 'campaignActivities'">
+        <datepicker class="w-100" [(ngModel)]="endDate" [minDate]="startDate" placeholder="To Date" format="MM-DD-YYYY">
+        </datepicker>
+    </div>
+</div>
+
+<span *ngIf="this.pagination.data && this.pagination.data.length">
+    <ng-container *ngIf="showTopPagination">
+        <div class="d-flex justify-content-start float-left pt-3">
+            <ngb-pagination class="pagination" size="sm" [collectionSize]="pagination.totalElements"
+                [(page)]="pagination.page" [maxSize]="10" [rotate]="true" [pageSize]="pagination.noOfElements"
+                [boundaryLinks]="true" (pageChange)="pageChanged()"></ngb-pagination>
+        </div>
+        <div class="d-flex justify-content-end float-right width-100  pt-3">
+            <span class="pt-1"> Records Per Page </span>
+            <select class="form-control justify-content-end size-13 page-size" [(ngModel)]="pagination.noOfElements"
+                (change)="changeMaxSize()" style="width: 60px !important;">
+                <option *ngFor="let option of [5,10,25,50,100]" [value]="option">{{option}}</option>
+            </select>
+
+        </div>
+        <div class="clearfix"></div>
+    </ng-container>
+    <div class="commentHistory header-count" *ngIf="!hidetitle">
+        <div class="container-fluid">
+            <div class="row mb-3" style="color: #16d2b4;">
+                <div class="col">
+                    <span class="line-height-30 pl-2 size-14">{{title ? title :'Search Results'}}</span>
+                </div>
+                <div class="col text-center" *ngIf="!hidetotalRecords">
+                    <span class="line-height-30 size-14">{{pagination.totalElements}} Item(s) found</span>
+                    <i></i>
+                </div>
+                <div class="col" *ngIf="headers">
+
+                    <div class="float-right pl-2">
+                        <sortable-list class="sortable-datatable-list" *ngIf="preferences"
+                            [limitSelection]="limitSelection" [data]="preferencesDropdown" matcher="label"
+                            (change)="sortChange($event)"></sortable-list>
+                    </div>
+                    <span *ngIf="export && !hideExport && !isReport" class="export">
+                        <div class="text-right relative top-3">
+                            <a class="relative inline-blk cursor" href="javascript:void(0)"
+                                (click)="barcodeAction.emit(true)" *ngIf="!hideExcel && showBarCodeIcon" target="_blank"
+                                [title]="export.barcodeTitle">
+                                <img src="./assets/images/barcode_icon.gif" alt="Scan" width="15" />
+                            </a>&nbsp;
+                            <a class="relative inline-blk cursor" href="{{url}}{{export.excelTemplate}}"
+                                *ngIf="!hideExcel && showExcelTemplate" target="_blank"
+                                [title]="export.excelTemplateTitle" rel="noopener noreferrer">
+                                <img src="./assets/images/excel.svg" alt="Excel" width="15" />
+                            </a>&nbsp;
+                            <a class="relative inline-blk cursor" href="{{url}}{{export.pdf}}" *ngIf="!hidePdf"
+                                target="_blank" title="PDF" rel="noopener noreferrer">
+                                <img src="./assets/images/pdf.svg" alt="PDF" width="15" />
+                            </a>&nbsp;
+                            <a class="relative inline-blk cursor" href="{{url}}{{export.excel}}" *ngIf="!hideExcel"
+                                target="_blank" title="Excel" rel="noopener noreferrer">
+                                <img src="./assets/images/excel.svg" alt="Excel" width="15" />
+                            </a>&nbsp;
+
+                        </div>
+                    </span>
+                    <span *ngIf="!export && !hideExport && !isReport" class="export">
+                        <div class="text-right relative top-3">
+                            <a class="relative inline-blk cursor" href="{{url}}ExportUtilAction.do?command=exportToPdf"
+                                target="_blank" *ngIf="!hidePdf" rel="noopener noreferrer">
+                                <img src="./assets/images/pdf.svg" alt="PDF" width="15" />
+                            </a>&nbsp;
+                            <a class="relative inline-blk cursor" href="{{url}}ExportUtilAction.do?command=exportToCsv"
+                                target="_blank" *ngIf="!hideExcel" rel="noopener noreferrer">
+                                <img src="./assets/images/excel.svg" alt="Excel" width="15" />
+                            </a>
+
+                        </div>
+                    </span>
+                    <span *ngIf="isReport" class="export pr-2">
+                        <div class="text-right relative top-3">
+                            <span class="relative inline-blk cursor" *ngIf="!hidePdf" (click)="generatePDF('download')">
+                                <img src="./assets/images/pdf.svg" alt="PDF" width="15" />
+                            </span>&nbsp;
+                            <span class="relative inline-blk cursor" *ngIf="!hideExcel" (click)="exportAsXLSX()">
+                                <img src="./assets/images/excel.svg" alt="Excel" width="15" />
+                            </span>
+
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive outer-table-padding">
+        <table class="table">
+            <thead class="light-blue-bg">
+                <tr>
+                    <th *ngIf="selectable && !selectable.index"
+                        style="min-width:20px;width:20px;vertical-align:middle;text-align:center;padding-right:5px !important;">
+
+                        <input type="checkbox" class="form-check-input select-checkbox" [(ngModel)]="selectAll"
+                            (change)="checkAll()" *ngIf="selectable.selectAll && selectable.type !='radio'">
+                    </th>
+
+                    <ng-container *ngFor="let header of headers;let i=index">
+
+                        <th *ngIf="selectable && selectable.index == (i+1)"
+                            style="min-width:20px;width:20px;vertical-align:middle;text-align:center;padding-right:5px !important;">
+                            <input type="checkbox" class="form-check-input select-checkbox" [(ngModel)]="selectAll"
+                                (change)="checkAll()" *ngIf="selectable.selectAll && selectable.type !='radio'">
+                        </th>
+                        <th *ngIf="multiSelectText && selectable.multiSelectIndex == (i+1)"
+                            [ngStyle]="{'width':multiSelectWidth+'px','min-width':multiSelectWidth+'px','max-width':multiSelectWidth+'px'}"
+                            style="vertical-align:middle;padding-right: 0px !important;">
+                            <span [innerHTML]="multiSelectText"></span>
+                        </th>
+                        <th scope="col position-relative" *ngIf="header.checked"
+                            (click)="header.sortable && sortColumnData(header)" [ngStyle]="{'width':header.width+'px'}"
+                            [style.width]="header.width ? header.width+'px' : 'auto'"
+                            [style.minWidth]="header.width ? header.width+'px' : 'auto'"
+                            [style.maxWidth]="header.width ? header.width+'px' : 'auto'">
+                            <span [innerHTML]="header.label"></span>
+                            <span class="icon-right" *ngIf="header.sortable && sortByColumn == header.key">
+                                <!-- {{header.dir}} -->
+                                <i class="icon ion-ios-arrow-down text-right" *ngIf="header.dir"></i>
+                                <i class="icon ion-ios-arrow-up text-right" *ngIf="!header.dir"></i>
+                            </span>
+                            <span class="icon-right up-down" *ngIf="header.sortable && sortByColumn != header.key">
+                                <i class="icon ion-ios-arrow-down text-right"></i>
+                                <i class="icon ion-ios-arrow-up text-right"></i>
+                            </span>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <!--[sortablejs]="pagination.data" [sortablejsOptions]="options"-->
+            <tbody #container [sortablejs]="pagination.data" [sortablejsOptions]="options" [hidden]="monitorLoader">
+                <tr *ngFor="let item of pagination.data;let i = index" [ngStyle]="item.style"
+                    (click)="setClickedRow(i);makeNormal($event,item)" [class.active]="i == selectedRowEle">
+                    <td style="min-width:20px;width:20px;vertical-align:middle;padding-right:5px !important;text-align:center;"
+                        *ngIf="selectable && !selectable.index">
+
+                        <input type="radio" [checked]="item.select" name="{{randomNumber}}checkone"
+                            class="form-check-input select-checkbox" (change)="checkOne(item)"
+                            [disabled]="item.disabled" *ngIf="!item.hideCheckbox && selectable.type =='radio'">
+
+                        <input type="checkbox" class="form-check-input select-checkbox" [(ngModel)]="item.select"
+                            (ngModelChange)="checkOne(item)" [disabled]="item.disabled"
+                            *ngIf="!item.hideCheckbox && selectable.type !='radio'">
+
+                    </td>
+
+
+
+                    <ng-container *ngFor="let header of headers;let j = index">
+
+                        <td style="min-width:20px;width:20px;text-align:center;vertical-align:middle;padding-right:5px !important;"
+                            *ngIf="selectable && selectable.index == (j+1)">
+                            <input type="radio" [checked]="item.select" name="{{randomNumber}}checkone"
+                                class="form-check-input select-checkbox" (change)="checkOne(item)"
+                                [disabled]="item.disabled" *ngIf="!item.hideCheckbox && selectable.type =='radio'">
+                            <input type="checkbox" class="form-check-input select-checkbox" [(ngModel)]="item.select"
+                                (ngModelChange)="checkOne(item)" [disabled]="item.disabled"
+                                *ngIf="!item.hideCheckbox && selectable.type !='radio'">
+                        </td>
+                        <td *ngIf="multiSelectText && selectable.multiSelectIndex == (j+1)"
+                            [ngStyle]="{'width':multiSelectWidth+'px','min-width':multiSelectWidth+'px','max-width':multiSelectWidth+'px'}"
+                            style="vertical-align:top;padding-right: 0px !important;">
+                            <!-- <multiselect class="full" [data]="selectList" [(ngModel)]="item.selectListData" (ngModelChange)="changeMulti(item)" matcher="labelName"
+                            primaryKey="labelValue"></multiselect> -->
+                            <!-- {{item.selectListData | json}} -->
+                            <!-- <multi-set alignment="vertical" type="checkbox" [data]="selectList" [(ngModel)]="item.selectListData" (selected)="selected($event)" (ngModelChange)="changeMulti($event)" matcher="labelName"
+                            propertyId="labelValue" [splitTubes]="true"></multi-set> -->
+                            <select class="form-control w-90" style="max-height:75px;height:75px;" multiple
+                                [(ngModel)]="item.selectListData" (ngModelChange)="changeMulti($event)">
+                                <option *ngFor="let item of selectList" [value]="item.labelValue">{{item.labelName}}
+                                </option>
+                            </select>
+                        </td>
+                        <td style="vertical-align:middle"
+                            *ngIf="header.static && header.checked && !header.customTemplate"
+                            [title]="item.columnTitle[header.key] ? item.columnTitle[header.key] : ''"
+                            [ngStyle]="item.columnStyle[header.key]"
+                            [style.width]="header.width ? header.width+'px' : 'auto'"
+                            [style.textAlign]="header.align ? header.align : 'inherit'"
+                            [style.minWidth]="header.width ? header.width+'px' : 'auto'"
+                            [style.maxWidth]="header.width ? header.width+'px' : 'auto'"
+                            class="link-type {{item.columnCssClass[header.key]}}"
+                            [ngClass]="{'text-center':(header.controls && item[header.key])}">
+                            <a href="javascript:void(0)" class="control-icons" *ngIf="!header.link && !header.controls"
+                                [innerHTML]="item[header.key]"
+                                (click)="staticClick(item);getNode(item,$event,header.key)"></a>
+                            <a *ngIf="header.link && !header.controls"
+                                [routerLink]="['/'+header.linkUrlFormat,item[header.linkParam] ? item[header.linkParam] : {} ]"
+                                [innerHTML]="item[header.key]"></a>
+                            <div *ngIf="header.controls && item[header.key]" class="btn-group position-static"
+                                placement="bottom-right" ngbDropdown role="group"
+                                aria-label="Button group with nested dropdown">
+                                <div class="control-btn" ngbDropdownToggle [innerHTML]="item[header.key]"></div>
+                                <div class="dropdown-menu min-width-5" ngbDropdownMenu>
+                                    <ng-container *ngIf="!header.customOptionTemplate">
+                                        <ng-container *ngFor="let name of item.staticControls">
+                                            <button class="dropdown-item" (click)="onControl($event,name,item)"
+                                                *ngIf="item.showAll || name.show">{{name.label}}</button>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="header.customOptionTemplate">
+                                        <ng-container
+                                            *ngTemplateOutlet="header.customOptionTemplate;context:{staticControls:item.staticControls,item:item}">
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="vertical-align:middle" [style.width]="header.width ? header.width+'px' : 'auto'"
+                            [style.textAlign]="header.align ? header.align : 'inherit'"
+                            [style.minWidth]="header.width ? header.width+'px' : 'auto'"
+                            [style.maxWidth]="header.width ? header.width+'px' : 'auto'"
+                            *ngIf="header.checked && !header.static && (!header.customTemplate || header.customTemplate && header.editable)"
+                            [title]="item.columnTitle[header.key] ? item.columnTitle[header.key] : ''"
+                            [ngStyle]="item.columnStyle[header.key]"
+                            [style.width]="header.width ? header.width+'px' : 'auto'"
+                            [style.textAlign]="header.align ? header.align : 'inherit'"
+                            [style.minWidth]="header.width ? header.width+'px' : 'auto'"
+                            [style.maxWidth]="header.width ? header.width+'px' : 'auto'"
+                            class="inline-fields make-active"
+                            (dblclick)="item.inlineEdit[header.key] && item.inlineEdit[header.key].editable && item.editableIcon && item.editableIcon[header.key] && item.contentEditable = true;item.headerName = header.key;editableRowNum=item.rnum;autoFocusSelect($event)"
+                            [ngClass]="{'edit-text-inline':item.inlineEdit[header.key] && item.inlineEdit[header.key].inlineText}">
+                            <ng-template #tipContent>
+                                <span class="text-left" [innerHTML]="item[header.key]"></span>
+                            </ng-template>
+                            <select #selectedElement class="inline-active-selection" [(ngModel)]="item[header.key]"
+                                *ngIf="item.inlineEdit[header.key] && item.inlineSelectOptions[header.key] && item.inlineEdit[header.key].editable && (item.contentEditable || item.inlineEdit[header.key].defaultInline) && item.inlineEdit[header.key].editableType == 'select' && (item.headerName == header.key  || item.inlineEdit[header.key].defaultInline)"
+                                (change)="onSelectChange($event,item,item.inlineSelectOptions[header.key],header.key,i,j,item.inlineEdit[header.key].editableType)"
+                                (blur)="onContentBlur(item,header.key)" [disabled]="item.disabledColumn[header.key]">
+                                <option *ngFor="let item1 of item.inlineSelectOptions[header.key]" [value]="item1.name">
+                                    {{item1.name}}</option>
+                            </select>
+                            <input #selectedElement type="text" class="inline-active-selection"
+                                [(ngModel)]="item[header.key]"
+                                *ngIf="item.inlineEdit[header.key] && item.inlineEdit[header.key].editable && (item.contentEditable  || item.inlineEdit[header.key].defaultInline) && item.inlineEdit[header.key].editableType == 'input' && (item.headerName == header.key || item.inlineEdit[header.key].defaultInline)"
+                                (blur)="onInputBlur($event,item,header.editableSchema,header.key,i,j,item.inlineEdit[header.key].editableType)"
+                                [disabled]="item.disabledColumn[header.key]" />
+                            <input #selectedElement type="number" class="inline-active-selection"
+                                [(ngModel)]="item[header.key]"
+                                *ngIf="item.inlineEdit[header.key] && item.inlineEdit[header.key].editable && (item.contentEditable  || item.inlineEdit[header.key].defaultInline) && item.inlineEdit[header.key].editableType == 'number' && (item.headerName == header.key || item.inlineEdit[header.key].defaultInline)"
+                                (blur)="onInputBlur($event,item,header.editableSchema,header.key,i,j,header.editableType)"
+                                [disabled]="item.disabledColumn[header.key]" />
+                            <input #selectedElement type="checkbox" class="inline-active-selection relative top-2"
+                                *ngIf="item.inlineEdit[header.key] && item.inlineEdit[header.key].editable && (item.contentEditable  || item.inlineEdit[header.key].defaultInline) && item.inlineEdit[header.key].editableType == 'checkbox' && (item.headerName == header.key || item.inlineEdit[header.key].defaultInline)"
+                                [checked]="header.schema && (header.schema[0] == item[header.key])"
+                                (change)="setPropertyValues($event,item,header.key,item[header.key],header.schema,header.editableType,i)"
+                                (blur)="onContentBlur(item,header.key)" [disabled]="item.disabledColumn[header.key]" />
+
+
+                            <span #selectedElement class="inline-active-selection"
+                                *ngIf="item.inlineEdit[header.key] && item.inlineEdit[header.key].editable && (item.contentEditable || item.inlineEdit[header.key].defaultInline) && item.inlineEdit[header.key].editableType == 'custom' && ((item.headerName == header.key && editableRowNum == item.rnum) || item.inlineEdit[header.key].defaultInline)">
+
+                                <ng-container
+                                    *ngTemplateOutlet="header.customTemplate;context:item.customTemplateJson[header.key]">
+                                </ng-container>
+                            </span> {{item.inlineEdit[header.key] && item.inlineEdit[header.key].inlineText}}
+                            <div class="normal-btn" [placement]="(checkedHeaders().length/2) > j+1 ? 'right' : 'left'"
+                                [ngbTooltip]="header.tooltip && item[header.key] && item[header.key].length > (header.tooltipMaxLen == null ? 15 : header.tooltipMaxLen) ? tipContent: null"
+                                container="body" triggers="manual" (mouseenter)="openTooltip(el)"
+                                [ngClass]="{'status-btn d-inline':header.type}"
+                                class="{{item.columnCssClass[header.key]}}"
+                                [ngStyle]="{'background-color':getColor(header.type, item[header.key],header.schema)}"
+                                #el="ngbTooltip" *ngIf="header.type != 'image' && !header.popover">
+
+                                <span *ngIf="header.html && !header.link" [ngStyle]="item.columnStyle[header.key]"
+                                    [innerHTML]="(header.tooltip && item[header.key] && item[header.key].length>(header.tooltipMaxLen == null ? 20 : header.tooltipMaxLen+5))? (getSanitizeText(item[header.key]) | slice:0:(header.tooltipMaxLen == null ? 15 : header.tooltipMaxLen))+' ...':(getSanitizeText(item[header.key]))"></span>
+                                <span *ngIf="!header.html && !header.link && item[header.key] !== undefined"
+                                    [ngStyle]="item.columnStyle[header.key]"
+                                    [innerHTML]="item[header.key] | sanitizeHtml"></span>
+                                <span *ngIf="item.editableIcon && item.editableIcon[header.key]">
+                                    <div class="card icon-card-list green-bg mb-2 mr-2 float-right" title="Edit"
+                                        (click)="item.inlineEdit[header.key] && item.inlineEdit[header.key].editable && item.contentEditable = true;item.headerName = header.key;editableRowNum=item.rnum;autoFocusSelect($event, 'iconClicked');">
+                                        <span class="icon-tag size-20" title="Edit"></span>
+                                    </div>
+                                </span>
+                                <a *ngIf="header.link && !header.html && header.linkType != 'object' && item[header.key] !== undefined"
+                                    [routerLink]="['/'+header.linkUrlFormat,item[header.linkParam] ? item[header.linkParam] : {}]">{{item[header.key]}}</a>
+                                <a *ngIf="header.link && !header.html && header.linkType == 'object' && item[header.key] !== undefined"
+                                    [routerLink]="['/'+header.linkUrlFormat,getParams(item,header)]">{{item[header.key]}}</a>
+                            </div>
+                            <div *ngIf="header.type == 'image' && !header.popover && item[header.key]">
+                                <img [src]="item[header.key]" width="{{header.sizeX}}" height="{{header.sizeY}}" />
+                            </div>
+                            <div *ngIf="header.popover" class="{{item.columnCssClass[header.key]}}">
+                                <ng-container *ngIf="!header.link">
+                                    <ng-container *ngFor="let link of getArray(item[header.key]);let linInd = index">
+                                        <a href="javascript:void(0)" [ngbPopover]="popContent" [innerHTML]="link"
+                                            (mouseover)="loadPopover($event,item,header.key)" container="body"
+                                            triggers="mouseenter:mouseleave" [placement]="popoverPlacement"></a>
+                                        <span *ngIf="linInd < getArray(item[header.key]).length - 1">,</span>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="header.link">
+                                    <a [routerLink]="['/'+header.linkUrlFormat,item[header.linkParam]]"
+                                        *ngFor="let link of getArray(item[header.key])" [ngbPopover]="popContent"
+                                        [innerHTML]="link" (mouseover)="loadPopover($event,item,header.key)"
+                                        container="body" triggers="mouseenter:mouseleave"
+                                        [placement]="popoverPlacement"></a>
+                                </ng-container>
+                            </div>
+
+                        </td>
+                        <td style="vertical-align:middle" [style.width]="header.width ? header.width+'px' : 'auto'"
+                            [style.textAlign]="header.align ? header.align : 'inherit'"
+                            [style.minWidth]="header.width ? header.width+'px' : 'auto'"
+                            [style.maxWidth]="header.width ? header.width+'px' : 'auto'"
+                            *ngIf="header.customTemplate && !header.editable">
+                            <ng-container
+                                *ngTemplateOutlet="header.customTemplate;context:item.customTemplateJson[header.key]">
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+        <div class="minitor_loading1 p-1 " *ngIf="monitorLoader">
+            Loading...
+        </div>
+    </div>
+    <ng-container *ngIf="!hideBottomPagination">
+        <div class="d-flex justify-content-start float-left mt-2 mb-2" style="padding-left:20px">
+            <!-- pagination.searchElments && (pagination.searchElments != pagination.totalElements) -->
+            <span class="line-height-30 size-14" *ngIf="filterFlag">{{title ? title : pagination.searchElments + "
+                Record(s) found out of " + pagination.totalElements}}</span>
+
+            <!-- pagination.searchElments == pagination.totalElements -->
+            <span class="line-height-30 size-14" *ngIf="!filterFlag">{{title ? title : pagination.totalElements + "
+                Record(s) found" }}</span>
+        </div>
+        <div class="d-flex justify-content-start float-right mt-2 ml-2 mb-2" style="padding-right:20px;">
+            <ngb-pagination class="pagination" size="sm" [collectionSize]="pagination.searchElments"
+                [(page)]="pagination.page" [maxSize]="5" [rotate]="true" [pageSize]="pagination.noOfElements"
+                [boundaryLinks]="true" (pageChange)="pageChanged()"></ngb-pagination>
+
+        </div>
+        <div class="d-flex justify-content-end float-right width-25 mt-2  mb-2">
+            <span class="pt-1 pr-2 size-14"> Records Per Page </span>
+            <select class="form-control justify-content-end size-14 page-size ml-1 p-0 size-12 pagecount"
+                [(ngModel)]="pagination.noOfElements" (change)="changeMaxSize()" style="width: 60px !important;">
+                <option *ngFor="let option of [5,10,25,50,100]" [value]="option">{{option}}</option>
+            </select>
+
+        </div>
+        <div class="clearfix" style="background:white;padding-bottom:5px;"></div>
+    </ng-container>
+</span>
+<!-- {{this.pagination | json}} -->
+<span *ngIf="this.pagination.data && !this.pagination.data.length" [hidden]="monitorLoader">
+    <div class="blue-hdr commentHistory">
+        <div class="row">
+            <div class="col text-center">
+                <span class="line-height-30">{{ noRecordMsg }}</span>
+            </div>
+
+        </div>
+    </div>
+    <br />
+    <div class="clearfix"></div>
+</span>
+<ng-template #popContent>
+    <ng-container *ngTemplateOutlet="popoverContent"></ng-container>
+</ng-template>

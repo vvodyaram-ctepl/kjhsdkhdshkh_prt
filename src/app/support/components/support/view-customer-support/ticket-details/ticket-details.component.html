@@ -1,0 +1,137 @@
+<div class="content-block">
+    <div class="row showEditBtn" *ngIf="displayEdit">
+        <div class="col-12">
+            <div class="float-right">
+                <button *ngIf="RWFlag && (dataArr.status == 'In-Progress' || dataArr.status == 'Open')" class="btn btn-primary" (click)="editCustomerSupport()">Edit Ticket</button>
+            </div>
+        </div>
+    </div>
+    <div class="row ticket-details" *ngIf="dataArr">
+        <div class="col-4">
+            <label>Ticket #</label>
+            <div>{{dataArr.ticketId ? dataArr.ticketId : '-'}}</div>
+        </div>
+        <div class="col-4">
+            <label>Ticket Title</label>
+            <div>{{dataArr.ticketTitle ? dataArr.ticketTitle : '-'}}</div>
+        </div>
+        <div class="col-4">
+            <label>Created Date</label>
+            <div>{{dataArr.ticketCreatedDate ? dataArr.ticketCreatedDate : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Assigned To</label>
+            <div>{{dataArr.assignedTo ? dataArr.assignedTo : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Priority</label>
+            <div>{{dataArr.priority ? dataArr.priority : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Ticket Status</label>
+            <div>{{dataArr.status ? dataArr.status : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Pet Name</label>
+            <div>{{dataArr.petName ? dataArr.petName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Pet Parent Name</label>
+            <div>{{dataArr.petParentName ? dataArr.petParentName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Contact Method</label>
+            <div>{{dataArr.contactMethod ? dataArr.contactMethod : '-'}}</div>
+        </div>
+        <div class="col-12 mt-4">
+            <label>Pet Parent Address</label>
+            <div>{{dataArr.petParentAddress ? dataArr.petParentAddress : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Study</label>
+            <div>{{dataArr.studyName ? dataArr.studyName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Study Start Date</label>
+            <div>{{dataArr.studyStartDate ? dataArr.studyStartDate : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Study End Date</label>
+            <div>{{dataArr.studyEndDate ? dataArr.studyEndDate : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Study Status</label>
+            <div>{{ dataArr.studyStatus?'Active':'Inactive' }}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Issue</label>
+            <div>{{dataArr.issueName ? dataArr.issueName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Root Cause</label>
+            <div>{{dataArr.rootCauseName ? dataArr.rootCauseName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Asset Number</label>
+            <div>{{dataArr.sensorName ? dataArr.sensorName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Manufacturer Serial Number</label>
+            <div>{{dataArr.mfgSerialNumber ? dataArr.mfgSerialNumber : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Bluetooth MAC Address</label>
+            <div>{{dataArr.mfgMacAddr ? dataArr.mfgMacAddr : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Wifi MAC Address</label>
+            <div>{{dataArr.wifiMacAddr ? dataArr.wifiMacAddr : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Asset Location</label>
+            <div>{{dataArr.sensorLocationName ? dataArr.sensorLocationName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Asset Status</label>
+            <div>{{dataArr.inventoryStatusName ? dataArr.inventoryStatusName : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Agent/System Action Initial</label>
+            <div>{{dataArr.agentSystemActionInitial ? dataArr.agentSystemActionInitial : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Agent/System Action Secondary</label>
+            <div>{{dataArr.agentSystemActionSecondary ? dataArr.agentSystemActionSecondary : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Agent/System Action Tertiary</label>
+            <div>{{dataArr.agentSystemActionTertiary ? dataArr.agentSystemActionTertiary : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Defective Sensor Action</label>
+            <div>{{dataArr.defectiveSensorAction ? dataArr.defectiveSensorAction : '-'}}</div>
+        </div>
+        <div class="col-4 mt-4">
+            <label>Notes</label>
+            <div>{{dataArr.notes ? dataArr.notes : '-'}}</div>
+        </div>
+        <div class="col-12 mt-4">
+            <label>Attachment</label>
+            <!-- <div>{{dataArr.notes ? dataArr.notes : '-'}}</div> -->
+            <div style="width:100%" class="pt-1 pb-1" *ngIf="uploadArr">
+                <div class="col-12 mb-3 pl-0" *ngFor="let list of uploadArr">
+                    <!-- {{list | json}} -->
+                    <!-- <a href="{{list.url}}" target="_blank" class="filedec">{{list.originalFileName}}</a> -->
+                    <a target="_blank" class="filedec"
+                        (click)="download(list.url, list.originalFileName, list.gcFileName)">{{list.originalFileName}}</a>
+                </div>
+            </div>
+
+            <div></div>
+        </div>
+        <div class="col-12 text-right mt-3">
+            <button class="btn btn-secondary" (click)="backToList()" type="button">Close</button>&nbsp;&nbsp;
+            <button class="btn btn-primary" (click)="next()" type="button">Next</button>
+        </div>
+    </div>
+</div>

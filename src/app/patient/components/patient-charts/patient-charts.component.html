@@ -1,0 +1,206 @@
+<div class="chart-area">
+    <div class="row">
+        <div class="col-12 mt-4">
+            <!-- <div class="search-content-box mt-3 mb-3">
+                <input type="text" placeholder="Search Chart" class="form-control" name="search" autocomplete="off" />
+            </div> -->
+            <div class="float-right">
+                <div class="input-group date-filter text-right">
+                    <label class="relative top-2">From</label>
+                    <datepicker [hideClose]="true" style="display:inline-table" [(ngModel)]="fromDate" name="fromDate"
+                        placeholder="MM-DD-YYYY" format="MM-DD-YYYY" (select)="onDateSelect($event)" [maxDate]="currentDate"
+                        style="width: 120px !important;padding-left: 5px;"></datepicker>
+                    <label style="padding-left: 20px;" class="relative top-2">To</label>
+                    <datepicker [hideClose]="true" [(ngModel)]="toDate" name="toDate" placeholder="MM-DD-YYYY"
+                        format="MM-DD-YYYY" [minDate]="fromDate" [maxDate]="currentDate"
+                        style="width: 120px !important;padding-left: 5px;">
+                    </datepicker>
+                    <button style="margin-left:20px;" type="button" class="btn btn-primary btn-sm no-padding go-btn"
+                        size-13 (click)="getInitialData(fromDate,toDate)">GO</button>
+                    <button class="btn btn-primary btn-sm no-padding go-btn ml-3 px-3" *ngIf="RWFlag" (click)="openWHPopup()">ADD
+                        WEIGHT
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4" style="display:block">
+            <canvas baseChart *ngIf="barChartData" [datasets]="barChartData" [labels]="barChartLabels"
+                [options]="barChartOptions" width="300" height="300" 
+                [legend]="barChartLegend" [chartType]="barChartType" [colors]="barChartColors">
+            </canvas>
+        </div>
+        <div class="col-12 mt-4" style="display:block">
+            <!-- {{barChartData | json}} -->
+            <div class="row">
+                <div class="col custom-table">
+                    <button class="relative btn btn-primary float-right" style="margin-bottom:20px" (click)="exportAsXLSX()">
+                        Export to Excel <i class="icon-excel"></i>
+                    </button>
+                    <table class="table" id="excel-table">
+                        <thead>
+                        <tr>
+                            <th scope="col" width="25%">Date</th>
+                            <th scope="col" width="25%">Pet Weight (In KGS)</th>
+                            <th scope="col" width="25%">Pet Weight (In LBS)</th>
+                            <th scope="col" width="25%" *ngIf="RWFlag"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="scrollbar scrollbar-near-moon thin" *ngIf="petCharts?.length > 0">
+                        <tr *ngFor="let list of petCharts | slice: (parentPage-1) * parentpageSize : (parentPage-1) * parentpageSize + parentpageSize">
+                            <td  width="25%">{{list.addDate | date: 'MM-dd-yyyy'}}</td>
+                            <td  width="25%">{{list.weightKgs}}</td>
+                            <td  width="25%">{{list.weight}}</td>
+                            <!-- style="display: flex;align-items: center;border-top: 0px;" -->
+                            <td width="25%" *ngIf="RWFlag">
+                                <div class="card icon-card-list green-bg mr-2" title="Edit">
+                                        <span class="icon-tag size-20" title="Edit" (click)="edit(list)"></span>
+                                    </div>&nbsp;
+                                <!-- <div class="card icon-card-list red-bg" title="Remove" (click)="deleteExPetArr(list)">
+                                <span class="pointer-cursor size-14" title="Remove">-</span>
+                                </div> -->
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tbody class="table-body" *ngIf="!petCharts || petCharts?.length == 0">
+                        <tr>
+                            <td>No Records Found</td>
+                        </tr>
+                        </tbody>
+                    </table>
+              </div>
+            </div>
+             <!-- pagination -->
+        <div class="row" *ngIf="petCharts">
+            <!-- {{petCharts | json}} -->
+            <div class="col-12">
+              <div style="float: right">
+                <ngb-pagination size="sm" *ngIf="petCharts.length > 0" [collectionSize]="petCharts.length" [(page)]="parentPage"
+                  [pageSize]="parentpageSize" [maxSize]="5" [rotate]="true" [ellipses]="true" [boundaryLinks]="true">
+                </ngb-pagination>
+              </div>
+            </div>
+            <!-- <div class="col-6">
+                  <div style="text-align: right;font-weight:bold;position: absolute;right: 15px;top: 10px;">
+                      Total Record Count : {{petParents.length}}
+                    </div>
+              </div> -->
+          </div>
+          <!-- pagination -->
+        </div>
+        <!-- <div class="col-12 summary-info">
+            <h4 class="bold mt-2">Summary</h4>
+            <div class="row">
+                <div class="col-3 mb-2">
+                    <div class="info">N/A</div>
+                    <div class="label">Since Start of Treatment</div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div>N/A</div>
+                    <div class="label">Verses Target</div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div>N/A</div>
+                    <div class="label">Start of Treatment</div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div>N/A</div>
+                    <div class="label">Verses Target</div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div class="info">N/A</div>
+                    <div class="label">Since Start of Treatment</div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div>N/A</div>
+                    <div class="label">Verses Target</div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div>N/A</div>
+                    <div class="label">Start of Treatment</div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div>N/A</div>
+                    <div class="label">Verses Target</div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            <span *ngIf="!editWeight">Add Weight</span>
+            <span *ngIf="editWeight">Edit Weight</span>
+
+            </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click');reset()">
+            <div class="close-wrapper">
+                <span class="icon-close" aria-hidden="true"></span>
+                <!--&#10006;-->
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="watchHistoryForm" (ngSubmit)="!submitted && addWatchHistory()">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <!-- {{petDobDate | json}} -->
+                    <fieldset class="w-fieldset">
+                        <legend>
+                            <label class="label">Date<span class="asterisk">*</span></label>
+                        </legend>
+                        <datepicker class="w-100" [minDate]="petDobDate" [disabled]="editWeight" formControlName="date" format="MM-DD-YYYY" [maxDate]="currentDate">
+                        </datepicker>
+                    </fieldset>
+                    <validation-message [messageToAppend]="" [control]="watchHistoryForm.controls.date">
+                    </validation-message>
+                </div>
+                <div class="col-12 mt-3">
+                    <!-- {{watchHistoryForm.value.weightUnits | json}} -->
+                    <fieldset class="w-fieldset">
+                        <legend> <label class="label">Weight<span class="asterisk">*</span></label></legend>
+                        <input style="width:76%;float:left;" type="text" formControlName="weight"
+                            class="form-control textbox" maxlength="" />
+                            <!-- [ngClass]="{'disabled': editWeight}"  -->
+                        <select style="width:24%;" class="select-cstom-control form-control"
+                            formControlName="weightUnits">
+                            <option value="lbs">LBS</option>
+                            <option value="kgs">KGS</option>
+                        </select>
+                    </fieldset>
+                    <validation-message [messageToAppend]="" [control]="watchHistoryForm.controls.weight">
+                    </validation-message>
+                </div>
+                <!--  -->
+                <div class="col-12 mt-3" *ngIf="editWeight">
+                <div class="checkbox-wrapper">
+                    <label>
+                        <input type="checkbox" class="check checkbox-width-20"
+                            formControlName="dontKnow" />
+                        <span class="label" style="margin-top: -31px;
+                        display: block;
+                        margin-left: 27px;">
+                            Don't Know
+                        </span>
+                    </label>
+                </div>
+                </div>
+                <!--  -->
+                <div class="col-12 mt-4 mb-2">
+
+                    <button type="submit" class="btn btn-primary btn-custom float-right "
+                       >
+                        <span *ngIf="!editWeight">Submit</span>
+                        <span *ngIf="editWeight">Update</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-custom float-right mr-3"
+                        (click)="d('Cross click');reset()">Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</ng-template>

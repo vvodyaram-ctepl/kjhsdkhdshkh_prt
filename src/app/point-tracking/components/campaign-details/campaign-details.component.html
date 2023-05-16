@@ -1,0 +1,213 @@
+<div class="content-box">
+
+    <div class="content-banner mb-3">
+
+        <div class="row no-gutter border-1">
+            <div class="col-6 block-left-center mb-2">
+                <span class="banner-heading-text">{{responseData.trackerName}}</span>
+                <span class="status-button" *ngIf="responseData.status != undefined"
+                    [ngClass]="responseData.status == 0 ? 'inactive-bg': (responseData.status == 2 ? 'active-bg' : 'info-bg')">{{responseData.status
+                    == 0 ?
+                    "Inactive" : (responseData.status == 2 ? "Draft" : "Published")}}</span>
+                <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+                <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+            </div>
+            <div class="col-6">
+                <div class="float-right mb-2">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row no-gutter mt-3 pb-2 border-1">
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="small-text">Study</div>
+                            <div class="green-small-text">
+                                {{responseData.studyName ? responseData.studyName : '-'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="small-text">Start Date</div>
+                            <div class="green-small-text">
+                                {{responseData.startDate | date: 'MM/dd/yyyy'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="small-text">End Date</div>
+                            <div class="green-small-text"> {{responseData.endDate | date: 'MM/dd/yyyy'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row no-gutter mt-3">
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="small-text">Activity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="small-text">Points</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="small-text">Start Date</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="small-text">End Date</div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="row no-gutter mt-3" [ngClass]="(activityData.id == 4 && responseData.pointTrackerMetricAssociatedObject?.length) ? 'pb-2 border-1' : ''"
+            *ngFor="let activityData of responseData.pointTrackerAssociatedObject">
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="green-small-text">
+                                {{activityData.activityName}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="green-small-text">
+                                {{activityData.points}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="green-small-text">
+                                {{activityData.startDate | date: 'MM/dd/yyyy'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row no-gutter">
+                    <div class="col-12">
+                        <div class="box-wrap mr-3">
+                            <div class="green-small-text">
+                                {{activityData.endDate | date: 'MM/dd/yyyy'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+        <ng-container *ngIf="responseData.pointTrackerMetricAssociatedObject?.length">
+            <div class="row no-gutter mt-3"
+                *ngFor="let behaviorData of responseData.pointTrackerMetricAssociatedObject">
+                <div class="col-3 pl-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="green-small-text">
+                                    {{behaviorData.metricName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="green-small-text">
+                                    {{behaviorData.metricPoints}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="green-small-text">
+                                    {{behaviorData.startDate | date: 'MM/dd/yyyy'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row no-gutter">
+                        <div class="col-12">
+                            <div class="box-wrap mr-3">
+                                <div class="green-small-text">
+                                    {{behaviorData.endDate | date: 'MM/dd/yyyy'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </ng-container>
+
+        <div class="row no-gutter mt-3">
+            <div class="col-12">
+                <div class="float-right">
+                    <button class="btn btn-secondary" type="button" routerLink="/user/point-tracking">
+                        Close
+                    </button>&nbsp;&nbsp;
+                    <button class="btn btn-primary" type="button" routerLink="/user/point-tracking/view/{{
+                        trackId
+                      }}/campaign-activities">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

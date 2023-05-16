@@ -1,0 +1,41 @@
+<form [formGroup]="addNotesForm">
+    <!-- {{addNotesForm.value | json}} -->
+    <div class="content-box">
+        <div class="content-block">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <!-- <ckeditor class="editor" formControlName="notes" debounce="500" [config]="ckEditorConfig">
+                    </ckeditor> -->
+                    <label class="label">Notes <span class="asterisk">*</span></label>
+                    <!-- <textarea class="form-control textbox w-100" formControlName="notes"
+              maxlength="500"></textarea> -->
+              <app-textarea formControlName="notes" [maxLengthT]="500"></app-textarea>
+                    <validation-message [control]="addNotesForm.controls.notes"></validation-message>
+                </div>
+            </div>
+            <!-- <div class="row mb-3">
+                <div class="col-4">
+                    <label class="label">
+                        Date
+                    </label>
+                    <div> {{addNotesForm.value.date}}</div>
+                </div>
+                <div class="col-4">
+                    <label class="label">
+                        Entered by
+                    </label>
+                    <div> {{addNotesForm.value.userName}}</div>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                        <button class="btn btn-secondary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

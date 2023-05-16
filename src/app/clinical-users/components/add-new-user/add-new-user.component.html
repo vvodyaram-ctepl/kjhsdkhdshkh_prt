@@ -1,0 +1,22 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span *ngIf="!editFlag">Add New User</span>
+                <span *ngIf="editFlag">Edit User</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="content-blk">
+        <div class="navtabsBackground">
+            <ul ngbNav class="row nav-tabs tabsDesign">
+                <li class="col" [ngbNavItem]="flatTab.name" *ngFor="let flatTab of flatTabs">
+                    <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                        (click)="activateTab(flatTab)"><span>{{ flatTab.name }}</span></a>
+                </li>
+            </ul>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

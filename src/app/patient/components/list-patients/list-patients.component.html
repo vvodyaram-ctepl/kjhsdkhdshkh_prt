@@ -1,0 +1,105 @@
+<div class="content-box">
+  <div class="content-hdr">
+    <div class="row no-gutter mb-2 b-1-grey pb-1">
+      <div class="col-6 block-left-center">
+        Pet
+      </div>
+      <div class="col-6">
+        <div class="float-right">
+          <button *ngIf="RWFlag" class="btn btn-primary mb-1" type="button" (click)="addNewPet()">Add New Pet</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row no-gutter mt-3">
+      <div class="col-3">
+        <div class="row no-gutter">
+          <div class="col-2">
+            <div class="img-box-blue">
+              <!-- <span class="icon-dog-blue size-20" dog-blue></span> -->
+              <span class="icon-pet-house size-26"></span>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="box-wrap ml-3">
+              <div class="small-text">Total On-Study Pets</div>
+              <div class="count-text">{{totalActivePets}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <div class="row no-gutter">
+          <div class="col-2">
+            <div class="img-box-blue">
+              <!-- <svg version="1.1" height="20" viewBox="0 0 1310 1024">
+                <title></title>
+                <g id="icomoon-ignore">
+                </g>
+                <path fill="#37b57c"
+                  d="M1308.293 264.359c-2.559-6.658-7.649-11.857-14.061-14.5l-0.168-0.061-110.487-44.579c-7.161-35.808-33.813-63.933-68.2-73.121l-0.659-0.15-5.97-68.66c-1.236-12.972-12.076-23.037-25.267-23.037-7.418 0-14.092 3.183-18.731 8.257l-0.018 0.019-28.36 31.279-17.513-61.33c-3.149-10.687-12.871-18.354-24.384-18.354-10.9 0-20.194 6.872-23.787 16.52l-0.057 0.175-130.985 361.146-485.332 22.621c-4.432 0.276-9.612 0.433-14.829 0.433-97.167 0-181.6-54.515-224.384-134.629l-0.666-1.367c-4.463-7.663-12.64-12.732-22.001-12.732-14.014 0-25.374 11.361-25.374 25.374 0 3.964 0.909 7.717 2.53 11.059l-0.066-0.151c40.759 76.48 110.994 132.713 195.149 153.984l2.108 0.451c-2.952 2.62-5.937 5.373-8.923 8.325-46.163 48.406-74.775 113.906-75.426 186.084l-0.001 0.128-109.79 48.228c-6.401 2.862-11.303 8.11-13.643 14.584l-0.056 0.176-57.549 162.529c-0.922 2.521-1.455 5.432-1.455 8.468 0 9.347 5.054 17.514 12.579 21.917l0.12 0.065 27.63 15.888c3.618 2.106 7.963 3.349 12.599 3.349 10.944 0 20.27-6.929 23.831-16.639l0.057-0.176 40.997-114.566 98.579-8.16-29.852 40.699c-3.082 4.148-4.934 9.37-4.934 15.024 0 1.631 0.154 3.225 0.448 4.77l-0.025-0.158 31.279 169.694c2.256 11.89 12.563 20.759 24.943 20.764h31.876c14-0.019 25.341-11.372 25.341-25.374 0-1.583-0.145-3.132-0.422-4.634l0.024 0.156-21.925-119.708 211.653-146.442c0.663-0.464-0.597 0.498 0 0 18.108-15.085 33.143-33.134 44.519-53.505l0.492-0.959c106.573 18.707 255.403 45.309 351.594 60.866 1.294 0.597-1.393-0.365 0 0l199.015 271.988c4.663 6.325 12.086 10.383 20.456 10.383 4.244 0 8.244-1.043 11.758-2.887l-0.139 0.066 23.218-12.007c8.233-4.307 13.756-12.787 13.756-22.558 0-4.238-1.039-8.234-2.877-11.746l0.067 0.14-103.156-200.309 105.71 21.527-2.554 36.486c-0.039 0.526-0.061 1.139-0.061 1.757 0 8.993 4.678 16.893 11.734 21.4l0.102 0.061 15.556 9.951c3.839 2.464 8.525 3.929 13.553 3.929 10.545 0 19.585-6.44 23.402-15.602l0.062-0.168 36.486-88.827c1.195-2.841 1.889-6.143 1.889-9.607 0-11.166-7.213-20.648-17.233-24.040l-0.179-0.053-190.955-65.708 56.985-262.932c9.636 1.699 20.737 2.675 32.064 2.687h0.010c77.897-1.1 144.91-46.602 176.967-112.289l0.521-1.183c1.63-3.254 2.584-7.090 2.584-11.149 0-3.367-0.657-6.581-1.849-9.52l0.061 0.17z">
+                </path>
+                <path fill="#fff" stroke="#37b57c" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4"
+                  stroke-width="33.1692"
+                  d="M1054.284 254.375c0 128.232-103.953 232.185-232.185 232.185s-232.185-103.953-232.185-232.185c0-128.232 103.953-232.185 232.185-232.185s232.185 103.953 232.185 232.185z">
+                </path>
+                <path fill="none" stroke="#37b57c" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4"
+                  stroke-width="33.1692"
+                  d="M1037.699 254.375c0 119.073-96.527 215.6-215.6 215.6s-215.6-96.527-215.6-215.6c0-119.073 96.527-215.6 215.6-215.6s215.6 96.527 215.6 215.6z">
+                </path>
+                <path fill="none" stroke="#37b57c" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4"
+                  stroke-width="33.1692" d="M713.171 254.375l68.428 68.428 128.398-128.398"></path>
+              </svg> -->
+              <span class="icon-study"></span>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="box-wrap ml-3">
+              <div class="small-text">Total Active Studies</div>
+              <div class="count-text">{{totalActiveStudies}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-blk">
+    <datatable *ngIf="showDataTable" [headers]="headers" [hideExport]="true" placeholder="Search" defaultColumn="name"
+      [filterTypeArr]="filterTypeArr" (formatter)="formatter($event)" (totalFormatter)="totalFormatter($event)"
+      dir="DESC" url="/api/pets" (nodeAction)="getNode($event)" pageName="petPage">
+    </datatable>
+  </div>
+</div>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Delete Pet
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span aria-hidden="true" class="icon-close"></span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row mb-4">
+      <div class="col-12">
+        Do you want to delete <span class="bold-text" style="color:red">{{this.petName}}</span> ?
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          No
+        </button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+          (click)="deletePet();d('Cross click')">
+          Yes
+        </button>
+      </div>
+    </div>
+
+  </div>
+</ng-template>

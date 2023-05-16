@@ -1,0 +1,27 @@
+<form [formGroup]="addSubClinicForm" (submit)='onSubmit(addSubClinicForm.value)'>
+    <div class="content-box">
+        <div class="content-block">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="multiselect">
+                        <label class="label">Select sub clinic for this clinic
+                        </label>
+                        <ng-multiselect-dropdown formControlName="subclinicName" [placeholder]="''"
+                            [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="selectedItems"
+                            (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+                        <button class="btn btn-primary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

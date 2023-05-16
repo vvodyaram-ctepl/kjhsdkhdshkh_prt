@@ -1,0 +1,37 @@
+<div class="content-block">
+    <div class="row">
+        <div class="col-12">
+            <div class="updates-block">
+                <!-- {{dataArr | json}} -->
+
+                <div *ngFor="let ticket of dataArr;let i = index; let last=last">
+
+                    <div *ngIf="ticket.msgArr">
+                        <div class="update-list">
+                            <div class="dotted-block">
+                                <span>Date: {{ticket.resolutionDate }}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span>User: {{ticket.resolutionProvidedBy}}</span>
+                            </div>
+
+                            <ul class="update-child-list">
+                                <li *ngFor="let details of dataArr[i].resolutionDetails"><span
+                                        [innerHTML]="details ? details : '-'"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let ticket of dataArr;let i = index; let last = last">
+                    <div *ngIf="last" class="green-block">
+                        <span>Created On: {{ticket.resolutionDate }}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Created by: {{ticket.resolutionProvidedBy}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 text-right mt-3">
+            <button class="btn btn-primary" (click)="back()" type="button">Back</button>&nbsp;&nbsp;
+            <!-- <button class="btn btn-primary" (click)="backToList()" type="button">Close</button> -->
+        </div>
+    </div>
+</div>

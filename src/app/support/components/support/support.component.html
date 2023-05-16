@@ -1,0 +1,21 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Customer Support
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <button *ngIf="RWFlag" class="btn btn-primary" (click)="addEditSupport()">Add New Ticket</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <datatable [headers]="headers" [filterTypeArr]="filterTypeArr" reportHeaderOverflow="linebreak"
+            placeholder="Search" [isReport]="true" exportTitle="Customer Support" [fileName]="'Customer Support'"
+            (nodeAction)="getNode($event)" (formatter)="formatter($event)" defaultColumn="name" dir="DESC"
+            url="/api/support" pageName="customerSupport">
+        </datatable>
+    </div>
+</div>

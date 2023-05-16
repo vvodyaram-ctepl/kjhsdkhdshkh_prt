@@ -1,0 +1,230 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                Edit Support Materials
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-block">
+            <!-- {{supportForm.value | json}} -->
+            <form novalidate [formGroup]="supportForm" *ngIf="editSupportData.length">
+                <div class="row ">
+                    <div class="col-3 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Material Type<span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control" [attr.disabled]="true" formControlName="materialType"
+                                (change)="onMatChange()">
+                                <option value=''>Select</option>
+                                <option *ngFor="let mat of materialTypeList" [ngValue]="mat.materialTypeId">
+                                    {{mat.materialTypeName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.materialType">
+                        </validation-message>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Category<span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control" formControlName="category" (change)="onCategoryChange()">
+                                <option value='' disabled="true">Select</option>
+                                <option *ngFor="let category of materialCategoryList" [ngValue]="category.categoryId">
+                                    {{category.categoryName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.category">
+                        </validation-message>
+                    </div>
+                    <div class="col-3 mb-3" *ngIf="supportForm.value.category == 1">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Sub Category<span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control" formControlName="subcategory">
+                                <option value='' disabled="true">Select</option>
+                                <option *ngFor="let sub of materialSubCategoryList" [ngValue]="sub.categoryId">
+                                    {{sub.categoryName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.subcategory">
+                        </validation-message>
+                    </div>
+                    <div class="col-3 mb-3" *ngIf="supportForm.value.category == 2">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Asset Type<span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control" formControlName="assetType"
+                                (change)="changeDeviceType(supportForm.value.assetType)">
+                                <option value='' disabled="true">Select</option>
+                                <option *ngFor="let asset of assetTypes" [ngValue]="asset">
+                                    {{asset}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.assetType">
+                        </validation-message>
+                    </div>
+                    <div class="col-3 mb-3" *ngIf="supportForm.value.category == 2">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Asset Model<span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control" formControlName="assetModel">
+                                <option value='' disabled="true">Select</option>
+                                <option *ngFor="let device of deviceModelList" [ngValue]="device.deviceModel">
+                                    {{device.deviceModel}}</option>
+                            </select>
+                            <!-- <input type="text" class="form-control textbox w-100" formControlName="deviceModel"> -->
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.assetModel">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-12 mb-3" *ngIf="
+                    supportForm.value.materialType != 2">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Title<span class="asterisk">*</span></label>
+                            </legend>
+                            <input class="form-control textbox w-100" formControlName="title" maxlength="500">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.title">
+                        </validation-message>
+                    </div>
+                    <div style="width:100%" class="col-12 pt-1 pb-1 pl-2 rytBdr lytWhiteBdr"
+                        *ngIf="supportForm.value.fileNames">
+                        <div class="upldBlk mb-3" *ngIf="supportForm.value.fileNames.length > 0">
+                            <div class="col-12 mb-3" *ngFor="let list of supportForm.value.fileNames;let k=index">
+                                <a href="javascript:void(0)" class="filedec">{{list.uploadedFileName}}</a>
+                                <span class="ml-2 crossIcon" (click)="confirmDeleteAttachment(list)">X</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- {{supportForm.value | json}} -->
+                    <!-- {{supportForm.controls.file | json}} -->
+                    <div class="col-12 mb-3" *ngIf="supportForm.value.materialType == 3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Attachment
+                                    <span *ngIf="supportForm.controls.file.status == 'INVALID'"
+                                        class="asterisk">*</span>
+                                </label>
+                            </legend>
+                            <app-file-upload validTypes="pdf" formControlName="file" [fileLength]="5"
+                                Page="addSupportMat" (selectedItem)="selectFileResult($event)">
+                            </app-file-upload>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.file">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-12 mb-3"
+                        *ngIf="supportForm.value.materialType == 1 && supportForm.value.fileNames.length == 0">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Attachment<span class="asterisk">*</span></label>
+                            </legend>
+                            <app-file-upload validTypes="video/mp4" [fileLength]="1" formControlName="file"
+                                (selectedItem)="selectFileResult($event)">
+                            </app-file-upload>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="supportForm.controls.file">
+                        </validation-message>
+                    </div>
+
+                </div>
+                <div class="row" *ngIf="
+                    supportForm.value.materialType == 2">
+                    <div class="col-12">
+                        FAQ(S)<span class="asterisk">*</span>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-4" formArrayName="arr" *ngFor="
+                let a of supportForm.get('arr')['controls'];
+                let i = index;
+                let last = last
+              ">
+
+                    <div class="col-11">
+                        <div class="ques-name">
+                            <div class="row custom-gutters-0" [formGroupName]="i">
+                                <div class="col-12 p-3 cstm-col" style="display: inherit;">
+                                    <span class="ques-number mt-2">Q{{i+1}}&nbsp;</span>
+                                    <!-- (input)="quesUpdated(i)" -->
+                                    <input type="text" class="form-control ml-1 d-inline-block"
+                                        formControlName="faqQuestion">
+                                    <validation-message [messageToAppend]=""
+                                        [control]="supportForm.get('arr').controls[i].controls.faqQuestion">
+                                    </validation-message>
+                                </div>
+
+                                <div class="col-12 p-3" style="display: inherit;">
+                                    <span class="ques-number  mt-2">A{{i+1}}&nbsp;</span>
+                                    <!-- (input)="quesUpdated(i)" -->
+                                    <textarea type="text" class="form-control ml-1 d-inline-block"
+                                        formControlName="faqAnswer"></textarea>
+                                    <validation-message [messageToAppend]=""
+                                        [control]="supportForm.get('arr').controls[i].controls.faqAnswer">
+                                    </validation-message>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-1 center-align">
+                        <div class="card icon-card-list red-bg mr-2 mt-3 pointer-cursor" title="Remove"
+                            *ngIf="supportForm.value.arr.length > 1" (click)="removeItem(i)">
+                            <span class=" pointer-cursor size-17" title="Remove">-</span>
+                        </div>
+
+                        <div class="card icon-card-list blue-bg mt-3" title="Add" *ngIf="last">
+                            <span class="fa fa-plus pointer-cursor size-15" style="color:white;" title="Add"
+                                (click)="addItem()"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" (click)="backToList()"
+                                type="button">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button"
+                                (click)="supportForm.markAllAsTouched();update()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Delete</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <div class="close-wrapper">
+                <span aria-hidden="true" class="icon-close"></span>
+            </div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+                Do you want to delete <span class="bold-text"
+                    style="color:red">{{deleteAttachPopData.uploadedFileName}}</span> ?
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click')">No
+                </button>
+                <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+                    (click)="deleteAttachment();">Yes
+                </button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

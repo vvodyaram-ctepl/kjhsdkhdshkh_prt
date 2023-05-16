@@ -1,0 +1,47 @@
+.border-line {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #bcc1cc;
+}
+.icon-card-list {
+    bottom:0px;
+    box-shadow: none;
+    width: 27px;
+    height: 26px;
+}
+// .icon-card-list.red-bg {
+//     padding: 5px 7px;
+//     border: 0.5px solid #fdc9c9;
+//     &:hover{
+//        background: #FDC9C9 0% 0% no-repeat padding-box;
+//         span{
+//           &::before{
+//             color:red;
+//           }
+//         }
+//       }
+// }
+.center-align {
+    display: flex;
+    align-items:center;
+    // flex-direction: row-reverse;
+}
+
+.mobile-number{
+   min-width:280px !important;
+  .dropdown-container{
+  .c-code{
+    float: left;
+    position: absolute;
+    width: 90px;
+    padding-left: 0;
+  }
+  .c-number{
+    max-width: 100%;
+    padding-left: 5px;
+    padding-right: 0px;
+    padding-left: 94px;
+    width: inherit;
+  }
+}
+}

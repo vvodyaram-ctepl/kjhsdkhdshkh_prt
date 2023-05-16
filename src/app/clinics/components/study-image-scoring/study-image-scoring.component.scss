@@ -1,0 +1,13 @@
+.icon-card-list {
+    bottom: 0px;
+    box-shadow: none;
+    width: 30px;
+    height: 30px;
+}
+
+.w-fieldset .btn:not(:disabled):not(.disabled) {
+    display: none;
+}
+.w-fieldset .btn-link:disabled, .btn-link.disabled {
+    display: none;
+}

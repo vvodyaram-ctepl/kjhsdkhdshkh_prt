@@ -1,0 +1,181 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-6 block-left-center">
+                <span *ngIf="!editProd">Add New Asset</span>
+                <span *ngIf="editProd">Edit Asset Details</span>
+
+            </div>
+        </div>
+    </div>
+    <div class="content-blk">
+        <div class="content-block">
+            <!-- {{assetsForm.value | json}} -->
+            <form [formGroup]="assetsForm" novalidate>
+                <div class="row ">
+                    <div class="col-4 mb-3">
+                        <!-- {{ assetsForm.value.deviceType | json}} -->
+                        <fieldset class="w-fieldset" [disabled]="assetsForm.value.disabledDevice">
+                            <legend><label class="label w-100">Asset Type<span class="asterisk">*</span></label>
+                            </legend>
+                            <!-- <input type="text" class="form-control textbox w-100" formControlName="deviceType"> -->
+                            <select class="form-control" formControlName="deviceType"
+                                (change)="changeDeviceType($event)">
+                                <option value=''>Select</option>
+                                <option *ngFor="let asset of assetTypes" [ngValue]="asset.deviceType">
+                                    {{asset.deviceType}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.deviceType">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3" *ngIf="showOtherAssetType">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Other Asset Type<span class="asterisk">*</span></label>
+                            </legend>
+                            <input type="text" class="form-control" formControlName="otherAssetType" maxlength="50" />
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.otherAssetType">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <!-- editProd -->
+                        <fieldset class="w-fieldset" [disabled]="assetsForm.value.deviceType == 'Other' || (editProd && assetsForm.value.deviceModel)">
+                            <legend><label class="label w-100">Asset Model<span class="asterisk" *ngIf="assetsForm.value.deviceType != 'Other'">*</span></label>
+                            </legend>
+                            <select class="form-control" formControlName="deviceModel"
+                                (change)="changeDeviceModel($event)">
+                                <option value=''>Select</option>
+                                <option *ngFor="let device of modelList" [ngValue]="device.deviceModel">
+                                    {{device.deviceModel}}</option>
+                            </select>
+                            <!-- <input type="text" class="form-control textbox w-100" formControlName="deviceModel"> -->
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.deviceModel">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3" *ngIf="showOtherAssetModel">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Other Asset Model<span class="asterisk">*</span></label>
+                            </legend>
+                            <input type="text" class="form-control" formControlName="otherAssetModel" maxlength="50" />
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.otherAssetModel">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Asset Location<span class="asterisk">*</span></label>
+                            </legend>
+                            <select class="form-control" formControlName="deviceLocationId"
+                                (change)='clearOtherLocation($event)'>
+                                <option value="">Select</option>
+                                <option *ngFor="let location of deviceLocations" [ngValue]="location.locationId">
+                                    {{location.location}}</option>
+
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.deviceLocationId">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3" *ngIf="showOtherLocation">
+                        <fieldset class="w-fieldset">
+                            <legend><label class="label w-100">Other Asset Location<span
+                                        class="asterisk">*</span></label>
+                            </legend>
+                            <input type="text" class="form-control" formControlName="deviceLocationOthers"
+                                maxlength="50" />
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.deviceLocationOthers">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Asset Number<span class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="deviceNumber">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.deviceNumber">
+                        </validation-message>
+                    </div>
+
+                    <div class="col-4  mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Manufacturer Serial Number<span
+                                        class="asterisk">*</span></label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="mfgSerialNumber">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.mfgSerialNumber">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset" [disabled]="assetsForm.value.disabledMfg">
+                            <legend> <label class="label">Manufacturer Firmware</label>
+                            </legend>
+                            <select class="form-control" formControlName="mfgFirmware">
+                                <option value=''>Select</option>
+                                <option *ngFor="let device of firmList" [ngValue]="device.firmwareVersionNumber">
+                                    {{device.firmwareVersionNumber}}</option>
+                            </select>
+                            <!-- <input type="text" class="form-control textbox w-100" formControlName="mfgFirmware"> -->
+                        </fieldset>
+                        <!-- <validation-message [messageToAppend]="" [control]="assetsForm.controls.mfgFirmware">
+                        </validation-message> -->
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Bluetooth MAC Address
+                                <!-- <span class="asterisk">*</span> -->
+                            </label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="mfgMacAddr">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.mfgMacAddr">
+                        </validation-message>
+                    </div>
+                    <!-- change new -->
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Wifi MAC Address
+                                <!-- <span class="asterisk">*</span> -->
+                            </label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="wifiMacAddr">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.wifiMacAddr">
+                        </validation-message>
+                    </div>
+                     <!-- change new -->
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset">
+                            <legend> <label class="label">Tracking Number</label></legend>
+                            <input type="text" class="form-control textbox w-100" formControlName="trackingNumber">
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.trackingNumber">
+                        </validation-message>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <fieldset class="w-fieldset" [disabled]="assetsForm.value.disabledStatus">
+                            <legend> <label class="label">Asset Status<span class="asterisk">*</span></label></legend>
+                            <select class="form-control" formControlName="statusId">
+                                <option value="">Select</option>
+                                <option *ngFor="let deviceStatus of deviceStatuses"
+                                    [value]="deviceStatus.deviceStatusId">
+                                    {{deviceStatus.statusName}}</option>
+                            </select>
+                        </fieldset>
+                        <validation-message [messageToAppend]="" [control]="assetsForm.controls.deviceStatusId">
+                        </validation-message>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="float-right">
+                            <button class="btn btn-secondary" type="button"
+                                (click)="backToList()">Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="submitForm()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

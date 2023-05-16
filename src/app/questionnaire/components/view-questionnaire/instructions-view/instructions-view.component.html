@@ -1,0 +1,20 @@
+<div class="content-block">
+    <div class="row mb-3" *ngFor="let inst of data.instructions; let i = index">
+        <div class="col-12">
+            {{i+1}}. {{inst.instruction}}
+        </div>
+    </div>
+    <div class="row" *ngIf="data.instructions.length == 0">
+        <div class="col-12">
+            No Instructions Found.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="float-right">
+                <button class="btn btn-secondary" type="button" (click)="back()">Close</button>&nbsp;&nbsp;
+                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

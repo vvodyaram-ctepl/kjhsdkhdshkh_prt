@@ -1,0 +1,452 @@
+<div class="content-box">
+  <div class="row ml-0 mr-0 bgColor">
+    <div class="col-md-4">
+      <div class="boxItemparent">
+        <div class="boxItem">
+          <!-- <span class="icon-external-link" style="position:absolute;right:6px;" (click)="tabsView('reports')"></span> -->
+          <div class="row no-gutters filterBox">
+            <div class="col font-weight-bold">
+              <i class="icon-report-chat icon-align"></i>
+              <div class="device-title">External Pet Info</div>
+            </div>
+          </div>
+          <hr class="line mb-2" />
+          <!--  <ul>
+            <li><a (click)="tabsView('reports')">Weight History Chart</a></li>
+          </ul> -->
+
+          <div class="dataBox">
+            <div class="col mt-12 px-0">
+              <table>
+                <thead class="table-hdr">
+                  <tr>
+                    <th>
+                      CATEGORY
+                    </th>
+                    <th>
+                      FIELD NAME
+                    </th>
+                    <th>
+                      FIELD VALUE
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="table-body scrollbar scrollbar-near-moon thin" *ngIf="externalPetArr?.length > 0">
+                  <tr *ngFor="let list of externalPetArr; let i = index">
+                    <td>
+                      {{ list.category }}
+                    </td>
+                    <td>
+                      {{ list.fieldName }}
+                    </td>
+                    <td>
+                      {{ list.fieldValue }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-center mt-2" style="color:#000000;font-size: 13px;" *ngIf="externalPetArr?.length == 0">
+                No
+                Records Found</div>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- <i class="icon-ellipsis pagination-icon"></i> -->
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="boxItemparent">
+        <div class="boxItem">
+          <span class="icon-external-link" style="position:absolute;right:6px;"
+            (click)="tabsView('petparentInfo')"></span>
+          <div class="row no-gutters filterBox">
+            <div class="col font-weight-bold">
+              <i class="icon-card icon-align"></i>
+              <div class="device-title">Pet Parent Info</div>
+            </div>
+          </div>
+          <hr class="line mb-1" />
+          <div class="scrollbar scrollbar-near-moon thin scroll-info">
+            <ngb-accordion #acc="ngbAccordion" [animation]="true" [closeOthers]="true" activeIds="device-0"
+              *ngIf="petParents">
+              <ngb-panel
+                *ngFor="let parent of petParents | slice: (parentPage-1) * parentpageSize : (parentPage-1) * parentpageSize + parentpageSize; let i=index"
+                id="device-{{i}}">
+                <ng-template ngbPanelTitle>
+                  <div>{{parent.petParentName}} &nbsp;</div>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Email
+                    </div>
+                    <div class="col-7">
+                      {{parent.email ? parent.email: '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Mobile
+                    </div>
+                    <div class="col-7">
+                      {{parent.phoneNumber ? parent.phoneNumber: '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Shipping Address
+                    </div>
+                    <div class="col-7">
+                      {{parent.shippingAddress ? parent.shippingAddress: '-'}}
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </div>
+        <!-- pagination -->
+        <div class="row" *ngIf="petParents">
+          <div class="col-12">
+            <div style="text-align: left">
+              <ngb-pagination *ngIf="petParents.length > 0" [collectionSize]="petParents.length" [(page)]="parentPage"
+                [pageSize]="parentpageSize" [maxSize]="5" [rotate]="true" [ellipses]="true" [boundaryLinks]="true">
+              </ngb-pagination>
+            </div>
+          </div>
+          <!-- <div class="col-6">
+                <div style="text-align: right;font-weight:bold;position: absolute;right: 15px;top: 10px;">
+                    Total Record Count : {{petParents.length}}
+                  </div>
+            </div> -->
+        </div>
+        <!-- pagination -->
+        <!-- <i class="icon-ellipsis pagination-icon"></i> -->
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="boxItemparent">
+        <div class="boxItem">
+          <span class="icon-external-link" style="position:absolute;right:6px;" (click)="tabsView('devices')"></span>
+          <div class="row no-gutters filterBox">
+            <div class="col font-weight-bold">
+              <i class="icon-device1 icon-align"></i>
+              <div class="device-title">Asset Details</div>
+            </div>
+          </div>
+          <hr class="line  mb-1" />
+          <div class="scrollbar scrollbar-near-moon thin scroll-info">
+            <ngb-accordion #acc="ngbAccordion" [animation]="true" [closeOthers]="true" activeIds="device-0"
+              *ngIf="petDevices">
+              <ngb-panel
+                *ngFor="let devices of petDevices | slice: (devPage-1) * devpageSize : (devPage-1) * devpageSize + devpageSize; let i=index"
+                id="device-{{i}}">
+                <ng-template ngbPanelTitle>
+                  <div>{{devices.deviceNumber ? devices.deviceNumber : '-'}}&nbsp;
+                  </div>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Asset Model
+                    </div>
+                    <div class="col-7">
+                      {{devices.deviceModel ? devices.deviceModel: '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Firmware version
+                    </div>
+                    <div class="col-7">
+                      {{devices.firmwareVersion ? devices.firmwareVersion: '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Last Sync
+                    </div>
+                    <div class="col-7">
+                      {{devices.lastSync ? devices.lastSync : '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Assigned On
+                    </div>
+                    <div class="col-7">
+                      {{devices.assignedOn ? (devices.assignedOn | customDateFormat) : '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Unassigned On
+                    </div>
+                    <div class="col-7">
+                      {{devices.unAssignedOn ? (devices.unAssignedOn | customDateFormat) : '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Unassigned Reason
+                    </div>
+                    <div class="col-7">
+                      {{devices.unassignedReason ? devices.unassignedReason : '-'}}
+                    </div>
+                  </div>
+                  <div class="row labelItem mt-1">
+                    <div class="col-5">
+                      Battery
+                    </div>
+                    <div class="col-7">
+                      {{devices.batteryPercentage ? devices.batteryPercentage : '-'}}
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </div>
+        <!-- pagination -->
+        <div class="row" *ngIf="petDevices">
+          <div class="col-12">
+            <div style="text-align: left">
+              <ngb-pagination *ngIf="petDevices.length > 0" [collectionSize]="petDevices.length" [(page)]="devPage"
+                [pageSize]="devpageSize" [maxSize]="10" [rotate]="true" [ellipses]="true" [boundaryLinks]="true">
+              </ngb-pagination>
+            </div>
+          </div>
+          <!-- <div class="col-6">
+                    <div style="text-align: right;font-weight:bold;position: absolute;right: 15px;top: 10px;">
+                        Total Record Count : {{petDevices.length}}
+                      </div>
+                </div> -->
+        </div>
+        <!-- pagination -->
+        <!-- <i class="icon-ellipsis pagination-icon"></i> -->
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="boxItemparent">
+        <div class="boxItem">
+          <span class="icon-external-link" style="position:absolute;right:3px;" (click)="tabsView('notes')"></span>
+          <div class="row no-gutters filterBox">
+            <div class="col font-weight-bold">
+              <i class="icon-edit1 icon-align"></i>
+              <div class="device-title">
+                Notes
+                <span class="padding-right:10px">
+                  <button class="btn btn-primary mr-2" (click)="addNotesPage()" *ngIf="RWFlag">New</button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <hr class="line mb-2" />
+          <div class="scrollbar scrollbar-near-moon thin">
+            <div class="notes-blk" *ngFor="let note of petNotes; let i=index">
+              <i class="fa fa-check" aria-hidden="true"></i>
+              <div>
+                <div class="note-title">{{note.noteType}}</div>
+                <div class="note-date">{{note.modifiedDate | customDateFormat }}</div>
+                <div class="note-dis">
+                  {{note.content}}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="notes-blk">
+              <i class="fa fa-check" aria-hidden="true"></i>
+              <div>
+                <div class="note-title">Vaccination</div>
+                <div class="note-date">02/13/2020</div>
+                <div class="note-dis">
+                  It seems Oscar is missing one of his regular sh
+                </div>
+              </div>
+            </div>
+            <div class="notes-blk">
+              <i class="fa fa-check" aria-hidden="true"></i>
+              <div>
+                <div class="note-title">Vaccination</div>
+                <div class="note-date">02/13/2020</div>
+                <div class="note-dis">
+                  It seems Oscar is missing one of his regular sh
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <!-- <div class="text-right theme-grey-text">More</div> -->
+        </div>
+        <!-- <i class="icon-ellipsis pagination-icon"></i> -->
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="boxItemparent">
+        <div class="boxItem">
+          <span class="icon-external-link" style="position:absolute;right:3px;" (click)="tabsView('campaign')"></span>
+          <div class="row no-gutters filterBox">
+            <div class="col font-weight-bold">
+              <i class="icon-badge icon-align"></i>
+              <div class="device-title">
+                Campaign Points
+                <span class="float-right" *ngIf="petCampaignPoints">
+                  {{petCampaignPoints.redeemablePoints}}
+                  <span style="color:black;padding-right: 10px;">Points</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <hr class="line mb-3" />
+          <div class="scrollbar scrollbar-near-moon thin">
+            <div *ngIf="petCampaignPoints">
+              <div class="observation-title skyblue">
+                <span class="text">Observations</span>
+                <span class="float-right count">{{petCampaignPoints.observations}}</span>
+              </div>
+              <div class="observation-title red">
+                <span class="text">Videos</span>
+                <span class="float-right count">{{petCampaignPoints.videos }}
+                </span>
+              </div>
+              <div class="observation-title purple">
+                <span class="text">Images</span>
+                <span class="float-right count">{{petCampaignPoints.images }}
+                </span>
+              </div>
+              <div class="observation-title yellow">
+                <span class="text">Questionnaire</span>
+                <span class="float-right count">{{petCampaignPoints.questionnaire }}
+                </span>
+              </div>
+              <div class="observation-title green">
+                <span class="text">Feedback</span>
+                <span class="float-right count">{{petCampaignPoints.feedback }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="boxItemparent">
+        <div class="boxItem">
+          <span class="icon-external-link" style="position:absolute;right:6px;"
+            (click)="tabsView('observations')"></span>
+          <div class="row no-gutters filterBox">
+            <div class="col font-weight-bold">
+              <i class="icon-report-chat icon-align"></i>
+              <div class="device-title">Observations</div>
+            </div>
+          </div>
+          <hr class="line mb-2" />
+          <div class="obslist scrollbar scrollbar-near-moon thin hideSinfo pr-2">
+            <div class="obs-blk" *ngFor="let obs of petObservations; let i=index">
+              <!-- <span *ngIf="obs.imagePath !== '';else videoThumbnailURL">
+                <img [src]="obs.imagePath" class="p-image">
+              </span> -->
+              <span *ngIf="obs.imageList && obs.imageList.length > 0;else videoThumbnailURL"
+                (click)="playObservation(obs)">
+                <img [src]="obs.imageList[0]" class="p-image">
+              </span>
+              <ng-template #videoThumbnailURL>
+                <span *ngIf="obs.videoThumbnailURL !== '';else defaultImg">
+                  <img [src]="obs.videoThumbnailURL" class="p-image" (click)="playVideo(obs)">
+                </span>
+              </ng-template>
+              <ng-template #defaultImg>
+                <span>
+                  <img src="assets/images/no-dogs.svg" class="p-image" />
+                </span>
+              </ng-template>
+
+              <!-- <span *ngIf="obs.imagePath == '' && obs.videoThumbnailURL == '' && obs.videoURL != ''">
+                <video controls class="p-video">
+                  <source
+                      src="{{'https://storage.googleapis.com/wearables-sensor-data-pr/UAT/GCloud/WPortal/ObservationVideo' + obs.videoURL}}"
+                      type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </span> -->
+
+              <div>
+                <div class="b-title">{{obs.activityType}}</div>
+                <div class="b-date">{{obs.observationTime | customDateFormat }}</div>
+                <div class="b-dis">
+                  {{obs.observationText}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <i class="icon-ellipsis pagination-icon"></i> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #observationElement let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Observation Video
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span aria-hidden="true">&#10006;</span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-4">
+      <div class="col-12 video-wrapper">
+        <video controls class="p-video videopath" controls autoplay width="100%" style="margin:0 auto;">
+          <source src="{{playVideoUrl}}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          Cancel
+        </button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary btn-custom float-right mr-3"
+          (click)="downloadvideo(playVideoUrl);">
+          Download
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #observationImageEle let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      View Image
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span aria-hidden="true">&#10006;</span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-4 vertical-scroll">
+      <div class="col-12">
+        <img src="{{playImgUrl}}" alt="pet" class="img-fluid" />
+      </div>
+    </div>
+    <div class="row text-right">
+      <div class="col-12 mb-4">
+        <button type="button" class="btn btn-secondary btn-custom float-right" (click)="d('Cross click');">
+          Close
+        </button>&nbsp;&nbsp;
+        <!-- <button type="button" class="btn btn-primary btn-custom float-right mr-3"  (click)="downloadImage();">
+                  Download
+              </button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,63 @@
+<div class="content-box">
+   <div class="content-block">
+      <form [formGroup]="activityFactorForm">
+         <div class="row mb-4">
+            <div class="col-3 m-auto">
+               <label class="label w-100" style="font-weight:bold">
+                  Select Data Source <span class="asterisk">*</span> </label>
+            </div>
+            <div class="col-9">
+               <fieldset class="w-fieldset" [disabled]="">
+                  <multi-typeahead [data]="dataSourceArr" matcher="name" formControlName="dataSource" display="name" class="custom-multitypeahead"
+                     [showMaxBadges]="2" (selectedItem)="selectedSource($event)">
+                  </multi-typeahead>
+               </fieldset>
+               <validation-message [control]="activityFactorForm.get('dataSource')">
+               </validation-message>
+            </div>
+         </div>
+         <div class="row-border mb-4" *ngIf="hasGoogleSheet.length">
+            <div class="row">
+               <div class="col-6">
+                  <fieldset class="w-fieldset">
+                     <legend><label class="label">Google Sheet Url <span class="asterisk">*</span></label>
+                     </legend>
+                     <input type="text" maxlength="100" class="form-control textbox w-100"
+                        formControlName="googleSheetUrl">
+                  </fieldset>
+                  <validation-message [control]="activityFactorForm.get('googleSheetUrl')">
+                  </validation-message>
+               </div>
+               <div class="col-3">
+                  <fieldset class="w-fieldset">
+                     <legend><label class="label">Start Date <span class="asterisk">*</span></label>
+                     </legend>
+                     <datepicker class="w-100" format="MM-DD-YYYY" formControlName="startDate" (select)="dateValidation()"></datepicker>
+                  </fieldset>
+                  <validation-message [control]="activityFactorForm.get('startDate')">
+                  </validation-message>
+               </div>
+               <div class="col-3">
+                  <fieldset class="w-fieldset" [disabled]="">
+                     <legend>
+                        <label class="label">End Date </label>
+                     </legend>
+                     <datepicker class="w-100" format="MM-DD-YYYY" formControlName="endDate" (select)="dateValidation()"></datepicker>
+                  </fieldset>
+                  <validation-message [control]="activityFactorForm.get('endDate')">
+                  </validation-message>
+               </div>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-12">
+               <div class="float-right">
+                  <button type="button" class="btn btn-secondary" (click)="back()"> Back</button>&nbsp;&nbsp;
+                  <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>

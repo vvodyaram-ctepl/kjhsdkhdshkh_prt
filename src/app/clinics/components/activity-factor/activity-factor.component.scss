@@ -1,0 +1,17 @@
+app-activity-factor {
+    .custom-multitypeahead {
+        .ng-select-container {
+            background: none !important;
+            box-shadow: none !important;
+
+            .ng-value-container {
+                padding: 0 !important;
+            }
+        }
+    }
+
+    .row-border {
+        border: 1px solid #22cbca;
+        padding: 15px;
+    }
+}

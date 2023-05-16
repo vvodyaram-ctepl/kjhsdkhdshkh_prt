@@ -1,0 +1,65 @@
+<div class="content-box">
+  <div class="content-hdr">
+    <div class="row">
+      <div class="col-6 block-left-center">
+        Update Firmware
+      </div>
+      <div class="col-6">
+        <div class="float-right">
+          <button *ngIf="RWFlag" class="btn btn-primary mr-2" type="button" (click)="updateFirm()">
+            Update Firmware Version
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-blk">
+    <datatable *ngIf="showDataTable" [selectable]="selectable" [headers]="headers" placeholder="Search"
+      [hideExport]="true" [filterTypeArr]="filterTypeArr" (selectedRecords)="selectedRecords($event)"
+      (selectedRecords)="selectedRecordsForVersion($event)" defaultColumn="modifiedDate" dir="DESC" pageName="updateFirmware"
+      url="/api/assets/getDeviceInfo">
+    </datatable>
+  </div>
+</div>
+<ng-template #archiveContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Update Firmware Version
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <div class="close-wrapper">
+        <span class="icon-close" aria-hidden="true"></span>
+      </div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="firmForm" (submit)='onSubmit(firmForm.value)'>
+      <div class="row mb-3">
+        <div class="col-12">
+          <fieldset class="w-fieldset">
+            <legend><label class="label">Select Firmware Version<span class="asterisk">*</span></label></legend>
+            <!-- <input formControlName="firmwareVersion" type="text" class="form-control textbox w-100" maxlength="" /> -->
+            <!-- {{firmForm.value.firmwareVersion | json}} -->
+            <!-- <lib-typeahead [data]="firmwareList" matcher="firmwareVersionNumber" formControlName="firmwareVersion"
+              class="w-100 mb-0" placeholder="" class="w-100">
+            </lib-typeahead> -->
+            <select class="form-control" formControlName="firmwareVersion">
+              <option value=''>Select </option>
+              <option *ngFor="let asset of firmwareList" [ngValue]="asset.firmwareVersionId">
+                  {{asset.firmwareVersionNumber}}</option>
+          </select>
+          </fieldset>
+          <validation-message [control]="firmForm.controls.firmwareVersion"></validation-message>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mb-4">
+          <button type="submit" class="btn btn-primary btn-custom float-right">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

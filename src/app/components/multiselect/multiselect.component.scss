@@ -1,0 +1,93 @@
+multiselect.full .cuppa-dropdown{
+    width: 100% !important;
+}
+multiselect{   
+       .c-btn{
+    span{
+        padding-left: 10px;
+    }
+    }
+    .c-label,.c-remove{
+        padding-left: 0 !important;
+    }
+    .pure-checkbox label.valueLabel{
+        width: calc(100% - 25px);
+        margin-top: 0px !important;
+    }
+      .disabled *{
+        pointer-events: none;
+        opacity: .9; 
+    }
+    .c-angle-down,.c-angle-up{
+        padding-left: 0 !important;
+    }
+    .pure-checkbox label{
+        vertical-align: top;
+    }
+    .pure-checkbox > label:before{
+        margin-top:2px;
+    }
+    
+li{
+padding: 2px 10px !important;
+}
+    .fa:after{
+    content: "\f3d0";
+    display: inline-block;
+    font-family: "Ionicons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    font-size: 10px;
+    }
+    .c-angle-down{
+        width: 12px !important;
+        height: 12px !important;
+        transform: translateY(-94%) !important;
+    }
+    .dropdown-box .c-btn{
+        box-shadow: none !important;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 !important;
+       /* padding-left: 10px !important;*/
+        border-radius: 0;
+    }
+    .list-area{
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+    .c-list{
+        width: 100% !important;
+        // width: calc(100% - 50px) !important;
+    }
+    .countplaceholder{
+        right: 26px !important; 
+    }
+    .c-token{
+        line-height: 15px;
+        position: relative;
+        z-index: 10;
+        margin-top: 0px !important;
+        label{
+           line-height: 20px;
+           margin: 0 !important;
+           height: 19px;
+           overflow: hidden;
+        }
+    }
+    .fa.fa-remove:after{
+        content: "\f14d" !important;
+        padding-left: 3px;
+        font-size: 16px;
+    }
+    .lazyContainer{
+        max-height: 120px !important;
+    }
+  
+}

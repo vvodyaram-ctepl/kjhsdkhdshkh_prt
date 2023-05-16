@@ -1,0 +1,95 @@
+<div class="content-box">
+    <div class="content-hdr">
+        <div class="row">
+            <div class="col-12 block-left-center">
+                Questionnaire Response
+            </div>
+        </div>
+    </div>
+
+    <div class="content-blk">
+        <div class="content-block">
+            <div class="row que-header content-banner px-0 pb-4 pt-2">
+                <div class="col">
+                    <div class="small-text">Questionnaire Name</div>
+                    <div class="green-small-text">{{this.questionnaireName}}</div>
+                </div>
+                <div class="col">
+                    <div class="small-text">Pet Parent</div>
+                    <div class="green-small-text">{{this.petParentName}}</div>
+                </div>
+                <div class="col">
+                    <div class="small-text">Pet Name</div>
+                    <div class="green-small-text">{{this.petName}}</div>
+                </div>
+                <div class="col">
+                    <div class="small-text">Study</div>
+                    <div class="green-small-text">{{this.study || '-'}}</div>
+                </div>
+                <div class="col">
+                    <div class="small-text">Submitted On</div>
+                    <div class="green-small-text">{{this.submittedOn}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-3 custom-table">
+                    <table>
+                        <!-- <thead class="table-hdr">
+                            <tr>
+                                <th *ngFor="let list of questionnaireResponseList; let i = index">
+                                    {{ list.label }}
+                                </th>
+                            </tr>
+                        </thead> -->
+                        <tbody class="table-body" *ngIf="questionnaireResponseList?.length > 0">
+                            <tr *ngFor="let list of questionnaireResponseList; let i = index">
+                                <td class="question">
+                                    <span class="question-number">{{'Q'+(i+1)}}</span> &nbsp;{{ list.question }}
+                                </td>
+                                <td class="answer">
+                                    {{ list.answer || '-'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="table-body" *ngIf="questionnaireResponseList?.length == 0">
+                            <tr>
+                                <td>No Records Found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-primary" type="button" (click)="back()">Back</button>&nbsp;&nbsp;
+                        <button class="btn btn-secondary" type="button" (click)="close()">Close</button>&nbsp;&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col mt-3 custom-table">
+            <table>
+                <tbody class="table-body" *ngIf="questionnaireResponseList?.length > 0">
+                    <tr *ngFor="let list of questionnaireResponseList; let i = index">
+                        <td>
+                            {{'Q'+(i+1)}} {{ list.question }}
+                        </td>
+                        <td>
+                            {{'A'+(i+1)}} {{ list.answer }}
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="table-body" *ngIf="questionnaireResponseList?.length == 0">
+                    <tr>
+                        <td>No Records Found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+</div>

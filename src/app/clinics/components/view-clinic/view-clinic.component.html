@@ -1,0 +1,185 @@
+<div class="content-box">
+  <div class="content-hdr">
+    <div class="row">
+      <div class="col-6">View Study</div>
+      <div class="col-6 text-right">
+        <!-- routerLink="/user/clinics/edit-clinic/{{editId}}" -->
+        <button *ngIf="RWFlag" class="btn btn-primary" (click)="editStudy()">Edit
+          Study</button>
+      </div>
+    </div>
+  </div>
+  <div class="content-blk">
+    <form [formGroup]="clinicForm">
+      <div class="content-banner mb-3">
+
+        <div class="row no-gutter border-1">
+          <div class="col-6 block-left-center mb-2">
+            <span class="banner-heading-text">{{clinicForm.value.clinicName}}</span>
+            <span class="status-button"
+              [ngClass]="clinicForm.value.status == 'Active' ? 'active-bg' : 'inactive-bg'">{{clinicForm.value.status}}</span>
+            <span class="icon-star" *ngIf="!isFav" (click)="makeFav()"></span>
+            <span class="icon-star-filled" *ngIf="isFav" (click)="removeFav()"></span>
+          </div>
+          <div class="col-6">
+            <div class="float-right mb-2">
+              <span class="pi_text mr-2" style="font-weight: bold;">Principal Investigator</span>
+              <span class="phone_number_text" style="font-weight: normal;color:black">{{clinicForm.value.pinv}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row no-gutter mt-3 icon-style">
+          <div class="col">
+            <div class="row no-gutter">
+              <div class="col-2 text-right">
+                <i class="icon-pet-house size-26"></i>
+              </div>
+              <div class="col-10">
+                <div class="box-wrap ml-2">
+                  <div class="small-text">Total Pets in Study</div>
+                  <div class="count-text date">{{clinicForm.value.totalActivePets}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-3">
+            <div class="row no-gutter">
+              <div class="col-2">
+                <div class="img-box-blue">
+                  <span class="icon-dog-blue red size-20"></span>
+                </div>
+              </div>
+              <div class="col-10">
+                <div class="box-wrap ml-3">
+                  <div class="small-text">Total In-Active Pets</div>
+                  <div class="count-text">{{clinicForm.value.totalInactivePets}}</div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="col">
+            <div class="row no-gutter">
+              <div class="col-2 mt-1 text-right">
+                <i class="icon-calendar size-22"></i>
+                <!-- <span class="cal-img size-20">
+                    <img src="assets/images/cal.svg" class="cal-image" />
+                  </span> -->
+              </div>
+              <div class="col-10">
+                <div class="box-wrap ml-2">
+                  <div class="small-text">Start Date</div>
+                  <div class="count-text date">{{clinicForm.value.startDate ? clinicForm.value.startDate : '-'}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="row no-gutter">
+              <div class="col-2 mt-1 text-right">
+                <i class="icon-calendar size-22"></i>
+              </div>
+              <div class="col-10">
+                <div class="box-wrap ml-2">
+                  <div class="small-text">End Date</div>
+                  <div class="count-text date">{{clinicForm.value.endDate ? clinicForm.value.endDate : '-'}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="row no-gutter">
+              <div class="col-2 text-right">
+                <div class="mt-2">
+                  <!-- <span class="icon-dog-blue red size-20"></span> -->
+                  <i class="icon-notification size-20" *ngIf="clinicForm.value.notifications == 1">
+                  </i>
+                  <i class="icon-notification size-20 disabled" *ngIf="clinicForm.value.notifications == 0">
+                  </i>
+                </div>
+              </div>
+              <div class="col-10">
+                <div class="box-wrap ml-2">
+                  <div class="small-text">
+                    <div class="small-text">Notification</div>
+                    <div class="count-text date" *ngIf="clinicForm.value.notifications == 1">Enabled</div>
+                    <div class="count-text date" *ngIf="clinicForm.value.notifications == 0">Disabled</div>
+                    <div class="count-text date"
+                      *ngIf="clinicForm.value.notifications != 0 && clinicForm.value.notifications != 1">Disabled</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row no-gutter">
+              <div class="col-2 mt-1 text-right">
+                <div>
+                  <i class="icon-database size-22"></i>
+                  <!-- <span class="cal-img size-20">
+                    <img src="assets/images/database-configuration.svg" class="not-image" />
+                  </span> -->
+                </div>
+              </div>
+              <div class="col-10">
+                <div class="box-wrap ml-2">
+                  <div class="small-text">
+                    <div class="small-text">External</div>
+                    <div class="count-text date" *ngIf="clinicForm.value.isExternal == 1">Yes</div>
+                    <div class="count-text date" *ngIf="clinicForm.value.isExternal == 0">No</div>
+                    <div class="count-text date"
+                      *ngIf="clinicForm.value.isExternal != 1 && clinicForm.value.isExternal != 0">-</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row no-gutter mt-3">
+          <div class="col-12 block-left-center mb-2">
+            <span class="banner-heading-text" style="font-size: 15px;width: 102px;"> Description :</span>
+          </div>
+          <div class="col-12">
+            <div class="" style="
+            font-size: 13px;
+            display: block;
+        ">{{clinicForm.value.description ? clinicForm.value.description : '-'}}</div>
+          </div>
+        </div>
+        <div class="row no-gutter mt-3">
+          <div class="col-12 block-left-center mb-2">
+            <span class="banner-heading-text" style="font-size: 15px;width: 102px;"> Prelude API URL :</span>
+          </div>
+          <div class="col-12">
+            <div class="" style="
+            font-size: 13px;
+            display: block;
+        ">{{clinicForm.value.preludeUrl ? clinicForm.value.preludeUrl : '-'}}</div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+    <ngb-carousel #carousel [showNavigationIndicators]="false" [showNavigationArrows]="true" [interval]="false"
+      (slide)="onSlide($event, carousel)">
+      <ng-template ngbSlide *ngFor="let item of data;let i = index" id="{{i}}">
+        <div class="navtabsBackground">
+          <ul ngbNav class="row nav-tabs tabsDesign">
+            <li class="col" [ngbNavItem]="flatTab.name" *ngFor="let flatTab of item">
+              <a ngbNavLink [routerLink]="flatTab.link" routerLinkActive="active-link"
+                (click)="activateTab(flatTab)"><span>{{ flatTab.name }}</span></a>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+
+    <router-outlet></router-outlet>
+
+  </div>
+</div>

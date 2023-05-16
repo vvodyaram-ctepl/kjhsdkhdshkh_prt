@@ -1,0 +1,11 @@
+
+    <!-- {{searchBy | json}} -->
+
+    <fieldset class="w-fieldset">
+        <legend> <label class="label">{{labelName}} <span class="asterisk" *ngIf="isRequired">*</span></label></legend>
+        <textarea class="form-control textbox w-100" [placeholder]="placeHolderText" [maxLength]="maxLengthT"
+        [(ngModel)]="searchBy" (ngModelChange)="searchByChange()" ></textarea>
+    </fieldset>
+    <div class="charCount mt-2">
+        Remaining Characters :  {{maxLengthT - searchBy?.length}} out of {{maxLengthT}}
+        </div>

@@ -1,0 +1,24 @@
+app-view-activity-factor {
+    .label-value {
+        padding: 8px 10px;
+        min-height: 36px;
+        background-color: #e9ecef !important;
+        overflow: hidden;
+
+        .aqua-bg {
+            background-color: #ebf5ff;
+            padding: 1px 5px;
+        }
+    }
+    .row-border {
+        border: 1px solid #22cbca;
+        padding: 15px;
+    }
+    .no_records {
+        padding: 2px 5px !important;
+        font-size: 14px;
+        line-height: 2;
+        color: #4b4b5a;
+        word-break: break-word;
+    }
+}

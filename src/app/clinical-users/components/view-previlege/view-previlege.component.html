@@ -1,0 +1,23 @@
+<div class="list-screen">
+    <div class="btn-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="float-right">
+                    <button type="button" class="btn btn-primary" (click)="addStudy()">Add Associated Study</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <datatable [headers]="headers" [hideExport]="true" [searchFilter]="true" defaultColumn="name" dir="DESC"
+        url="http://localhost:4200/assets/a.json">
+    </datatable>
+    <div class="row">
+        <div class="col-12">
+            <!-- <button type="submit">submit</button>&nbsp;&nbsp; -->
+            <div class="float-right">
+                <button class="btn btn-secondary" type="button" [disabled]="true">Back</button>&nbsp;&nbsp;
+                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
