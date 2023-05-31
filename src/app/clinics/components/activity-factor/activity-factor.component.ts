@@ -96,7 +96,7 @@ export class ActivityFactorComponent implements OnInit {
 
   public buildForm(): void {
     this.activityFactorForm = this.fb.group({
-      dataSource: [[], [Validators.required]],
+      dataSource: [[]],
       hasPrelude: [],
       googleSheetUrl: [],
       startDate: [],
